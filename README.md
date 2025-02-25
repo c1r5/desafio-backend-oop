@@ -18,7 +18,7 @@ _Serviços de pagamento simplificado_
 - _Este serviço deve ser RESTFul._
 
 ## Detalhes técnicos
-- Linguagem principal: Rust
+- Linguagem principal: Node | Typescript
 - Conteinerização: Docker
 - Mensageria: ?
 - Cache: Redis
