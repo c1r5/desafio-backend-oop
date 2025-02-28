@@ -50,3 +50,6 @@ _Serviços de pagamento simplificado_
 - [ ] Mensageria
 - [ ] Cache
 - [ ] Serviço de Notificação
+
+## Exemplo da arquitetura de comunicação
+![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge.drawio.png?raw=true)
