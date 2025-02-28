@@ -9,6 +9,7 @@ _Serviços de pagamento simplificado_
 - Nome completo
 - CPF / CNPJ
 - email
+- Telefone
 - Senha
 
 ---
@@ -27,7 +28,7 @@ _Serviços de pagamento simplificado_
 - Conteinerização: Docker
 - Mensageria: Apache Kafka
 - Cache: Redis
-- Banco de dados: Postgresql 
+- Banco de dados: Postgresql
 - Arquitetura: DDD
 - Cobertura de testes atual: 0%
 - Principios SOLID aplicados:
@@ -35,9 +36,10 @@ _Serviços de pagamento simplificado_
 
 ## Tasks primárias
 
-- [x] Arquitetura e Modelagem de Dados
+- [ ] Arquitetura e Modelagem de Dados
+  - [ ] USUÁRIO
+  - [x] TRANSFERENCIA
 - [ ] Banco de dados
-- [ ] Cache
 - [ ] Cadastro
 - [ ] Login
 - [ ] Transferência
@@ -46,3 +48,5 @@ _Serviços de pagamento simplificado_
 
 - [ ] Containerização
 - [ ] Mensageria
+- [ ] Cache
+- [ ] Serviço de Notificação
