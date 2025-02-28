@@ -1,4 +1,6 @@
-import fastify, { FastifyInstance, RawServerBase } from "fastify";
+import fastify, { FastifyBaseLogger, FastifyInstance, FastifyReply, FastifyRequest, FastifySchema, FastifyTypeProviderDefault, RawServerBase, RawServerDefault, RouteGenericInterface, RouteOptions } from "fastify";
+import { ResolveFastifyRequestType } from "fastify/types/type-provider";
+import { IncomingMessage, ServerResponse } from "http";
 import EventEmitter from "node:events";
 import ControllerModel from "shared/domain/models/controller-model";
 
@@ -10,6 +12,15 @@ export default class App extends EventEmitter<{
   public mock_server: RawServerBase
   private app: FastifyInstance
   private port: number
+  private routes: RouteOptions[] = [];
+
+  private health_check_route: RouteOptions = {
+    method: "GET",
+    url: "/health",
+    handler: function (this: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>, request: FastifyRequest<RouteGenericInterface, RawServerDefault, IncomingMessage, FastifySchema, FastifyTypeProviderDefault, unknown, FastifyBaseLogger, ResolveFastifyRequestType<FastifyTypeProviderDefault, FastifySchema, RouteGenericInterface>>, reply: FastifyReply<RouteGenericInterface, RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, unknown, FastifySchema, FastifyTypeProviderDefault, unknown>): unknown {
+      throw new Error("Function not implemented.");
+    }
+  }
   constructor(port?: number) {
     super()
     this.app = fastify()
@@ -17,11 +28,20 @@ export default class App extends EventEmitter<{
     this.mock_server = this.app.server
   }
 
-  register_controller(controller: ControllerModel) {
-    this.app.route(controller.options)
+  register_api_controller(controller: ControllerModel): this {
+    this.routes.push(controller.options)
+
+    return this
   }
 
   start() {
+    this.app.register(server => {
+      for (const route of this.routes) {
+        console.log(`[+] Routing ${route.url}`)
+        server.route(route)
+      }
+    }, { prefix: '/api' });
+
     this.app.listen({ port: this.port })
       .then(server => {
         console.log(`[+] Server listening at: ${server}`)
