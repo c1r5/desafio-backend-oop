@@ -28,7 +28,7 @@ _Serviços de pagamento simplificado_
 - Mensageria: Apache Kafka
 - Cache: Redis
 - Banco de dados: Postgresql 
-- Arquitetura: MVC
+- Arquitetura: DDD
 - Cobertura de testes atual: 0%
 - Principios SOLID aplicados:
   - [x] Dependency Inversion Principle
