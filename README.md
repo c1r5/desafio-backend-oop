@@ -25,9 +25,9 @@ _Serviços de pagamento simplificado_
 
 - Linguagem principal: Node | Typescript
 - Conteinerização: Docker
-- Mensageria: ?
+- Mensageria: Apache Kafka
 - Cache: Redis
-- Banco de dados: Postgresql
+- Banco de dados: Postgresql 
 - Arquitetura: MVC
 - Cobertura de testes atual: 0%
 - Principios SOLID aplicados:
