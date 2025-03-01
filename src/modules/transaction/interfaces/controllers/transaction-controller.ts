@@ -6,15 +6,17 @@ import ControllerModel from "shared/domain/models/controller-model";
 
 @injectable()
 export default class TransactionController implements ControllerModel {
-  options: RouteOptions = {
-    method: "POST",
-    url: "/transaction/:transaction_type",
-    handler: this.create_transaction
+  options: RouteOptions[] = []
+
+  constructor(@inject('TransactionRepository') transaction_repository: TransactionRepository<Transaction>) { 
+    this.options.push({
+      method: "POST",
+      url: "/transaction/:transaction_type",
+      handler: this.create_transaction
+    })
   }
 
-  constructor(@inject('TransactionRepository') transaction_repository: TransactionRepository<Transaction>) { }
-
-  private create_transaction(request: FastifyRequest, reply: FastifyReply) {
+  private create_transaction = async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send('ok')
   }
 
