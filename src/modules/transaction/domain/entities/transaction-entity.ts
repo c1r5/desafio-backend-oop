@@ -1,7 +1,15 @@
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
-import TransactionModel from "../models/transaction-model";
 
-@Entity({schema: 'transaction'})
+export type Transaction = {
+  transactionId: string,
+  status: "pending" | "completed" | "failed";
+  amount: BigInt
+  type: "payment" | "refund" | "transfer" | "adjustment";
+  payer: string,
+  recipient: string
+}
+
+@Entity({ schema: 'transaction' })
 export default class TransactionEntity extends BaseEntity {
   @PrimaryColumn()
   transactionId: string
@@ -16,7 +24,7 @@ export default class TransactionEntity extends BaseEntity {
   @Column()
   recipient: string
 
-  constructor(transaction: TransactionModel) {
+  constructor(transaction: Transaction) {
     super()
 
     this.transactionId = transaction.transactionId
