@@ -5,9 +5,9 @@ import { DataSource, Repository } from "typeorm";
 
 @injectable()
 export default class TransactionRepositoryImpl implements TransactionRepository {
-  repo: Repository<TransactionEntity>;
+  orm_repo: Repository<TransactionEntity>;
 
   constructor(datasource: DataSource) {
-    this.repo = datasource.getRepository(TransactionEntity)
+    this.orm_repo = datasource.getRepository(TransactionEntity)
   }
 }
