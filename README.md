@@ -36,10 +36,10 @@ _Serviços de pagamento simplificado_
 
 ## Tasks primárias
 
-- [ ] Arquitetura e Modelagem de Dados
-  - [ ] USUÁRIO
+- [X] Arquitetura e Modelagem de Dados
+  - [X] USUÁRIO
   - [x] TRANSFERENCIA
-- [ ] Banco de dados
+- [X] Banco de dados
 - [ ] Cadastro
 - [ ] Login
 - [ ] Transferência
