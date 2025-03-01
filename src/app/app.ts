@@ -30,7 +30,7 @@ export default class App extends EventEmitter<{
   }
 
   register_api_controller(controller: ControllerModel): this {
-    this.routes.push(controller.options)
+    this.routes.push(...controller.options)
 
     return this
   }
