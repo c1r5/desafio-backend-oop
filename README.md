@@ -51,5 +51,8 @@ _Serviços de pagamento simplificado_
 - [ ] Cache
 - [ ] Serviço de Notificação
 
-## Exemplo da arquitetura de comunicação
-![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge.drawio.png?raw=true)
+## Exemplo de Arquitetura
+![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-arquitetura-inicial.drawio.png?raw=true)
+
+## Exemplo de Entity Relationship Diagram
+![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-ERD.drawio.png?raw=true)
