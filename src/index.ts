@@ -1,7 +1,7 @@
 import TransactionController from "modules/transaction/interfaces/controllers/transaction-controller";
 import "reflect-metadata";
 import App from "app/app";
-import { container, TYPES } from "shared/di/di-container";
+import { container, TYPES } from "shared/infra/di/di-container";
 import UserController from "modules/users/interfaces/controllers/user-controller";
 
 const app = new App()
