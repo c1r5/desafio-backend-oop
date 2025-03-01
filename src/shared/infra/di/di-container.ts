@@ -5,9 +5,11 @@ import TransactionController from "modules/transaction/interfaces/controllers/tr
 import UserUseCases from "modules/users/domain/usecases/user-usecases";
 import UserRepositoryImpl from "modules/users/infra/repositories/user-repository-impl";
 import UserController from "modules/users/interfaces/controllers/user-controller";
+import AppDataSource from "../database/app-data-source";
 
 
 const TYPES = {
+  AppDataSource: Symbol.for('AppDataSource'),
   UserRepository: Symbol.for('UserRepository'),
   UserUseCases: Symbol.for('UserUseCases'),
   UserController: Symbol.for('UserController'),
@@ -26,5 +28,7 @@ container.bind<UserController>(TYPES.UserController).to(UserController)
 container.bind<TransactionRepositoryImpl>(TYPES.TransactionRepository).to(TransactionRepositoryImpl).inSingletonScope()
 container.bind<TransactionUseCases>(TYPES.TransactionUseCases).to(TransactionUseCases)
 container.bind<TransactionController>(TYPES.TransactionController).to(TransactionController)
+
+container.bind<AppDataSource>(TYPES.AppDataSource).to(AppDataSource).inSingletonScope()
 
 export { container, TYPES }
