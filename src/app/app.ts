@@ -26,6 +26,7 @@ export default class App extends EventEmitter<{
     this.app = fastify()
     this.port = port || 3000
     this.mock_server = this.app.server
+    this.routes.push(this.health_check_route)
   }
 
   register_api_controller(controller: ControllerModel): this {

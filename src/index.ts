@@ -1,7 +1,6 @@
-import TransactionRepositoryImpl from "modules/transaction/infrastructure/repositories/transaction-repository-impl";
 import TransactionController from "modules/transaction/interfaces/controllers/transaction-controller";
 import "reflect-metadata";
-import App from "shared/app/app";
+import App from "app/app";
 import { container, TYPES } from "shared/di/di-container";
 
 const app = new App()
