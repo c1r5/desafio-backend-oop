@@ -1,9 +1,10 @@
 import { inject, injectable } from "inversify";
-import UserRepositoryImpl from "modules/users/infra/repositories/user-repository-impl";
+import UserRepository from "../repositories/user-repository";
+import {TYPES} from "@shared/infra/di/di-types";
 
 @injectable()
 export default class UserUseCases {
   constructor(
-    @inject('UserRepository') user_repository: UserRepositoryImpl
+    @inject(TYPES.UserRepository) user_repository: UserRepository
   ) { }
 }
