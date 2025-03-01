@@ -1,13 +1,13 @@
 import { FastifyReply, FastifyRequest, RouteOptions } from "fastify";
 import { inject, injectable } from "inversify";
-import TransactionRepository from "modules/transaction/infra/repositories/transaction-repository";
+import TransactionUseCases from "modules/transaction/domain/usecases/transaction-usecases";
 import ControllerModel from "shared/domain/models/controller-model";
 
 @injectable()
 export default class TransactionController implements ControllerModel {
   options: RouteOptions[] = []
 
-  constructor(@inject('TransactionRepository') transaction_repository: TransactionRepository) { 
+  constructor(@inject('TransactionUseCases') usecase: TransactionUseCases ) {
     this.options.push({
       method: "POST",
       url: "/transaction/:transaction_type",
