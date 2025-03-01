@@ -14,44 +14,44 @@ export type User = {
 
 @Entity({ name: "users" })
 export default class UserEntity extends BaseEntity {
-  @PrimaryColumn()
-  userId: string;
+  @PrimaryColumn({ type: 'uuid'})
+  userId!: string;
 
-  @Column()
-  name: string;
+  @Column({ type: 'varchar', length: 100})
+  name!: string;
 
-  @Column({ unique: true })
-  email: string;
+  @Column({ unique: true, type: 'varchar', length: 100 })
+  email!: string;
 
-  @Column({ unique: true })
-  phone: string;
+  @Column({ unique: true, type: 'varchar', length: 30 })
+  phone!: string;
   
-  @Column({ unique: true })
-  document: string;
+  @Column({ unique: true, type: 'varchar', length: 20 })
+  document!: string;
 
-  @Column()
-  password: string;
+  @Column({ type: 'varchar', length: 100})
+  password!: string;
 
+  @Column({ type: 'numeric' })
+  createdAt!: number;
 
-  @Column({ type: 'timestamptz' })
-  createdAt: Date;
+  @Column({ type: 'numeric' })
+  updatedAt!: number;
 
-  @Column({ type: 'timestamptz' })
-  updatedAt: Date;
+  @Column({ type: 'numeric' })
+  lastLogin!: number;
 
-  @Column({ type: 'timestamptz' })
-  lastLogin: Date;
-
-  constructor(user: User) {
-    super();
-    this.userId = user.userId;
-    this.name = user.name;
-    this.email = user.email;
-    this.phone = user.phone;
-    this.password = user.password;
-    this.document = user.document;
-    this.createdAt = user.createdAt;
-    this.updatedAt = user.updatedAt;
-    this.lastLogin = user.lastLogin;
+  static from(user: User) : UserEntity {
+    let user_entity = new UserEntity()
+    user_entity.name = user.name
+    user_entity.email = user.email
+    user_entity.phone = user.phone
+    user_entity.document = user.document
+    user_entity.password = user.password
+    user_entity.password = user.password
+    user_entity.createdAt = user.createdAt.getTime()
+    user_entity.updatedAt = user.updatedAt.getTime()
+    user_entity.lastLogin = user.lastLogin.getTime()
+    return user_entity
   }
 }

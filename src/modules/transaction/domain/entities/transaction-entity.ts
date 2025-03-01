@@ -11,27 +11,27 @@ export type Transaction = {
 
 @Entity({ schema: 'transaction' })
 export default class TransactionEntity extends BaseEntity {
-  @PrimaryColumn()
-  transactionId: string
-  @Column()
-  status: string
-  @Column()
-  amount: BigInt
-  @Column()
-  type: string
-  @Column()
-  payer: string
-  @Column()
-  recipient: string
+  @PrimaryColumn({type: 'uuid'})
+  transactionId!: string;
+  @Column({type: 'varchar', length: 50})
+  status!: string;
+  @Column({ type: 'bigint'})
+  amount!: BigInt
+  @Column({ type: 'varchar', length: 50})
+  type!: string
+  @Column({type: 'uuid'})
+  payer!: string
+  @Column({type: 'uuid'})
+  recipient!: string
 
-  constructor(transaction: Transaction) {
-    super()
-
-    this.transactionId = transaction.transactionId
-    this.status = transaction.status
-    this.amount = transaction.amount
-    this.type = transaction.type
-    this.payer = transaction.payer
-    this.recipient = transaction.recipient
+  static from(transaction: Transaction) {
+    const entity = new TransactionEntity()
+    entity.transactionId = transaction.transactionId
+    entity.status = transaction.status
+    entity.amount = transaction.amount
+    entity.type = transaction.type
+    entity.payer = transaction.payer
+    entity.recipient = transaction.recipient
+    return entity
   }
 }
