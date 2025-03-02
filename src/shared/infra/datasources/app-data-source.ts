@@ -11,5 +11,3 @@ export const AppDataSource = new DataSource({
   ],
   synchronize: true,
 });
-
-export default AppDataSource;

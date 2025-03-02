@@ -40,14 +40,4 @@ export default class UserEntity extends BaseEntity {
 
   @Column({ type: 'numeric', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt!: number;
-
-  static from(user: User) : UserEntity {
-    let user_entity = this.create()
-    user_entity.name = user.name
-    user_entity.email = user.email
-    user_entity.phone = user.phone
-    user_entity.document = user.document
-    user_entity.password = user.password
-    return user_entity
-  }
 }
