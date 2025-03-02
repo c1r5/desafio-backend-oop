@@ -1,37 +1,19 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
+import {TransactionStatus, TransactionType} from "@/modules/transaction/domain/models/transaction-model";
 
-export type Transaction = {
-  transactionId: string,
-  status: "pending" | "completed" | "failed";
-  amount: BigInt
-  type: "payment" | "refund" | "transfer" | "adjustment";
-  payer: string,
-  recipient: string
-}
 
 @Entity({ schema: 'transaction' })
 export default class TransactionEntity extends BaseEntity {
   @PrimaryColumn({type: 'uuid'})
   transactionId!: string;
-  @Column({type: 'varchar', length: 50})
-  status!: string;
-  @Column({ type: 'bigint'})
+  @Column({type: 'varchar', length: 50, default: "pending"})
+  status!: TransactionStatus;
+  @Column({ type: 'bigint', default: BigInt(0)})
   amount!: BigInt
   @Column({ type: 'varchar', length: 50})
-  type!: string
+  type!: TransactionType
   @Column({type: 'uuid'})
   payer!: string
   @Column({type: 'uuid'})
   recipient!: string
-
-  static from(transaction: Transaction) {
-    const entity = new TransactionEntity()
-    entity.transactionId = transaction.transactionId
-    entity.status = transaction.status
-    entity.amount = transaction.amount
-    entity.type = transaction.type
-    entity.payer = transaction.payer
-    entity.recipient = transaction.recipient
-    return entity
-  }
 }

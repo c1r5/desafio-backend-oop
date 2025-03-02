@@ -4,7 +4,7 @@ import {DataSource} from "typeorm";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
-  database: "sql/db",
+  database: "sql/db.sqlite",
   entities: [
     TransactionEntity,
     UserEntity
