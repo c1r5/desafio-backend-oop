@@ -52,7 +52,7 @@ _Serviços de pagamento simplificado_
 - [ ] Serviço de Notificação
 
 ## Exemplo de Arquitetura
-![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-arquitetura-inicial.drawio.png?raw=true)
+![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-arquitetura-inicial.png?raw=true)
 
 ## Exemplo de Entity Relationship Diagram
-![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-ERD.drawio.png?raw=true)
+![](https://github.com/c1r5/desafio-backend/blob/main/images/backend-challenge-ERD.png?raw=true)
