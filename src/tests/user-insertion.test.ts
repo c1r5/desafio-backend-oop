@@ -2,9 +2,8 @@ import {DataSource} from "typeorm";
 import UserRepository from "../modules/users/domain/repositories/user-repository";
 import UserRepositoryImpl from "../modules/users/infra/repositories/user-repository-impl";
 import UserEntity from "@/modules/users/domain/entities/user-entity";
-import TransactionEntity from "@/modules/transaction/domain/entities/transaction-entity";
 
-describe('user insertion test', () => {
+describe('User create', () => {
     let datasource: DataSource;
     let user_repository: UserRepository;
     let user_id: string;
@@ -14,10 +13,7 @@ describe('user insertion test', () => {
         datasource = new DataSource({
             type: "sqlite",
             database: ":memory:",
-            entities: [
-                UserEntity,
-                TransactionEntity
-            ],
+            entities: [UserEntity],
             synchronize: true,
         });
         await datasource.initialize(); // Inicializa a conexão
