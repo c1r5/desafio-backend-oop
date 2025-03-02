@@ -41,8 +41,8 @@ _Serviços de pagamento simplificado_
   - [x] TRANSFERENCIA
 - [X] Banco de dados
   - [x] Inserção
-  - [ ] Deleção
-  - [ ] Atualização
+  - [X] Deleção
+  - [X] Atualização
 - [ ] Rotas
   - [ ] Cadastro
   - [ ] Login
