@@ -40,9 +40,14 @@ _Serviços de pagamento simplificado_
   - [X] USUÁRIO
   - [x] TRANSFERENCIA
 - [X] Banco de dados
-- [ ] Cadastro
-- [ ] Login
-- [ ] Transferência
+  - [x] Inserção
+  - [ ] Deleção
+  - [ ] Atualização
+- [ ] Rotas
+  - [ ] Cadastro
+  - [ ] Login
+  - [ ] Atualizar dados
+  - [ ] Transferência
 
 ## Tasks secundárias
 
