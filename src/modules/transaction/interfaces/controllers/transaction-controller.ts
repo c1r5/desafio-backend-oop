@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest, RouteOptions } from "fastify";
 import { inject, injectable } from "inversify";
 import TransactionUseCases from "modules/transaction/domain/usecases/transaction-usecases";
 import ControllerModel from "shared/domain/models/controller-model";
-import {TYPES} from "@shared/infra/di/di-types";
+import {TYPES} from "@/shared/infra/di/di-types";
 
 @injectable()
 export default class TransactionController implements ControllerModel {

@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import TransactionRepository from "../models/transaction-repository";
 import UserRepository from "modules/users/domain/repositories/user-repository";
-import {TYPES} from "@shared/infra/di/di-types";
+import {TYPES} from "@/shared/infra/di/di-types";
 
 @injectable()
 export default class TransactionUseCases {
