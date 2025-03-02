@@ -1,5 +1,5 @@
 export const TYPES = {
-    AppDataSource: Symbol.for('AppDataSource'),
+    DataSource: Symbol.for('DataSource'),
     UserRepository: Symbol.for('UserRepository'),
     UserUseCases: Symbol.for('UserUseCases'),
     UserController: Symbol.for('UserController'),

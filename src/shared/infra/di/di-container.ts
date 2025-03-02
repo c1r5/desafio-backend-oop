@@ -4,10 +4,11 @@ import TransactionController from "modules/transaction/interfaces/controllers/tr
 import UserUseCases from "modules/users/domain/usecases/user-usecases";
 import UserRepositoryImpl from "modules/users/infra/repositories/user-repository-impl";
 import UserController from "modules/users/interfaces/controllers/user-controller";
-import AppDataSource from "../datasources/app-data-source";
 
 import { Container } from "inversify";
 import { TYPES } from "./di-types";
+import {DataSource} from "typeorm";
+import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 
 const container = new Container()
 
@@ -19,6 +20,6 @@ container.bind<TransactionRepositoryImpl>(TYPES.TransactionRepository).to(Transa
 container.bind<TransactionUseCases>(TYPES.TransactionUseCases).to(TransactionUseCases)
 container.bind<TransactionController>(TYPES.TransactionController).to(TransactionController)
 
-container.bind<AppDataSource>(TYPES.AppDataSource).to(AppDataSource).inSingletonScope()
+container.bind<DataSource>(TYPES.DataSource).toConstantValue(AppDataSource)
 
 export { container }
