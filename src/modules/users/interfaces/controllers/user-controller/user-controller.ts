@@ -1,14 +1,14 @@
 import { FastifyReply, FastifyRequest, RouteOptions } from "fastify";
 import { inject } from "inversify";
-import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
+import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
 import ControllerModel from "@/shared/domain/models/controller-model";
 import {TYPES} from "@/shared/infra/di/di-types";
 
 export class UserController extends ControllerModel {
   options: RouteOptions[] = []
-  private user_usecases: UserUseCases;
+  private user_usecases: UserUseCasesImpl;
 
-  constructor(@inject(TYPES.UserUseCases) user_usecases: UserUseCases) {
+  constructor(@inject(TYPES.UserUseCases) user_usecases: UserUseCasesImpl) {
     super()
     this.user_usecases = user_usecases;
     this.options.push({

@@ -1,6 +1,9 @@
 export const TYPES = {
+    MockDataSource: Symbol.for('MockDataSource'),
+    UserRepositoryMock: Symbol.for('UserRepositoryMock'),
+
     DataSource: Symbol.for('DataSource'),
-    UserRepository: Symbol.for('UserRepository'),
+    UserRepositoryImpl: Symbol.for('UserRepositoryImpl'),
     UserUseCases: Symbol.for('UserUseCases'),
     UserController: Symbol.for('UserController'),
     TransactionRepository: Symbol.for('TransactionRepository'),

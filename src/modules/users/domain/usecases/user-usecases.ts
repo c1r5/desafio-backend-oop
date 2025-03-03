@@ -1,18 +1,11 @@
-import {inject, injectable} from "inversify";
-import UserRepository from "../repositories/user-repository";
-import {TYPES} from "@/shared/infra/di/di-types";
-import {User} from "../entities/user-entity";
+import UserEntity, {UserID} from "@/modules/users/domain/entities/user-entity";
 
-@injectable()
-export default class UserUseCases {
-  private user_repository: UserRepository;
-  constructor(
-    @inject(TYPES.UserRepository) user_repository: UserRepository
-  ) {
-    this.user_repository = user_repository;
-  }
+export default interface UserUseCases {
+    create_user(entity: Partial<UserEntity>): Promise<UserID>
 
-  async create_user(user: User) {
-    return this.user_repository.orm_repo.create()
-  }
+    authenticate(user: Partial<UserEntity>): Promise<UserEntity | null>
+
+    authorize(token: string): Promise<UserEntity | null>
+
+    get_user_by_id(id: string): Promise<UserEntity | null>
 }

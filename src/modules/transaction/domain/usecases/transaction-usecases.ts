@@ -9,7 +9,7 @@ export default class TransactionUseCases {
   private use_repository: UserRepository;
   constructor(
     @inject(TYPES.TransactionRepository) transaction_repository: TransactionRepository,
-    @inject(TYPES.UserRepository) user_repository: UserRepository
+    @inject(TYPES.UserRepositoryImpl) user_repository: UserRepository
   ) {
     this.use_repository = user_repository;
     this.transaction_repository = transaction_repository;
