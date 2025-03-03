@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import App from "app/app";
-import TransactionController from "modules/transaction/interfaces/controllers/transaction-controller";
-import { container } from "shared/infra/di/di-container";
+import App from "@/app";
+import TransactionController from "@/modules/transaction/interfaces/controllers/transaction-controller";
+import { container } from "@/shared/infra/di/di-container";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {UserController} from "@/modules/users/interfaces/controllers/user-controller";
 
@@ -15,6 +15,6 @@ app
     .register_api_controller(user_controller)
     .start()
 
-export default {
-    server: app.mock_server
+export {
+    app
 }

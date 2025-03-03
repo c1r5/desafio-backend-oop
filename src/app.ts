@@ -7,7 +7,7 @@ import fastify, {
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import EventEmitter from "node:events";
-import ControllerModel from "shared/domain/models/controller-model";
+import ControllerModel from "@/shared/domain/models/controller-model";
 
 
 export default class App extends EventEmitter<{

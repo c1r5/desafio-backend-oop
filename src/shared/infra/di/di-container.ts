@@ -1,8 +1,8 @@
-import TransactionUseCases from "modules/transaction/domain/usecases/transaction-usecases";
-import TransactionRepositoryImpl from "modules/transaction/infra/repositories/transaction-repository-impl";
-import TransactionController from "modules/transaction/interfaces/controllers/transaction-controller";
-import UserUseCases from "modules/users/domain/usecases/user-usecases";
-import UserRepositoryImpl from "modules/users/infra/repositories/user-repository-impl";
+import TransactionUseCases from "@/modules/transaction/domain/usecases/transaction-usecases";
+import TransactionRepositoryImpl from "@/modules/transaction/infra/repositories/transaction-repository-impl";
+import TransactionController from "@/modules/transaction/interfaces/controllers/transaction-controller";
+import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
+import UserRepositoryImpl from "@/modules/users/infra/repositories/user-repository-impl";
 import {UserController} from "@/modules/users/interfaces/controllers/user-controller";
 
 import { Container } from "inversify";
