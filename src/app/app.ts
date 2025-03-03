@@ -1,6 +1,11 @@
-import fastify, { FastifyBaseLogger, FastifyInstance, FastifyReply, FastifyRequest, FastifySchema, FastifyTypeProviderDefault, RawServerBase, RawServerDefault, RouteGenericInterface, RouteOptions } from "fastify";
-import { ResolveFastifyRequestType } from "fastify/types/type-provider";
-import { IncomingMessage, ServerResponse } from "http";
+import fastify, {
+  FastifyInstance,
+  RawServerBase,
+  RouteOptions
+} from "fastify";
+
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
 import EventEmitter from "node:events";
 import ControllerModel from "shared/domain/models/controller-model";
 
@@ -10,23 +15,19 @@ export default class App extends EventEmitter<{
   connect: [string]
 }> {
   public mock_server: RawServerBase
+
   private app: FastifyInstance
   private port: number
   private routes: RouteOptions[] = [];
 
-  private health_check_route: RouteOptions = {
-    method: "GET",
-    url: "/health",
-    handler: function (this: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>, request: FastifyRequest<RouteGenericInterface, RawServerDefault, IncomingMessage, FastifySchema, FastifyTypeProviderDefault, unknown, FastifyBaseLogger, ResolveFastifyRequestType<FastifyTypeProviderDefault, FastifySchema, RouteGenericInterface>>, reply: FastifyReply<RouteGenericInterface, RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, unknown, FastifySchema, FastifyTypeProviderDefault, unknown>): unknown {
-      throw new Error("Function not implemented.");
-    }
-  }
   constructor(port?: number) {
     super()
-    this.app = fastify()
+
     this.port = port || 3000
+    this.app = fastify()
     this.mock_server = this.app.server
-    this.routes.push(this.health_check_route)
+
+    this.setup_swagger()
   }
 
   register_api_controller(controller: ControllerModel): this {
@@ -51,5 +52,28 @@ export default class App extends EventEmitter<{
       .catch(err => {
         this.emit('error', err)
       })
+  }
+
+  private setup_swagger = () => {
+    this.app.register(swaggerUi, {
+      routePrefix: '/docs',
+      uiConfig: {
+        docExpansion: 'full',
+        deepLinking: false,
+      },
+    });
+
+    this.app.register(swagger, {
+      openapi: {
+        info: {
+          title: 'Fastify TypeScript API',
+          description: 'A sample API with Fastify, TypeScript, and Swagger',
+          version: '1.0.0',
+        },
+        servers: [
+          { url: 'http://localhost:3000' },
+        ],
+      },
+    });
   }
 }
