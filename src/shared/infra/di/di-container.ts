@@ -3,7 +3,7 @@ import TransactionRepositoryImpl from "modules/transaction/infra/repositories/tr
 import TransactionController from "modules/transaction/interfaces/controllers/transaction-controller";
 import UserUseCases from "modules/users/domain/usecases/user-usecases";
 import UserRepositoryImpl from "modules/users/infra/repositories/user-repository-impl";
-import UserController from "modules/users/interfaces/controllers/user-controller";
+import {UserController} from "@/modules/users/interfaces/controllers/user-controller";
 
 import { Container } from "inversify";
 import { TYPES } from "./di-types";
