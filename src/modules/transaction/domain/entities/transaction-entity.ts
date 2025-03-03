@@ -1,6 +1,7 @@
 import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
-import {TransactionStatus, TransactionType} from "@/modules/transaction/domain/models/transaction-model";
 
+export type TransactionStatus = "pending" | "completed" | "failed";
+export type TransactionType = "payment" | "refund" | "transfer" | "adjustment";
 
 @Entity({ schema: 'transaction' })
 export default class TransactionEntity extends BaseEntity {
