@@ -1,16 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
-
-export type User = {
-  userId?: string
-  name: string
-  email: string
-  phone: string
-  password: string
-  document: string
-  createdAt?: Date
-  updatedAt?: Date
-  lastLogin?: Date
-}
+import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
 
 @Entity({ name: "users" })
 export default class UserEntity extends BaseEntity {
@@ -31,6 +19,9 @@ export default class UserEntity extends BaseEntity {
 
   @Column({ type: 'varchar', length: 100})
   password!: string;
+
+  @Column({ type: 'varchar', length: 100})
+  type!: "pj" | "pf";
 
   @Column({ type: 'bigint', default: 0})
   balance!: BigInt

@@ -6,9 +6,11 @@ import {TYPES} from "@/shared/infra/di/di-types";
 
 export class UserController extends ControllerModel {
   options: RouteOptions[] = []
+  private user_usecases: UserUseCases;
 
   constructor(@inject(TYPES.UserUseCases) user_usecases: UserUseCases) {
     super()
+    this.user_usecases = user_usecases;
     this.options.push({
       method: "POST",
       url: "/user/create",
@@ -19,8 +21,8 @@ export class UserController extends ControllerModel {
           properties: {
             name: {type: "string"},
             email: {type: "string"},
-            password: {type: "string"},
-            document: {type: "string"}
+            document: {type: "string"},
+            password: {type: "string"}
           }
         }
       }
