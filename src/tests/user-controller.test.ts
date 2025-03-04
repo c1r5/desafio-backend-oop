@@ -46,4 +46,15 @@ describe('user controller', () => {
 
         expect(create_user.status).toBe(201)
     })
+
+    it('should authenticate user', async () => {
+        let auth_user = await request(server)
+            .post('/api/user/authenticate')
+            .send({
+                email: 'Matheus.Oliveira83@bol.com.br',
+                password: 'EkNr0nC7oc5euG_'
+            })
+
+        expect(auth_user.status).toBe(200)
+    })
 })

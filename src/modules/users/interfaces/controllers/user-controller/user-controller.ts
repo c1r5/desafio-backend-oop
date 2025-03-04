@@ -14,11 +14,15 @@ export class UserController implements ControllerModel {
         this.options.push({
             method: "POST",
             url: "/user/create",
-            handler: this.create_user,
+            handler: this.create,
+        }, {
+            method: "POST",
+            url: "/user/authenticate",
+            handler: this.authenticate
         })
     }
 
-    private create_user = async (request: FastifyRequest, reply: FastifyReply) => {
+    private create = async (request: FastifyRequest, reply: FastifyReply) => {
         try {
             let user_id = await this.user_usecases.create_user(request.body as Partial<UserEntity>);
             reply.status(201).send({
@@ -39,4 +43,13 @@ export class UserController implements ControllerModel {
 
     }
 
+    private authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
+        let auth = await this.user_usecases.authenticate(request.body as UserEntity)
+
+        if (!auth) {
+            reply.status(401).send({
+                message: 'Unauthorized'
+            })
+        }
+    }
 }

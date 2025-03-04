@@ -1,7 +1,6 @@
 import TransactionUseCases from "@/modules/transaction/domain/usecases/transaction-usecases";
 import TransactionRepositoryImpl from "@/modules/transaction/infra/repositories/transaction-repository-impl";
 import TransactionController from "@/modules/transaction/interfaces/controllers/transaction-controller";
-import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
 import {UserController} from "@/modules/users/interfaces/controllers/user-controller";
 
 import {Container} from "inversify";
@@ -14,6 +13,7 @@ import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
 import ControllerModel from "@/shared/domain/models/controller-model";
 import TransactionRepository from "@/modules/transaction/domain/models/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
+import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
 
 const container = new Container()
 
