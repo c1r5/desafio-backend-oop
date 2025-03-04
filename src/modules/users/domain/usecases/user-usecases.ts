@@ -5,7 +5,5 @@ export default interface UserUseCases {
 
     authenticate(user: Partial<UserEntity>): Promise<UserEntity | null>
 
-    authorize(userId: UserID): Promise<boolean>
-
     get_user_by_id(id: string): Promise<UserEntity | null>
 }

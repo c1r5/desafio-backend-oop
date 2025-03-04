@@ -8,13 +8,12 @@ import {Container} from "inversify";
 import {TYPES} from "./di-types";
 import {DataSource} from "typeorm";
 
-
-import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import UserRepositoryImpl from "@/modules/users/infra/repositories/user-repository-impl";
 import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
 import ControllerModel from "@/shared/domain/models/controller-model";
 import TransactionRepository from "@/modules/transaction/domain/models/transaction-repository";
+import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 
 const container = new Container()
 

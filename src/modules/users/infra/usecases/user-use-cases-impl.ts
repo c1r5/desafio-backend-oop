@@ -14,19 +14,19 @@ export default class UserUseCasesImpl implements UserUseCases {
         this.user_repository = user_repository;
     }
 
-    create_user(entity: Partial<UserEntity>): Promise<UserID> {
-        throw new Error("Method not implemented.");
+    async create_user(entity: Partial<UserEntity>): Promise<UserID> {
+        let result = await this.user_repository.orm_repo.save(entity);
+        return result.userId;
     }
 
     authenticate(user: Partial<UserEntity>): Promise<UserEntity | null> {
-        throw new Error("Method not implemented.");
+        return this.user_repository.orm_repo.findOneBy([
+            {email: user.email, password: user.password},
+            {document: user.document, password: user.password}
+        ])
     }
 
-    authorize(userId: UserID): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-
-    get_user_by_id(id: string): Promise<UserEntity | null> {
-        throw new Error("Method not implemented.");
+    async get_user_by_id(id: string): Promise<UserEntity | null> {
+        return await this.user_repository.orm_repo.findOneBy({userId: id})
     }
 }

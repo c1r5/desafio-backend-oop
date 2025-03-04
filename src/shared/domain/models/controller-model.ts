@@ -1,5 +1,5 @@
-import { RouteOptions } from "fastify";
+import {RouteOptions} from "fastify";
 
-export default abstract class ControllerModel {
-  abstract options: RouteOptions[]
+export default interface ControllerModel {
+    options: RouteOptions[]
 }
