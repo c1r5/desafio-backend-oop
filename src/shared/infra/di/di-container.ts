@@ -13,13 +13,13 @@ import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
 import ControllerModel from "@/shared/domain/models/controller-model";
 import TransactionRepository from "@/modules/transaction/domain/models/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
-import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
+import UserUsecasesImpl from "@/modules/users/infra/usecases/user-usecases-impl";
 
 const container = new Container()
 
 container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl).inSingletonScope()
 
-container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
+container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUsecasesImpl)
 container.bind<ControllerModel>(TYPES.UserController).to(UserController)
 
 container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl).inSingletonScope()

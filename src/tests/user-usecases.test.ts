@@ -38,7 +38,7 @@ describe('User UseCases Operations', () => {
     })
 
     test('should authenticate a user', async () => {
-        let authentication = await user_usecases.authenticate({
+        let authentication = await user_usecases.authenticate_user({
             email: "Suelen62@yahoo.com",
             password: "j3sIo62gAqqw9lP"
         })

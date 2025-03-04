@@ -12,6 +12,10 @@ export class UserController implements ControllerModel {
     constructor(@inject(TYPES.UserUseCases) user_usecases: UserUseCases) {
         this.user_usecases = user_usecases;
         this.options.push({
+            method: "PUT",
+            url: "/user/update",
+            handler: this.update
+        }, {
             method: "POST",
             url: "/user/create",
             handler: this.create,
@@ -19,6 +23,19 @@ export class UserController implements ControllerModel {
             method: "POST",
             url: "/user/authenticate",
             handler: this.authenticate
+        })
+    }
+
+    private update = async (request: FastifyRequest, reply: FastifyReply) => {
+        let {userId, ...data} = request.body as Partial<UserEntity>;
+
+        if (!userId) return reply.status(400).send({message: 'userId is required'})
+
+        let update_user = await this.user_usecases.update_user(userId, data);
+
+        reply.send({
+            message: 'ok',
+            ...update_user
         })
     }
 
@@ -44,12 +61,17 @@ export class UserController implements ControllerModel {
     }
 
     private authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
-        let auth = await this.user_usecases.authenticate(request.body as UserEntity)
+        let auth = await this.user_usecases.authenticate_user(request.body as UserEntity)
 
         if (!auth) {
             reply.status(401).send({
                 message: 'Unauthorized'
             })
         }
+
+        reply.send({
+            message: 'ok',
+            user_id: auth?.userId
+        })
     }
 }

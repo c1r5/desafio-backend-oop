@@ -40,7 +40,7 @@ _Serviços de pagamento simplificado_
 - [ ] Rotas
     - [X] Cadastro
     - [X] Login
-    - [ ] Atualizar dados
+    - [X] Atualizar dados
     - [ ] Transferência
     - [ ] Validações
         - [ ] Entradas
