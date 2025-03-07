@@ -28,7 +28,7 @@ _Serviços de pagamento simplificado_
 - Arquitetura: DDD
 - Cobertura de testes atual: 0%
 
-## Tasks I
+## Tasks
 
 - [X] Arquitetura e Modelagem de Dados
     - [X] USUÁRIO
@@ -37,26 +37,25 @@ _Serviços de pagamento simplificado_
     - [x] Inserção
     - [X] Deleção
     - [X] Atualização
-- [ ] Rotas
-    - [X] Cadastro
-    - [X] Login
-    - [X] Atualizar dados
-    - [ ] Transferência
-    - [ ] Validações
-        - [ ] Entradas
-        - [ ] Itens das regras de negócio
-            - [ ] Lojistas só recebem (transferencias)
-            - [ ] Validar se o usuário tem saldo (transferencias)
-            - [ ] Consultar um serviço autorizador externo (transferencias)
-
-## Tasks II
-
-- [ ] Notificação ( No pagamento o usuário ou lojista precisa receber notificação )
-    - [ ] Processo separado para tentar novamente caso o serviço externo esteja instável
-    - [ ] Email
-    - [ ] SMS
-    - [ ] Transferencias
-    - [ ] Verificação de Email | Telefone
+- [ ] Features
+    - [ ] Segurança
+        - [ ] Autenticação
+            - [ ] Login
+                - [ ] Implementar JWT (geração e validação de tokens)
+                - [ ] Testes: Login com credenciais válidas retorna token, credenciais inválidas retorna erro
+        - [ ] Logout
+        - [ ] Autorização
+            - [ ] Definir permissões ( lojistas não podem realizar pagamentos )
+            - [ ] Middleware para validação
+            - [ ] Testes: Usuário sem permissão é bloqueado, usuário com permissão é autorizado
+        - [ ] Cadastro
+            - [ ] Criar usuário básico (nome, email, senha)
+            - [ ] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro
+        - [ ] Atualizar dados
+        - [ ] Transferência
+        - [ ] Notificação
+            - [ ] Email
+            - [ ] SMS
 
 ## Exemplo de Arquitetura
 
