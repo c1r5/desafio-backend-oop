@@ -5,5 +5,6 @@ export const TYPES = {
     UserController: Symbol.for('UserController'),
     TransactionRepository: Symbol.for('TransactionRepository'),
     TransactionUseCases: Symbol.for('TransactionUseCases'),
-    TransactionController: Symbol.for('TransactionController')
+    TransactionController: Symbol.for('TransactionController'),
+    FastifyInstance: Symbol.for('FastifyInstance'),
 };

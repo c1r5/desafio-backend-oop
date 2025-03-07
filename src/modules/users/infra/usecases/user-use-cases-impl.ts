@@ -3,9 +3,10 @@ import UserRepository from "../../domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
 import UserEntity, {UserID} from "../../domain/entities/user-entity";
+import {JWT} from "@fastify/jwt";
 
 @injectable()
-export default class UserUsecasesImpl implements UserUseCases {
+export default class UserUseCasesImpl implements UserUseCases {
     private user_repository: UserRepository;
 
     constructor(
@@ -29,11 +30,23 @@ export default class UserUsecasesImpl implements UserUseCases {
         return result.userId;
     }
 
-    authenticate_user(user: Partial<UserEntity>): Promise<UserEntity | null> {
-        return this.user_repository.orm_repo.findOneBy([
+    async authenticate_user(
+        user: Partial<UserEntity>,
+        jwt_service: JWT
+    ): Promise<string | null> {
+        let find_user = await this.user_repository.orm_repo.findOneBy([
             {email: user.email, password: user.password},
             {document: user.document, password: user.password}
         ])
+
+        if (find_user) {
+            return jwt_service.sign({
+                userId: find_user.userId,
+                userType: find_user.type
+            })
+        }
+
+        return null;
     }
 
     async get_user_by_id(id: string): Promise<UserEntity | null> {

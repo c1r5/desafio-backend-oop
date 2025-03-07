@@ -1,5 +1,5 @@
-import {RouteOptions} from "fastify";
+import {FastifyInstance} from "fastify";
 
 export default interface ControllerModel {
-    options: RouteOptions[]
+    register_routes(app: FastifyInstance): void
 }
