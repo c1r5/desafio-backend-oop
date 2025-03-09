@@ -1,11 +1,11 @@
-import {UserController} from "@/modules/users/interfaces/controllers/user-controller";
+import { UserController } from "@/modules/users/interfaces/controllers/user-controller";
 import App from "@/app";
-import {RawServerDefault} from "fastify";
-import {DataSource} from "typeorm";
-import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
-import {container} from "@/shared/infra/di/di-container";
+import { RawServerDefault } from "fastify";
+import { DataSource } from "typeorm";
+import { AppDataSource } from "@/shared/infra/datasources/app-data-source";
+import { container } from "@/shared/infra/di/di-container";
 import request from "supertest";
-import {TYPES} from "@/shared/infra/di/di-types";
+import { TYPES } from "@/shared/infra/di/di-types";
 
 describe('user controller', () => {
 
