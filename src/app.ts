@@ -2,6 +2,7 @@ import fastify, {FastifyInstance, FastifyReply, FastifyRequest, RawServerDefault
 import jwt from "@fastify/jwt";
 
 import EventEmitter from "node:events";
+import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 
 
 export default class App extends EventEmitter<{
@@ -21,6 +22,10 @@ export default class App extends EventEmitter<{
                 expiresIn: '1h'
             }
         });
+
+        this.app.setValidatorCompiler(validatorCompiler);
+        this.app.setSerializerCompiler(serializerCompiler);
+        
         this.app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
             try {
                 await request.jwtVerify();

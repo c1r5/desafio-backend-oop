@@ -43,14 +43,13 @@ _Serviços de pagamento simplificado_
             - [X] Login
                 - [X] Implementar JWT (geração e validação de tokens)
                 - [X] Testes: Login com credenciais válidas retorna token, credenciais inválidas retorna erro
+            - [X] Refatorar
+                - [X] Validar entradas com Zod
         - [ ] Logout
         - [ ] Autorização
             - [ ] Definir permissões ( lojistas não podem realizar pagamentos )
             - [ ] Middleware para validação
             - [ ] Testes: Usuário sem permissão é bloqueado, usuário com permissão é autorizado
-        - [ ] Refatorar ( pós testes )
-            - [ ] Validar entradas com Zod
-            - [ ] Implementar schemas de DTOs com Zod
     - [ ] Cadastro
         - [ ] Criar usuário básico (nome, email, senha)
         - [ ] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro

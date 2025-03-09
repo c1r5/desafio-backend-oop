@@ -46,4 +46,14 @@ describe('user controller', () => {
         expect(req.body.token).toBeTruthy()
     })
 
+    it('should respond with 400 BAD_REQUEST', async () => {
+        let req = await request(mocked_server)
+            .post('/api/user/login')
+            .send({
+                document: "621796275661",
+                password: "EkNr0nC7oc5euG_"
+            });
+
+        expect(req.status).toBe(400)
+    })
 })
