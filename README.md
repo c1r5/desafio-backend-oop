@@ -46,6 +46,10 @@ _Serviços de pagamento simplificado_
             - [X] Refatorar
                 - [X] Validar entradas com Zod
         - [ ] Logout
+            - [ ] Armazenar sessão no banco de dados
+            - [ ] Revogar sessão
+            - [ ] Definir ID da sessão no JWT
+            - [ ] Testes: Realizar logout e verificar se a sessão foi revogada
         - [ ] Autorização
             - [ ] Definir permissões ( lojistas não podem realizar pagamentos )
             - [ ] Middleware para validação
