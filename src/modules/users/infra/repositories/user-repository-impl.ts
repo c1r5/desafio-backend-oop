@@ -6,12 +6,9 @@ import {TYPES} from "@/shared/infra/di/di-types";
 
 @injectable()
 export default class UserRepositoryImpl implements UserRepository {
-    orm_repo: Repository<UserEntity>;
-    datasource: DataSource;
+    orm: Repository<UserEntity>;
 
-    constructor(@inject(TYPES.DataSource) datasource: DataSource) {
-        this.datasource = datasource;
-        this.orm_repo = datasource.getRepository<UserEntity>(UserEntity)
+    constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
+        this.orm = datasource.getRepository<UserEntity>(UserEntity)
     }
-
 }

@@ -1,7 +1,6 @@
-import {DataSource, Repository} from "typeorm";
-import UserEntity from "../entities/user-entity";
+import {Repository} from "typeorm";
+import UserEntity from "@/modules/users/domain/entities/user-entity";
 
-export default abstract class UserRepository {
-  abstract orm_repo: Repository<UserEntity>;
-  abstract datasource: DataSource
+export default interface UserRepository {
+    orm: Repository<UserEntity>
 }

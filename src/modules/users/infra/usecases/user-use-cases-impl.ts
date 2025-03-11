@@ -16,17 +16,17 @@ export default class UserUseCasesImpl implements UserUseCases {
     }
 
     async update_user(id: UserID, entity: Partial<UserEntity>): Promise<UserEntity | null> {
-        let entity_to_update = await this.user_repository.orm_repo.update(id, entity);
+        let entity_to_update = await this.user_repository.orm.update(id, entity);
 
         if (entity_to_update.affected) {
-            return await this.user_repository.orm_repo.findOneBy({userId: id})
+            return await this.user_repository.orm.findOneBy({userId: id})
         }
 
         return null
     }
 
     async create_user(entity: Partial<UserEntity>): Promise<UserID> {
-        let result = await this.user_repository.orm_repo.save(entity);
+        let result = await this.user_repository.orm.save(entity);
         return result.userId;
     }
 
@@ -34,7 +34,7 @@ export default class UserUseCasesImpl implements UserUseCases {
         user: Partial<UserEntity>,
         jwt_service: JWT
     ): Promise<string | null> {
-        let find_user = await this.user_repository.orm_repo.findOneBy([
+        let find_user = await this.user_repository.orm.findOneBy([
             {email: user.email, password: user.password},
             {document: user.document, password: user.password}
         ])
@@ -50,6 +50,6 @@ export default class UserUseCasesImpl implements UserUseCases {
     }
 
     async get_user_by_id(id: string): Promise<UserEntity | null> {
-        return await this.user_repository.orm_repo.findOneBy({userId: id})
+        return await this.user_repository.orm.findOneBy({userId: id})
     }
 }
