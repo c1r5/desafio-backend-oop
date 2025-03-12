@@ -34,4 +34,8 @@ export default class AuthRepositoryImpl implements AuthRepository {
 
         return session[0]
     }
+
+    async revoke_session(session: AuthSessionEntity): Promise<void> {
+        await this.orm.update(session.sid, {...session, is_active: false})
+    }
 }

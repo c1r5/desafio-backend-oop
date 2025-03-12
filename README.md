@@ -45,11 +45,11 @@ _Serviços de pagamento simplificado_
                 - [X] Testes: Login com credenciais válidas retorna token, credenciais inválidas retorna erro
             - [X] Refatorar
                 - [X] Validar entradas com Zod
-        - [ ] Logout
+        - [X] Logout
             - [X] Armazenar sessão no banco de dados
             - [X] Definir ID da sessão no JWT
-            - [ ] Revogar sessão
-            - [ ] Testes: Realizar logout e verificar se a sessão foi revogada
+            - [X] Revogar sessão
+            - [X] Testes: Realizar logout e verificar se a sessão foi revogada
         - [ ] Autorização
             - [ ] Definir permissões ( lojistas não podem realizar pagamentos )
             - [ ] Middleware para validação

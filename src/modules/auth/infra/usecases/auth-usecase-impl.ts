@@ -27,13 +27,11 @@ export default class AuthUsecaseImpl implements AuthUsecase {
 
         const payload = JwtPayloadSchema.parse(decoded_payload);
 
-        const session_id = payload.session_id
-
-        const has_session_active = await this.has_session(session_id);
-
+        const has_session_active = await this.has_session(payload.user_id);
+        
         if (!has_session_active) throw new LogoutAuthError('no_session_active')
 
-        this.auth_repository.revoke_session(has_session_active)
+        await this.auth_repository.revoke_session(has_session_active)
 
         return
     }
