@@ -20,4 +20,18 @@ export default class AuthRepositoryImpl implements AuthRepository {
 
         return this.orm.save(new_session);
     }
+
+    async find_session(user_id: string): Promise<AuthSessionEntity> {
+        let session = await this.orm.find({
+            where: {
+                userId: user_id
+            },
+
+            order: {
+                createdAt: -1
+            }
+        })
+
+        return session[0]
+    }
 }

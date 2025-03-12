@@ -16,7 +16,7 @@ export default class AuthUsecaseImpl implements AuthUsecase {
     }
 
     async has_session(user_id: string): Promise<AuthSessionEntity | null> {
-        let session = await this.auth_repository.orm.findOneBy({userId: user_id})
+        let session = await this.auth_repository.find_session(user_id)
 
         return (!session || !session.is_active) ? null : session
     }

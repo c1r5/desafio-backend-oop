@@ -47,4 +47,16 @@ describe('login test suite', () => {
         expect(authenticate.status).toBe(200)
         expect(authenticate.body.access_token).toBeTruthy()
     })
+
+    it('should return 403 with has_session_active message', async () => {
+        const authenticate = await request(mocked_server)
+            .post('/api/login')
+            .send({
+                email: 'Suelen62@yahoo.com',
+                password: 'j3sIo62gAqqw9lP',
+            })
+
+        expect(authenticate.status).toBe(403)
+        expect(authenticate.body.message).toBe('has_active_session')
+    })
 })

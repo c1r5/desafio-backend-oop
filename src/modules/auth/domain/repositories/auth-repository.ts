@@ -5,4 +5,6 @@ export default interface AuthRepository {
     orm: Repository<AuthSessionEntity>;
 
     new_session(user_id: string): Promise<AuthSessionEntity>;
+
+    find_session(user_id: string): Promise<AuthSessionEntity>;
 }

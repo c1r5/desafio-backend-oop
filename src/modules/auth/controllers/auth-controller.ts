@@ -10,7 +10,7 @@ import {
     LoginResponseSchema
 } from "@/modules/auth/domain/schemas/login-body-schema";
 import App from "@/app";
-import {UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
+import {HasActiveSessionAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
 
 @injectable()
 export default class AuthController implements ControllerModel {
@@ -41,8 +41,11 @@ export default class AuthController implements ControllerModel {
                         access_token: token
                     })
                 } catch (e) {
+
                     if (e instanceof UserNotFoundAuthError) {
                         return reply.status(400).send({message: 'invalid credentials'})
+                    } else if (e instanceof HasActiveSessionAuthError) {
+                        return reply.status(403).send({message: 'has_active_session'})
                     }
                 }
             })
