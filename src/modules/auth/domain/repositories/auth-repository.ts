@@ -7,4 +7,6 @@ export default interface AuthRepository {
     new_session(user_id: string): Promise<AuthSessionEntity>;
 
     find_session(user_id: string): Promise<AuthSessionEntity>;
+
+    revoke_session(session: AuthSessionEntity): void;
 }

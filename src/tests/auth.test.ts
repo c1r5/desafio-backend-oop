@@ -59,4 +59,15 @@ describe('login test suite', () => {
         expect(authenticate.status).toBe(403)
         expect(authenticate.body.message).toBe('has_active_session')
     })
+
+    it('should return 200 and revoke session', async () => {
+        const authenticate = await request(mocked_server)
+            .get('/api/logout')
+            .set({
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiYzc3YWZhYWQtMDdhNy00NWUyLWJkY2MtOTJkYmYwNTJiZWIzIiwiaWF0IjoxNzQxNzQwMzYzLCJleHAiOjE3NDE3NDM5NjN9.HrjPD2NAU3A2L6b2X8e4szgFw2T1J_WNJtCcpSYM4S4'
+            })
+
+
+        expect(authenticate.status).toBe(200)
+    })
 })

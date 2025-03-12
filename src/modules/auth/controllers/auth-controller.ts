@@ -7,10 +7,11 @@ import {
     LoginBody,
     LoginBodySchema,
     LoginResponse,
-    LoginResponseSchema
-} from "@/modules/auth/domain/schemas/login-body-schema";
+    LoginResponseSchema,
+    LogoutResponse
+} from "@/modules/auth/domain/schemas/login-schema";
 import App from "@/app";
-import {HasActiveSessionAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
+import {HasActiveSessionAuthError, LogoutAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
 
 @injectable()
 export default class AuthController implements ControllerModel {
@@ -22,6 +23,21 @@ export default class AuthController implements ControllerModel {
 
     register_routes(app: FastifyInstance): void {
         app.register(server => {
+            server.get<{ Reply: LogoutResponse }>('/logout', {}, async (request, reply) => {
+                try {
+                    await this.auth_usecase.logout(
+                        app.jwt,
+                        request.headers.authorization
+                    )
+                } catch (e) {
+                    if (e instanceof LogoutAuthError) {
+                        reply.status(400).send({message: e.message})
+                    }
+
+                    reply.status(500).send({message: 'Internal Server Error'})
+                }
+            });
+
             server.post<{ Body: LoginBody, Reply: LoginResponse }>('/login', {
                 schema: {
                     body: LoginBodySchema,

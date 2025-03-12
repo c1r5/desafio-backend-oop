@@ -9,3 +9,6 @@ export class UserNotFoundAuthError extends AuthError {
 
 export class HasActiveSessionAuthError extends AuthError {
 }
+
+export class LogoutAuthError extends AuthError {
+}

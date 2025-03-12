@@ -9,4 +9,8 @@ export default interface AuthUsecase {
     ): Promise<string>
 
     has_session(user_id: string): Promise<AuthSessionEntity | null>
+
+    logout(
+        jwt: JWT,
+        authorization: string | undefined): Promise<void>;
 }

@@ -23,3 +23,9 @@ export const LoginResponseSchema = z.object({
 })
 
 export type LoginResponse = z.infer<typeof LoginResponseSchema>
+
+export const LogoutResponseSchema = z.object({
+    message: z.string(),
+})
+
+export type LogoutResponse = z.infer<typeof LogoutResponseSchema>

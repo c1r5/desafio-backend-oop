@@ -3,9 +3,10 @@ import UserRepository from "@/modules/users/domain/repositories/user-repository"
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {JWT} from "@fastify/jwt";
-import {HasActiveSessionAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
+import {HasActiveSessionAuthError, LogoutAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
 import AuthRepository from "@/modules/auth/domain/repositories/auth-repository";
 import {AuthSessionEntity} from "@/modules/auth/domain/entities/auth-session-entity";
+import {JwtPayloadSchema} from "@/modules/auth/domain/schemas/jwt-payload-schema";
 
 @injectable()
 export default class AuthUsecaseImpl implements AuthUsecase {
@@ -13,6 +14,28 @@ export default class AuthUsecaseImpl implements AuthUsecase {
         @inject(TYPES.UserRepository) private user_repository: UserRepository,
         @inject(TYPES.AuthRepository) private auth_repository: AuthRepository
     ) {
+    }
+
+    async logout(jwt: JWT, authorization: string | undefined): Promise<void> {
+        if (!authorization) throw new LogoutAuthError('invalid_token');
+
+        const auth_token = authorization.split(' ')[1];
+
+        const decoded_payload = jwt.decode(auth_token);
+
+        if (!decoded_payload) throw new LogoutAuthError('invalid_token')
+
+        const payload = JwtPayloadSchema.parse(decoded_payload);
+
+        const session_id = payload.session_id
+
+        const has_session_active = await this.has_session(session_id);
+
+        if (!has_session_active) throw new LogoutAuthError('no_session_active')
+
+        this.auth_repository.revoke_session(has_session_active)
+
+        return
     }
 
     async has_session(user_id: string): Promise<AuthSessionEntity | null> {
