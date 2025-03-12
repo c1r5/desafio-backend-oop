@@ -1,8 +1,11 @@
 export class AuthError extends Error {
-    constructor(message: string) {
+    constructor(message?: string) {
         super();
     }
 }
 
-export class AuthErrorNotFound extends AuthError {
+export class UserNotFoundAuthError extends AuthError {
+}
+
+export class HasActiveSessionAuthError extends AuthError {
 }

@@ -10,4 +10,6 @@ export class AuthSessionEntity {
     createdAt!: number;
     @Column({type: 'numeric', default: 1})
     expiresIn!: number;
+    @Column({type: 'boolean', default: false})
+    is_active!: boolean;
 }

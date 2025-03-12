@@ -10,7 +10,7 @@ import {
     LoginResponseSchema
 } from "@/modules/auth/domain/schemas/login-body-schema";
 import App from "@/app";
-import {AuthErrorNotFound} from "@/modules/auth/errors/auth-errors";
+import {UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
 
 @injectable()
 export default class AuthController implements ControllerModel {
@@ -41,7 +41,7 @@ export default class AuthController implements ControllerModel {
                         access_token: token
                     })
                 } catch (e) {
-                    if (e instanceof AuthErrorNotFound) {
+                    if (e instanceof UserNotFoundAuthError) {
                         return reply.status(400).send({message: 'invalid credentials'})
                     }
                 }

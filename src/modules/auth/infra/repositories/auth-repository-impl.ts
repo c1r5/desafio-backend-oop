@@ -16,6 +16,7 @@ export default class AuthRepositoryImpl implements AuthRepository {
         let new_session = this.orm.create();
 
         new_session.userId = user_id;
+        new_session.is_active = true;
 
         return this.orm.save(new_session);
     }
