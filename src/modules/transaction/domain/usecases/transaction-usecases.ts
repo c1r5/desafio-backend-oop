@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import TransactionRepository from "@/modules/transaction/domain/models/transaction-repository";
+import TransactionRepository from "@/modules/transaction/domain/repositories/transaction-repository";
 import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
 
