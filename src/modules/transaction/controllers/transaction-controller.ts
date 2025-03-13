@@ -1,8 +1,9 @@
 import {inject, injectable} from "inversify";
-import TransactionUseCases from "@/modules/transaction/domain/usecases/transaction-usecases";
-import ControllerModel from "@/shared/domain/models/controller-model";
+import AppController from "@/shared/domain/controllers/app-controller";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
+import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
+import TransactionUsecase from "@/modules/transaction/domain/usecases/transaction-usecase";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -11,9 +12,12 @@ declare module 'fastify' {
 }
 
 @injectable()
-export default class TransactionController implements ControllerModel {
+export default class TransactionController implements AppController {
 
-    constructor(@inject(TYPES.TransactionUseCases) transaction_usecases: TransactionUseCases) {
+    constructor(
+        @inject(TYPES.TransactionUseCases) private transaction_usecases: TransactionUsecase,
+        @inject(TYPES.UserUseCases) private user_usecases: UserUseCases
+    ) {
     }
 
     register_routes(app: FastifyInstance): void {
