@@ -5,6 +5,7 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import ControllerModel from "@/shared/domain/models/controller-model";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import jwt from "@fastify/jwt";
+import fastifyAuth from "@fastify/auth";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -28,7 +29,7 @@ export default class Application {
     setup_application(): void {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
-
+        this.fastify.register(fastifyAuth)
         this.fastify.register(jwt, {
             secret: 'secret',
             sign: {

@@ -52,7 +52,9 @@ _Serviços de pagamento simplificado_
             - [X] Testes: Realizar logout e verificar se a sessão foi revogada
         - [ ] Autorização
             - [X] Middle ware para validar o JWT
-            - [ ] Definir permissões ( lojistas não podem realizar pagamentos )
+            - [ ] Definir permissões
+                - [ ] Usuários devem estar com sessão e status ativos
+                - [ ] Lojistas não podem realizar pagamentos
             - [ ] Testes: Usuário sem permissão é bloqueado, usuário com permissão é autorizado
     - [ ] Cadastro
         - [ ] Criar usuário básico (nome, email, senha)
