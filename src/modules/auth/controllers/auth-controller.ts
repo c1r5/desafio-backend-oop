@@ -8,63 +8,74 @@ import {
     LoginBodySchema,
     LoginResponse,
     LoginResponseSchema,
-    LogoutResponse
+    LogoutResponse,
+    LogoutResponseSchema
 } from "@/modules/auth/domain/schemas/login-schema";
-import App from "@/app";
 import {HasActiveSessionAuthError, LogoutAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
 
 @injectable()
 export default class AuthController implements ControllerModel {
     constructor(
         @inject(TYPES.AuthUsecase) private auth_usecase: AuthUsecase,
-        @inject(TYPES.ApplicationServer) private app: App
     ) {
     }
 
     register_routes(app: FastifyInstance): void {
-        app.register(server => {
-            server.get<{ Reply: LogoutResponse }>('/logout', {}, async (request, reply) => {
-                try {
-                    await this.auth_usecase.logout(
-                        app.jwt,
-                        request.headers.authorization
-                    )
-                } catch (e) {
-                    if (e instanceof LogoutAuthError) {
-                        reply.status(400).send({message: e.message})
-                    }
-
-                    reply.status(500).send({message: 'Internal Server Error'})
+        app.get<{ Reply: LogoutResponse }>('/logout', {
+            schema: {
+                response: {
+                    200: LogoutResponseSchema
                 }
-            });
+            }
+        }, async (request, reply) => {
+            await request.jwtVerify()
 
-            server.post<{ Body: LoginBody, Reply: LoginResponse }>('/login', {
-                schema: {
-                    body: LoginBodySchema,
-                    response: {
-                        200: LoginResponseSchema
-                    },
+            try {
+                await this.auth_usecase.logout(
+                    app.jwt,
+                    request.headers.authorization
+                )
+
+                return reply.status(200).send({message: 'logged_out'})
+            } catch (e) {
+                if (e instanceof LogoutAuthError) {
+                    return reply.status(400).send({message: e.message})
                 }
-            }, async (request, reply) => {
-                const login = request.body.document || request.body.email
 
-                if (!login) return reply.status(400).send({message: 'invalid_credentials'})
+                return reply.status(500).send({message: 'internal_server_error'})
+            }
+        });
 
-                try {
-                    let token = await this.auth_usecase.authenticate_user(app.jwt, login, request.body.password)
-                    return reply.status(200).send({
-                        message: 'success',
-                        access_token: token
-                    })
-                } catch (e) {
+        app.post<{ Body: LoginBody, Reply: LoginResponse }>('/login', {
+            schema: {
+                body: LoginBodySchema,
+                response: {
+                    200: LoginResponseSchema
+                },
+            }
+        }, async (request, reply) => {
+            const login = request.body.document || request.body.email
 
-                    if (e instanceof UserNotFoundAuthError) {
-                        return reply.status(400).send({message: 'invalid credentials'})
-                    } else if (e instanceof HasActiveSessionAuthError) {
-                        return reply.status(403).send({message: 'has_active_session'})
-                    }
+            if (!login) return reply.status(400).send({message: 'invalid_credentials'})
+
+            try {
+                let token = await this.auth_usecase.authenticate_user(app.jwt, login, request.body.password)
+                return reply.status(200).send({
+                    message: 'success',
+                    access_token: token
+                })
+            } catch (e) {
+
+                if (e instanceof UserNotFoundAuthError) {
+                    return reply.status(400).send({message: 'invalid_credentials'})
                 }
-            })
-        }, {prefix: '/api'})
+
+                if (e instanceof HasActiveSessionAuthError) {
+                    return reply.status(403).send({message: 'has_active_session'})
+                }
+
+                return reply.status(500).send({message: 'internal_server_error'})
+            }
+        })
     }
 }

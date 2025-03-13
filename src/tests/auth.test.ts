@@ -9,16 +9,18 @@ import ControllerModel from "@/shared/domain/models/controller-model";
 describe('login test suite', () => {
     let mocked_server: RawServerDefault
     let datasource: DataSource
+    let jwt_token: string
 
     beforeAll(async () => {
-        const app = container.get<App>(TYPES.ApplicationServer)
         const _datasource = container.get<DataSource>(TYPES.DataSource)
+        datasource = await _datasource.initialize()
+
+        const app = container.get<App>(TYPES.ApplicationServer)
         const auth_controller = container.get<ControllerModel>(TYPES.AuthController)
 
-        auth_controller.register_routes(app.server)
-
-        datasource = await _datasource.initialize()
-        mocked_server = await app.mock_on_ready()
+        app.register_controller(auth_controller, '/api/v1')
+            .setup_application()
+        mocked_server = await app.mocked()
     })
 
     afterAll(async () => {
@@ -27,7 +29,7 @@ describe('login test suite', () => {
 
     it('should return 400 invalid credentials', async () => {
         const authenticate = await request(mocked_server)
-            .post('/api/login')
+            .post('/api/v1/login')
             .send({
                 email: 'test@test.com',
                 password: '123456',
@@ -36,21 +38,9 @@ describe('login test suite', () => {
         expect(authenticate.status).toBe(400)
     })
 
-    it('should return 200 and return a jwt token', async () => {
-        const authenticate = await request(mocked_server)
-            .post('/api/login')
-            .send({
-                email: 'Suelen62@yahoo.com',
-                password: 'j3sIo62gAqqw9lP',
-            })
-
-        expect(authenticate.status).toBe(200)
-        expect(authenticate.body.access_token).toBeTruthy()
-    })
-
     it('should return 403 with has_session_active message', async () => {
         const authenticate = await request(mocked_server)
-            .post('/api/login')
+            .post('/api/v1/login')
             .send({
                 email: 'Suelen62@yahoo.com',
                 password: 'j3sIo62gAqqw9lP',
@@ -62,12 +52,27 @@ describe('login test suite', () => {
 
     it('should return 200 and revoke session', async () => {
         const authenticate = await request(mocked_server)
-            .get('/api/logout')
+            .get('/api/v1/logout')
             .set({
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiYzc3YWZhYWQtMDdhNy00NWUyLWJkY2MtOTJkYmYwNTJiZWIzIiwiaWF0IjoxNzQxNzQwMzYzLCJleHAiOjE3NDE3NDM5NjN9.HrjPD2NAU3A2L6b2X8e4szgFw2T1J_WNJtCcpSYM4S4'
+                Authorization: `Bearer ${jwt_token}`
             })
 
 
         expect(authenticate.status).toBe(200)
+    })
+
+    it('should return 200 and return a jwt token', async () => {
+        const authenticate = await request(mocked_server)
+            .post('/api/v1/login')
+            .send({
+                email: 'Suelen62@yahoo.com',
+                password: 'j3sIo62gAqqw9lP',
+            })
+
+
+        expect(authenticate.status).toBe(200)
+        expect(authenticate.body.access_token).toBeTruthy()
+
+        jwt_token = authenticate.body.access_token
     })
 })
