@@ -9,7 +9,6 @@ import ControllerModel from "@/shared/domain/models/controller-model";
 describe('login test suite', () => {
     let mocked_server: RawServerDefault
     let datasource: DataSource
-    let jwt_token: string
 
     beforeAll(async () => {
         const _datasource = container.get<DataSource>(TYPES.DataSource)
@@ -54,7 +53,7 @@ describe('login test suite', () => {
         const authenticate = await request(mocked_server)
             .get('/api/v1/logout')
             .set({
-                Authorization: `Bearer ${jwt_token}`
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiZDgxYWJmNzAtMzM2NS00OTZmLWE2YzMtMTNkZDZlOTNiM2NhIiwiaWF0IjoxNzQxODMyOTg1LCJleHAiOjE3NDE4MzY1ODV9.UCoLc83iaanoBX3aRvH6xipgvKqD75zjMRwS7EBCLII`
             })
 
 
@@ -69,10 +68,19 @@ describe('login test suite', () => {
                 password: 'j3sIo62gAqqw9lP',
             })
 
+        console.log(`[+] token: ${authenticate.body.access_token}`)
 
         expect(authenticate.status).toBe(200)
         expect(authenticate.body.access_token).toBeTruthy()
+    })
 
-        jwt_token = authenticate.body.access_token
+    it('should return 401 jwt verify error', async () => {
+        const authenticate = await request(mocked_server)
+            .get('/api/v1/logout')
+            .set({
+                Authorization: `Bearer INVALID_JWT`
+            })
+
+        expect(authenticate.status).toBe(401)
     })
 })

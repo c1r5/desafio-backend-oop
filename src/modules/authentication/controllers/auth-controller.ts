@@ -1,6 +1,6 @@
 import ControllerModel from "@/shared/domain/models/controller-model";
 import {inject, injectable} from "inversify";
-import AuthUsecase from "@/modules/auth/domain/usecases/auth-usecase";
+import AuthUsecase from "@/modules/authentication/domain/usecases/auth-usecase";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance} from "fastify";
 import {
@@ -10,8 +10,12 @@ import {
     LoginResponseSchema,
     LogoutResponse,
     LogoutResponseSchema
-} from "@/modules/auth/domain/schemas/login-schema";
-import {HasActiveSessionAuthError, LogoutAuthError, UserNotFoundAuthError} from "@/modules/auth/errors/auth-errors";
+} from "@/modules/authentication/domain/schemas/login-schema";
+import {
+    HasActiveSessionAuthError,
+    LogoutAuthError,
+    UserNotFoundAuthError
+} from "@/modules/authentication/errors/auth-errors";
 
 @injectable()
 export default class AuthController implements ControllerModel {
@@ -22,6 +26,7 @@ export default class AuthController implements ControllerModel {
 
     register_routes(app: FastifyInstance): void {
         app.get<{ Reply: LogoutResponse }>('/logout', {
+            onRequest: [app.authenticate],
             schema: {
                 response: {
                     200: LogoutResponseSchema

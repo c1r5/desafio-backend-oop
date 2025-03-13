@@ -1,8 +1,8 @@
-import AuthRepository from "@/modules/auth/domain/repositories/auth-repository";
+import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource, Repository} from "typeorm";
-import {AuthSessionEntity} from "@/modules/auth/domain/entities/auth-session-entity";
+import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
 
 @injectable()
 export default class AuthRepositoryImpl implements AuthRepository {

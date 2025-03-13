@@ -14,12 +14,12 @@ import ControllerModel from "@/shared/domain/models/controller-model";
 import TransactionRepository from "@/modules/transaction/domain/models/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
-import AuthUsecase from "@/modules/auth/domain/usecases/auth-usecase";
-import AuthRepository from "@/modules/auth/domain/repositories/auth-repository";
-import AuthUsecaseImpl from "@/modules/auth/infra/usecases/auth-usecase-impl";
-import AuthRepositoryImpl from "@/modules/auth/infra/repositories/auth-repository-impl";
+import AuthUsecase from "@/modules/authentication/domain/usecases/auth-usecase";
+import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
+import AuthUsecaseImpl from "@/modules/authentication/infra/usecases/auth-usecase-impl";
+import AuthRepositoryImpl from "@/modules/authentication/infra/repositories/auth-repository-impl";
 import Application from "@/app";
-import AuthController from "@/modules/auth/controllers/auth-controller";
+import AuthController from "@/modules/authentication/controllers/auth-controller";
 
 const container = new Container()
 

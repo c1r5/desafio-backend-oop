@@ -1,4 +1,4 @@
-import Fastify, {FastifyInstance, RawServerDefault} from "fastify";
+import Fastify, {FastifyInstance, FastifyReply, FastifyRequest, RawServerDefault} from "fastify";
 import {DataSource} from "typeorm";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
@@ -6,6 +6,11 @@ import ControllerModel from "@/shared/domain/models/controller-model";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import jwt from "@fastify/jwt";
 
+declare module 'fastify' {
+    interface FastifyInstance {
+        authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    }
+}
 
 @injectable()
 export default class Application {
@@ -30,6 +35,15 @@ export default class Application {
                 expiresIn: '1h'
             }
         });
+
+        this.fastify
+            .decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+                try {
+                    await request.jwtVerify()
+                } catch (err) {
+                    reply.send(err)
+                }
+            })
     }
 
     async start_application(): Promise<void> {
@@ -40,7 +54,8 @@ export default class Application {
     }
 
     register_controller(controller: ControllerModel, prefix: string): this {
-        this.fastify.register(instance => controller.register_routes(instance), {prefix})
+        this.fastify
+            .register(instance => controller.register_routes(instance), {prefix})
         return this
     }
 }

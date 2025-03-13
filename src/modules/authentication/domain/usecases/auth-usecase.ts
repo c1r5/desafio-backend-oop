@@ -1,5 +1,5 @@
 import {JWT} from "@fastify/jwt";
-import {AuthSessionEntity} from "@/modules/auth/domain/entities/auth-session-entity";
+import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
 
 export default interface AuthUsecase {
     authenticate_user(

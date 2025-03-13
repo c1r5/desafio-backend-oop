@@ -1,5 +1,5 @@
 import {Repository} from "typeorm";
-import {AuthSessionEntity} from "@/modules/auth/domain/entities/auth-session-entity";
+import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
 
 export default interface AuthRepository {
     orm: Repository<AuthSessionEntity>;
