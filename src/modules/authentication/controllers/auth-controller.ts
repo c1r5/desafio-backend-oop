@@ -1,4 +1,4 @@
-import AppController from "@/shared/domain/controllers/app-controller";
+import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
 import AuthUsecase from "@/modules/authentication/domain/usecases/auth-usecase";
 import {TYPES} from "@/shared/infra/di/di-types";
@@ -18,10 +18,11 @@ import {
 } from "@/modules/authentication/errors/auth-errors";
 
 @injectable()
-export default class AuthController implements AppController {
+export default class AuthController extends AppControllerV1 {
     constructor(
         @inject(TYPES.AuthUsecase) private auth_usecase: AuthUsecase,
     ) {
+        super()
     }
 
     register(app: FastifyInstance): void {
