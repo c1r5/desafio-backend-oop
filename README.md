@@ -61,9 +61,9 @@ _Serviços de pagamento simplificado_
                     - Receber
                     - Adicionar outras formas de pagamento
                 - [X] Lojistas não podem realizar pagamentos
-    - [ ] Cadastro
-        - [ ] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro
-        - [ ] Criar usuário básico (nome, email, senha)
+    - [X] Cadastro
+        - [X] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro
+        - [X] Criar usuário básico (nome, documento, telefone, email, senha)
     - [ ] Atualizar dados
     - [ ] Transferência
     - [ ] Notificação

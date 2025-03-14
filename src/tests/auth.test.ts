@@ -16,10 +16,9 @@ describe('login test suite', () => {
         const app = container.get<Application>(TYPES.ApplicationServer)
 
         app
-            .setup_application()
             .register_middleware(container.get(TYPES.SessionValidationMiddleware))
             .register_middleware(container.get(TYPES.UserValidationMiddleware))
-            .register_controller(container.get(TYPES.AuthController), '/api/v1')
+            .register_controller(container.get(TYPES.AuthController))
 
 
         mocked_server = await app.mocked()
@@ -47,7 +46,7 @@ describe('login test suite', () => {
                 email: 'Suelen62@yahoo.com',
                 password: 'j3sIo62gAqqw9lP',
             })
-        
+
         expect(authenticate.status).toBe(403)
         expect(authenticate.body.message).toBe('has_active_session')
     })

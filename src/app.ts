@@ -2,7 +2,7 @@ import Fastify, {FastifyInstance, FastifyReply, FastifyRequest, RawServerDefault
 import {DataSource} from "typeorm";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import AppController from "@/shared/domain/controllers/app-controller";
+import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import jwt from "@fastify/jwt";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
@@ -18,15 +18,6 @@ export default class Application {
     private fastify: FastifyInstance = Fastify();
 
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
-    }
-
-    async mocked(): Promise<RawServerDefault> {
-        await this.fastify.ready();
-
-        return this.fastify.server
-    }
-
-    setup_application(): this {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
         this.fastify.register(jwt, {
@@ -44,8 +35,12 @@ export default class Application {
                     reply.send(err)
                 }
             })
+    }
 
-        return this
+    async mocked(): Promise<RawServerDefault> {
+        await this.fastify.ready();
+
+        return this.fastify.server
     }
 
     async start_application(): Promise<void> {
@@ -55,8 +50,10 @@ export default class Application {
         })
     }
 
-    register_controller(controller: AppController, prefix: string): this {
-        this.fastify.register((instance) => controller.register(instance), {prefix})
+    register_controller(controller: AppControllerV1): this {
+        this.fastify.register((instance) => controller.register(instance), {
+            prefix: `/api/${controller.api_version}`
+        })
         return this
     }
 

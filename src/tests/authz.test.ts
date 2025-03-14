@@ -14,15 +14,13 @@ describe('authorization test suite', () => {
         datasource = await _datasource.initialize();
 
         const app = container.get<Application>(TYPES.ApplicationServer);
-        app.setup_application();
-
 
         app
             .register_middleware(container.get(TYPES.SessionValidationMiddleware))
             .register_middleware(container.get(TYPES.UserValidationMiddleware))
             .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
-            .register_controller(container.get(TYPES.AuthController), '/api/v1')
-            .register_controller(container.get(TYPES.TransactionController), '/api/v1')
+            .register_controller(container.get(TYPES.AuthController))
+            .register_controller(container.get(TYPES.TransactionController))
 
         mocked_server = await app.mocked();
     })

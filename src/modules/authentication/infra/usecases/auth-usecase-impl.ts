@@ -56,16 +56,16 @@ export default class AuthUsecaseImpl implements AuthUsecase {
             throw new UserNotFoundAuthError('user_not_found');
         }
 
-        let has_session = await this.has_session(user_entity.userId)
+        let has_session = await this.has_session(user_entity.user_id)
 
         if (has_session) {
             throw new HasActiveSessionAuthError()
         }
 
-        let session = await this.auth_repository.new_session(user_entity.userId)
+        let session = await this.auth_repository.new_session(user_entity.user_id)
 
         return jwt.sign({
-            user_id: user_entity.userId,
+            user_id: user_entity.user_id,
             user_type: user_entity.type,
             session_id: session.sid,
         })

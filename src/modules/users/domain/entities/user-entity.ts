@@ -1,13 +1,9 @@
 import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
 
-export type UserID = string;
-export type UserType = "pj" | "pf";
-export type UserStatus = "active" | "inactive" | "blocked";
-
 @Entity({name: "users"})
 export default class UserEntity extends BaseEntity {
     @PrimaryColumn({type: 'uuid', generated: 'uuid'})
-    userId!: UserID;
+    user_id!: string;
 
     @Column({type: 'varchar', length: 100})
     name!: string;
@@ -15,20 +11,20 @@ export default class UserEntity extends BaseEntity {
     @Column({unique: true, type: 'varchar', length: 100})
     email!: string;
 
-    @Column({unique: true, type: 'varchar', length: 30})
+    @Column({unique: true, type: 'varchar', length: 15})
     phone!: string;
 
-    @Column({unique: true, type: 'varchar', length: 20})
+    @Column({unique: true, type: 'varchar', length: 15})
     document!: string;
 
     @Column({type: 'varchar', length: 100})
     password!: string;
 
     @Column({type: 'varchar', length: 100})
-    type!: UserType;
+    type!: string;
 
     @Column({type: 'varchar', length: 100, default: "inactive"})
-    status!: UserStatus;
+    status!: "active" | "inactive" | "blocked";
 
     @Column({type: 'bigint', default: 0})
     balance!: BigInt

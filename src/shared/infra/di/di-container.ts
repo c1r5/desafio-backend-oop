@@ -10,7 +10,7 @@ import {DataSource} from "typeorm";
 import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import UserRepositoryImpl from "@/modules/users/infra/repositories/user-repository-impl";
 import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
-import AppController from "@/shared/domain/controllers/app-controller";
+import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import TransactionRepository from "@/modules/transaction/domain/repositories/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
@@ -41,9 +41,9 @@ container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
 container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl)
 container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
 
-container.bind<AppController>(TYPES.UserController).to(UserController)
-container.bind<AppController>(TYPES.AuthController).to(AuthController)
-container.bind<AppController>(TYPES.TransactionController).to(TransactionController)
+container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
+container.bind<AppControllerV1>(TYPES.AuthController).to(AuthController)
+container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
 
 container.bind<AppMiddleware>(TYPES.SessionValidationMiddleware).to(VerifySessionMiddleware)
 container.bind<AppMiddleware>(TYPES.UserValidationMiddleware).to(VerifyUserStatusMiddleware)

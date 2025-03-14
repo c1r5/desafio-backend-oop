@@ -3,6 +3,12 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {FastifyInstance} from "fastify";
+import {
+    UserCreateBody,
+    userCreateBodySchema,
+    UserCreateResponse,
+    userCreateResponseSchema
+} from "@/modules/users/domain/schemas/user-create-schemas";
 
 
 export class UserController extends AppControllerV1 {
@@ -13,6 +19,31 @@ export class UserController extends AppControllerV1 {
     }
 
     register(app: FastifyInstance): void {
-        throw new Error("Method not implemented.");
+        app.post<{
+            Body: UserCreateBody,
+            Reply: UserCreateResponse
+        }>('/user/create', {
+            schema: {
+                body: userCreateBodySchema,
+                response: {
+                    201: userCreateResponseSchema
+                }
+            }
+        }, async (request, reply) => {
+            try {
+                const created_user_id = await this.user_usecases.create_user(request.body)
+
+                return reply.status(201).send({
+                    user_id: created_user_id,
+                    message: 'created'
+                })
+
+            } catch (e) {
+
+                return reply.status(500).send({
+                    message: 'internal_server_error'
+                })
+            }
+        })
     }
 }
