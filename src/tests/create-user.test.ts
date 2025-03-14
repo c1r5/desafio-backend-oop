@@ -5,7 +5,7 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource} from "typeorm";
 import request from "supertest";
 import {fakerPT_BR} from "@faker-js/faker";
-import {generate_cpf} from "@/helpers";
+import {generate_cpf} from "shared/application/helpers";
 
 describe('crate user test suite', () => {
     let mocked_server: RawServerDefault;

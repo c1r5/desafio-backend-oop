@@ -1,8 +1,8 @@
 import {inject, injectable} from "inversify";
-import UserRepository from "../../domain/repositories/user-repository";
+import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
-import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
-import UserEntity from "../../domain/entities/user-entity";
+import UserUseCases from "@/modules/users/application/usecases/user-usecases";
+import UserEntity from "@/modules/users/domain/entities/user-entity";
 
 @injectable()
 export default class UserUseCasesImpl implements UserUseCases {
@@ -12,14 +12,6 @@ export default class UserUseCasesImpl implements UserUseCases {
         @inject(TYPES.UserRepository) user_repository: UserRepository
     ) {
         this.user_repository = user_repository;
-    }
-
-    async get_user_type_by_id(id: string): Promise<string | null> {
-        return (
-            await this.user_repository.orm.findOneBy({
-                user_id: id
-            })
-        )?.type ?? null
     }
 
     async is_active(user_id: string): Promise<boolean> {

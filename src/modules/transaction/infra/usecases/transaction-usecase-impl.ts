@@ -2,7 +2,7 @@ import {inject, injectable} from "inversify";
 import TransactionRepository from "@/modules/transaction/domain/repositories/transaction-repository";
 import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
-import TransactionUsecase from "@/modules/transaction/domain/usecases/transaction-usecase";
+import TransactionUsecase from "@/modules/transaction/application/usecases/transaction-usecase";
 
 @injectable()
 export default class TransactionUsecaseImpl implements TransactionUsecase {

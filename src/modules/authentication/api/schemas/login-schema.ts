@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {validate_document} from "@/helpers/document";
+import {validate_document} from "@/shared/application/helpers/document";
 
 export const LoginBodySchema = z.object({
     document: z.string()

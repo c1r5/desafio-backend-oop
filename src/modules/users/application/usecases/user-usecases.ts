@@ -8,6 +8,4 @@ export default interface UserUseCases {
     get_user_by_id(id: string): Promise<UserEntity | null>
 
     is_active(user_id: string): Promise<boolean>;
-
-    get_user_type_by_id(id: string): Promise<string | null>
 }

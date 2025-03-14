@@ -1,4 +1,4 @@
-import AuthUsecase from "@/modules/authentication/domain/usecases/auth-usecase";
+import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
 import UserRepository from "@/modules/users/domain/repositories/user-repository";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
@@ -7,10 +7,10 @@ import {
     HasActiveSessionAuthError,
     LogoutAuthError,
     UserNotFoundAuthError
-} from "@/modules/authentication/errors/auth-errors";
+} from "@/modules/authentication/api/errors/auth-errors";
 import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
 import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
-import {JwtPayloadSchema} from "@/shared/domain/schemas/jwt-payload-schema";
+import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 @injectable()
 export default class AuthUsecaseImpl implements AuthUsecase {

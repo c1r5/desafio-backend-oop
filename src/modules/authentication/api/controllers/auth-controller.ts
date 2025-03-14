@@ -1,6 +1,6 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
-import AuthUsecase from "@/modules/authentication/domain/usecases/auth-usecase";
+import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance} from "fastify";
 import {
@@ -10,12 +10,12 @@ import {
     LoginResponseSchema,
     LogoutResponse,
     LogoutResponseSchema
-} from "@/modules/authentication/domain/schemas/login-schema";
+} from "@/modules/authentication/api/schemas/login-schema";
 import {
     HasActiveSessionAuthError,
     LogoutAuthError,
     UserNotFoundAuthError
-} from "@/modules/authentication/errors/auth-errors";
+} from "@/modules/authentication/api/errors/auth-errors";
 
 @injectable()
 export default class AuthController extends AppControllerV1 {

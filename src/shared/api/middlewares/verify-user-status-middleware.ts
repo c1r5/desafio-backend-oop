@@ -1,9 +1,9 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {JwtPayloadSchema} from "@/shared/domain/schemas/jwt-payload-schema";
+import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
+import UserUseCases from "@/modules/users/application/usecases/user-usecases";
 
 
 declare module 'fastify' {
