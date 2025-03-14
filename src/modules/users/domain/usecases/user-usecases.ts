@@ -1,15 +1,13 @@
-import UserEntity, {UserID} from "@/modules/users/domain/entities/user-entity";
-import {JWT} from "@fastify/jwt";
+import UserEntity, {UserID, UserType} from "@/modules/users/domain/entities/user-entity";
 
 export default interface UserUseCases {
     create_user(entity: Partial<UserEntity>): Promise<UserID>
 
-    authenticate_user(
-        entity: Partial<UserEntity>,
-        jwt_service: JWT
-    ): Promise<string | null>
-
     update_user(id: UserID, entity: Partial<UserEntity>): Promise<UserEntity | null>
 
     get_user_by_id(id: UserID): Promise<UserEntity | null>
+
+    is_active(user_id: string): Promise<boolean>;
+
+    get_user_type_by_id(id: UserID): Promise<UserType | null>
 }

@@ -21,6 +21,11 @@ import AuthRepositoryImpl from "@/modules/authentication/infra/repositories/auth
 import Application from "@/app";
 import AuthController from "@/modules/authentication/controllers/auth-controller";
 import TransactionUsecase from "@/modules/transaction/domain/usecases/transaction-usecase";
+import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
+import VerifySessionMiddleware from "@/shared/middlewares/verify-session-middleware";
+import VerifyUserStatusMiddleware from "@/shared/middlewares/verify-user-status-middleware";
+import VerifyUserTransferAbilityMiddleware
+    from "@/modules/transaction/middlewares/verify-user-transfer-ability-middleware";
 
 const container = new Container()
 
@@ -29,14 +34,18 @@ container.bind<Application>(TYPES.ApplicationServer).to(Application)
 
 container.bind<AuthUsecase>(TYPES.AuthUsecase).to(AuthUsecaseImpl)
 container.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepositoryImpl)
-container.bind<AppController>(TYPES.AuthController).to(AuthController)
 
 container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl)
 container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
-container.bind<AppController>(TYPES.UserController).to(UserController)
 
 container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl)
 container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
+
+container.bind<AppController>(TYPES.UserController).to(UserController)
+container.bind<AppController>(TYPES.AuthController).to(AuthController)
 container.bind<AppController>(TYPES.TransactionController).to(TransactionController)
 
+container.bind<AppMiddleware>(TYPES.SessionValidationMiddleware).to(VerifySessionMiddleware)
+container.bind<AppMiddleware>(TYPES.UserValidationMiddleware).to(VerifyUserStatusMiddleware)
+container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
 export {container}

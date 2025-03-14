@@ -1,14 +1,21 @@
 export const TYPES = {
-    UserRepository: Symbol.for('UserRepository'),
     DataSource: Symbol.for('DataSource'),
     ApplicationServer: Symbol.for('ApplicationServer'),
+
+    UserRepository: Symbol.for('UserRepository'),
     UserUseCases: Symbol.for('UserUseCases'),
     UserController: Symbol.for('UserController'),
-    TransactionRepository: Symbol.for('TransactionRepository'),
+
     TransactionUseCases: Symbol.for('TransactionUseCases'),
+    TransactionRepository: Symbol.for('TransactionRepository'),
     TransactionController: Symbol.for('TransactionController'),
-    FastifyInstance: Symbol.for('FastifyInstance'),
-    AuthController: Symbol.for('AuthController'),
+
     AuthUsecase: Symbol.for('AuthUsecase'),
     AuthRepository: Symbol.for('AuthRepository'),
+    AuthController: Symbol.for('AuthController'),
+
+
+    SessionValidationMiddleware: Symbol.for('SessionValidationMiddleware'),
+    UserValidationMiddleware: Symbol.for('UserValidationMiddleware'),
+    VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware')
 };

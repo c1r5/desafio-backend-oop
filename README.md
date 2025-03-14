@@ -38,27 +38,32 @@ _Serviços de pagamento simplificado_
     - [X] Deleção
     - [X] Atualização
 - [ ] Features
-    - [ ] Segurança
+    - [X] Segurança
         - [X] Autenticação
             - [X] Login
-                - [X] Implementar JWT (geração e validação de tokens)
                 - [X] Testes: Login com credenciais válidas retorna token, credenciais inválidas retorna erro
+                - [X] Implementar JWT (geração e validação de tokens)
             - [X] Refatorar
+                - [X] Testes: Validando entradas do usuário
                 - [X] Validar entradas com Zod
         - [X] Logout
+            - [X] Testes: Realizar logout e verificar se a sessão foi revogada
             - [X] Armazenar sessão no banco de dados
             - [X] Definir ID da sessão no JWT
             - [X] Revogar sessão
-            - [X] Testes: Realizar logout e verificar se a sessão foi revogada
-        - [ ] Autorização
+        - [X] Autorização
+            - [X] Testes: Usuário sem permissão é bloqueado de realizar operações na aplicação
             - [X] Middle ware para validar o JWT
-            - [ ] Definir permissões
-                - [ ] Usuários devem estar com sessão e status ativos
-                - [ ] Lojistas não podem realizar pagamentos
-            - [ ] Testes: Usuário sem permissão é bloqueado, usuário com permissão é autorizado
+            - [X] Definir permissões
+                - [X] Usuários devem estar com sessão ativa acessar a aplicação
+                - [X] Usuários devem estar com status ativos para realizar operações:
+                    - Transferir
+                    - Receber
+                    - Adicionar outras formas de pagamento
+                - [X] Lojistas não podem realizar pagamentos
     - [ ] Cadastro
-        - [ ] Criar usuário básico (nome, email, senha)
         - [ ] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro
+        - [ ] Criar usuário básico (nome, email, senha)
     - [ ] Atualizar dados
     - [ ] Transferência
     - [ ] Notificação

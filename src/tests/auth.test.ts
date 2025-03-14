@@ -1,10 +1,9 @@
 import {RawServerDefault} from "fastify";
 import {DataSource} from "typeorm";
 import {container} from "@/shared/infra/di/di-container";
-import App from "@/app";
+import Application from "@/app";
 import {TYPES} from "@/shared/infra/di/di-types";
 import request from "supertest";
-import ControllerModel from "@/shared/domain/models/controller-model";
 
 describe('login test suite', () => {
     let mocked_server: RawServerDefault
@@ -14,11 +13,15 @@ describe('login test suite', () => {
         const _datasource = container.get<DataSource>(TYPES.DataSource)
         datasource = await _datasource.initialize()
 
-        const app = container.get<App>(TYPES.ApplicationServer)
-        const auth_controller = container.get<ControllerModel>(TYPES.AuthController)
+        const app = container.get<Application>(TYPES.ApplicationServer)
 
-        app.register_controller(auth_controller, '/api/v1')
+        app
             .setup_application()
+            .register_middleware(container.get(TYPES.SessionValidationMiddleware))
+            .register_middleware(container.get(TYPES.UserValidationMiddleware))
+            .register_controller(container.get(TYPES.AuthController), '/api/v1')
+
+
         mocked_server = await app.mocked()
     })
 
@@ -44,7 +47,7 @@ describe('login test suite', () => {
                 email: 'Suelen62@yahoo.com',
                 password: 'j3sIo62gAqqw9lP',
             })
-
+        
         expect(authenticate.status).toBe(403)
         expect(authenticate.body.message).toBe('has_active_session')
     })
@@ -53,7 +56,7 @@ describe('login test suite', () => {
         const authenticate = await request(mocked_server)
             .get('/api/v1/logout')
             .set({
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiZDgxYWJmNzAtMzM2NS00OTZmLWE2YzMtMTNkZDZlOTNiM2NhIiwiaWF0IjoxNzQxODMyOTg1LCJleHAiOjE3NDE4MzY1ODV9.UCoLc83iaanoBX3aRvH6xipgvKqD75zjMRwS7EBCLII`
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiZjUxZWI0YjItOTk1Yy00YmRiLTkxOTctZDRlODMxNzA1ZGRjIiwiaWF0IjoxNzQxOTEzNjUxLCJleHAiOjE3NDE5MTcyNTF9.0OvLoCMlCXowBNCOSXw-wJjzIyToCHZK_OB3lE_5zSs`
             })
 
 

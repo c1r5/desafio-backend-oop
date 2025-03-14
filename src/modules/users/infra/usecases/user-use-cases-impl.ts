@@ -2,8 +2,7 @@ import {inject, injectable} from "inversify";
 import UserRepository from "../../domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/modules/users/domain/usecases/user-usecases";
-import UserEntity, {UserID} from "../../domain/entities/user-entity";
-import {JWT} from "@fastify/jwt";
+import UserEntity, {UserID, UserType} from "../../domain/entities/user-entity";
 
 @injectable()
 export default class UserUseCasesImpl implements UserUseCases {
@@ -13,6 +12,20 @@ export default class UserUseCasesImpl implements UserUseCases {
         @inject(TYPES.UserRepository) user_repository: UserRepository
     ) {
         this.user_repository = user_repository;
+    }
+
+    async get_user_type_by_id(id: UserID): Promise<UserType | null> {
+        return (
+            await this.user_repository.orm.findOneBy({
+                userId: id
+            })
+        )?.type ?? null
+    }
+
+    async is_active(user_id: string): Promise<boolean> {
+        const user_entity = await this.user_repository.orm.findOneBy({userId: user_id})
+
+        return !!user_entity
     }
 
     async update_user(id: UserID, entity: Partial<UserEntity>): Promise<UserEntity | null> {
@@ -28,25 +41,6 @@ export default class UserUseCasesImpl implements UserUseCases {
     async create_user(entity: Partial<UserEntity>): Promise<UserID> {
         let result = await this.user_repository.orm.save(entity);
         return result.userId;
-    }
-
-    async authenticate_user(
-        user: Partial<UserEntity>,
-        jwt_service: JWT
-    ): Promise<string | null> {
-        let find_user = await this.user_repository.orm.findOneBy([
-            {email: user.email, password: user.password},
-            {document: user.document, password: user.password}
-        ])
-
-        if (find_user) {
-            return jwt_service.sign({
-                userId: find_user.userId,
-                userType: find_user.type
-            })
-        }
-
-        return null;
     }
 
     async get_user_by_id(id: string): Promise<UserEntity | null> {

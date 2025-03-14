@@ -10,7 +10,7 @@ import {
 } from "@/modules/authentication/errors/auth-errors";
 import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
 import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
-import {JwtPayloadSchema} from "@/modules/authentication/domain/schemas/jwt-payload-schema";
+import {JwtPayloadSchema} from "@/shared/domain/schemas/jwt-payload-schema";
 
 @injectable()
 export default class AuthUsecaseImpl implements AuthUsecase {

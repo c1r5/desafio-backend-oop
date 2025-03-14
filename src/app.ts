@@ -2,14 +2,14 @@ import Fastify, {FastifyInstance, FastifyReply, FastifyRequest, RawServerDefault
 import {DataSource} from "typeorm";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import ControllerModel from "@/shared/domain/models/controller-model";
+import AppController from "@/shared/domain/controllers/app-controller";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import jwt from "@fastify/jwt";
-import fastifyAuth from "@fastify/auth";
+import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 
 declare module 'fastify' {
     interface FastifyInstance {
-        authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+        verify_jwt: (request: FastifyRequest, reply: FastifyReply) => void;
     }
 }
 
@@ -26,10 +26,9 @@ export default class Application {
         return this.fastify.server
     }
 
-    setup_application(): void {
+    setup_application(): this {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
-        this.fastify.register(fastifyAuth)
         this.fastify.register(jwt, {
             secret: 'secret',
             sign: {
@@ -38,13 +37,15 @@ export default class Application {
         });
 
         this.fastify
-            .decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+            .decorate('verify_jwt', async (request: FastifyRequest, reply: FastifyReply) => {
                 try {
                     await request.jwtVerify()
                 } catch (err) {
                     reply.send(err)
                 }
             })
+
+        return this
     }
 
     async start_application(): Promise<void> {
@@ -54,9 +55,13 @@ export default class Application {
         })
     }
 
-    register_controller(controller: ControllerModel, prefix: string): this {
-        this.fastify
-            .register(instance => controller.register_routes(instance), {prefix})
+    register_controller(controller: AppController, prefix: string): this {
+        this.fastify.register((instance) => controller.register(instance), {prefix})
+        return this
+    }
+
+    register_middleware(middleware: AppMiddleware): this {
+        middleware.register(this.fastify)
         return this
     }
 }
