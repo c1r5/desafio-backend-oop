@@ -29,7 +29,11 @@ export function generate_cnpj(formatted: boolean = false): string {
     return cnpj;
 }
 
-export function validate_cnpj(document: string): boolean {
+export function validate_cnpj(document?: string): boolean {
+    if (!document) {
+        return false
+    }
+
     const cleanedCnpj = document.replace(/\D/g, '');
 
     if (cleanedCnpj.length !== 14) return false;

@@ -25,7 +25,11 @@ export function generate_cpf(formatted: boolean = false): string {
     return cpf;
 }
 
-export function validate_cpf(document: string): boolean {
+export function validate_cpf(document?: string): boolean {
+    if (!document) {
+        return false
+    }
+    
     const cleanedCpf = document.replace(/\D/g, '');
 
     if (cleanedCpf.length !== 11) return false
