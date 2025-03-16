@@ -1,9 +1,12 @@
 import {z} from "zod";
-import {validate_document} from "@/shared/application/helpers/document";
+import {validate_cnpj, validate_cpf} from "@/shared/application/helpers";
 
 export const LoginBodySchema = z.object({
     document: z.string()
-        .refine(validate_document, {
+        .refine(value => {
+            if (validate_cpf(value)) return true
+            return validate_cnpj(value);
+        }, {
             message: 'É necessário fornecer um documento válido.',
             path: ['document'],
         }).optional(),
