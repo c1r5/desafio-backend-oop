@@ -20,6 +20,10 @@ export class UserController extends AppControllerV1 {
     }
 
     register(app: FastifyInstance): void {
+        this.user_create_route(app)
+    }
+
+    private user_create_route(app: FastifyInstance) {
         app.post<{
             Body: UserCreateBody,
             Reply: UserCreateResponse
