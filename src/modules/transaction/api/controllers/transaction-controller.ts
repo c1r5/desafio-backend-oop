@@ -17,12 +17,12 @@ export default class TransactionController extends AppControllerV1 {
 
     register(app: FastifyInstance): void {
         app.post('/transfer', {
-            onRequest: [
+            preHandler: app.auth([
                 app.verify_jwt,
                 app.validate_user_session,
                 app.validate_user,
                 app.verify_user_transfer_ability
-            ]
+            ])
         }, async (request, reply) => {
             reply.status(200)
         })

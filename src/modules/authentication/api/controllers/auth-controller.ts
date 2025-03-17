@@ -28,11 +28,11 @@ export default class AuthController extends AppControllerV1 {
     register(app: FastifyInstance): void {
         app.get<{ Reply: LogoutResponse }>('/logout',
             {
-                onRequest: [
+                preHandler: app.auth([
                     app.verify_jwt,
                     app.validate_user_session,
                     app.validate_user
-                ],
+                ]),
                 schema: {
                     response: {
                         200: LogoutResponseSchema
