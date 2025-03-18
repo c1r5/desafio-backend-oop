@@ -19,8 +19,6 @@ export default class Application {
     private fastify: FastifyInstance = Fastify({
         logger: true
     });
-    private middlewares: AppMiddleware[] = []
-    private controllers: AppControllerV1[] = []
 
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
         this.fastify.setValidatorCompiler(validatorCompiler);
@@ -50,36 +48,22 @@ export default class Application {
 
     async start_application(): Promise<void> {
         await this.datasource.initialize()
-
-        this.register_middlewares()
-        this.register_controllers()
-
+        // this.register_middlewares()
+        // this.register_controllers()
         await this.fastify.listen({
             port: 3000
         })
     }
 
     register_controller(controller: AppControllerV1): this {
-        this.controllers.push(controller)
+        this.fastify.register((instance) => controller.register(instance), {
+            prefix: `/api/${controller.api_version}`
+        });
         return this
     }
 
     register_middleware(middleware: AppMiddleware): this {
-        this.middlewares.push(middleware)
+        middleware.register(this.fastify)
         return this
-    }
-
-    private register_middlewares() {
-        this.middlewares.forEach(middleware => {
-            middleware.register(this.fastify)
-        })
-    }
-
-    private register_controllers() {
-        this.controllers.forEach(controller => {
-            this.fastify.register((instance) => controller.register(instance), {
-                prefix: `/api/${controller.api_version}`
-            });
-        })
     }
 }

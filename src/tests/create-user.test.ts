@@ -5,7 +5,7 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource} from "typeorm";
 import request from "supertest";
 import {fakerPT_BR} from "@faker-js/faker";
-import {generate_cpf} from "shared/application/helpers";
+import {generate_cpf} from "@/shared/application/helpers/cpf";
 
 describe('crate user test suite', () => {
     let mocked_server: RawServerDefault;
@@ -34,7 +34,6 @@ describe('crate user test suite', () => {
                 name: fakerPT_BR.person.fullName(),
                 document: generate_cpf(),
                 email: fakerPT_BR.internet.email(),
-                type: 'pf',
                 phone: fakerPT_BR.phone.number(),
                 password: fakerPT_BR.internet.password()
             })
