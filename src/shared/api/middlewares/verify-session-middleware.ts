@@ -3,7 +3,7 @@ import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
-import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -21,6 +21,7 @@ export default class VerifySessionMiddleware implements AppMiddleware {
         app.decorate('validate_user_session', async (
             request: FastifyRequest,
             reply: FastifyReply) => {
+
             if (!request.headers.authorization || !request.headers.authorization.startsWith('Bearer')) return reply.status(401).send({
                 message: 'invalid_token'
             })
@@ -33,7 +34,7 @@ export default class VerifySessionMiddleware implements AppMiddleware {
                 message: 'invalid_token'
             })
 
-            const decoded = JwtPayloadSchema.parse(payload)
+            const decoded = jwtPayloadSchema.parse(payload)
 
             const has_valid_session = await this.auth_usecase.has_session(decoded.user_id)
 

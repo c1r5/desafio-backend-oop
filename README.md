@@ -64,7 +64,8 @@ _Serviços de pagamento simplificado_
     - [X] Cadastro
         - [X] Testes: Cadastro bem-sucedido retorna 201, email e documento duplicados retorna erro
         - [X] Criar usuário básico (nome, documento, telefone, email, senha)
-    - [ ] Atualizar dados
+    - [X] Atualizar dados
+        - [X] usuários inativos podem apenas mudar o telefone e email para verificação
     - [ ] Transferência
     - [ ] Notificação
         - [ ] Email

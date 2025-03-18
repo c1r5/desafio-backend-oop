@@ -10,7 +10,7 @@ import {
 } from "@/modules/authentication/api/errors/auth-errors";
 import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
 import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
-import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 @injectable()
 export default class AuthUsecaseImpl implements AuthUsecase {
@@ -29,7 +29,7 @@ export default class AuthUsecaseImpl implements AuthUsecase {
 
         if (!decoded_payload) throw new LogoutAuthError('invalid_token')
 
-        const payload = JwtPayloadSchema.parse(decoded_payload);
+        const payload = jwtPayloadSchema.parse(decoded_payload);
 
         const has_session_active = await this.has_session(payload.user_id);
 

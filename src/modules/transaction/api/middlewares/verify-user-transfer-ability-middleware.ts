@@ -3,7 +3,7 @@ import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/modules/users/application/usecases/user-usecases";
-import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -39,7 +39,7 @@ export default class VerifyUserTransferAbilityMiddleware implements AppMiddlewar
 
             const {
                 user_type
-            } = JwtPayloadSchema.parse(decoded_payload);
+            } = jwtPayloadSchema.parse(decoded_payload);
 
             if (!user_type) {
                 return reply.status(401).send({

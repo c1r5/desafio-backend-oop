@@ -17,7 +17,7 @@ export default class UserUseCasesImpl implements UserUseCases {
     async is_active(user_id: string): Promise<boolean> {
         const user_entity = await this.user_repository.orm.findOneBy({user_id: user_id})
 
-        return !!user_entity
+        return user_entity?.status === 'active'
     }
 
     async update_user(id: string, entity: Partial<UserEntity>): Promise<UserEntity | null> {

@@ -1,6 +1,6 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {JwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/modules/users/application/usecases/user-usecases";
@@ -23,21 +23,13 @@ export default class VerifyUserStatusMiddleware implements AppMiddleware {
             request: FastifyRequest,
             reply: FastifyReply) => {
 
-            if (!request.headers.authorization) return reply.status(401).send({
-                message: 'invalid_token'
-            })
+            const {
+                user
+            } = request;
 
-            const access_token = request.headers.authorization.split(' ')[1].trim();
+            const parsed = jwtPayloadSchema.parse(user)
 
-            const payload = app.jwt.decode(access_token);
-
-            if (!payload) return reply.status(401).send({
-                message: 'invalid_token'
-            })
-
-            const decoded = JwtPayloadSchema.parse(payload)
-
-            const is_user_active = await this.user_usecase.is_active(decoded.user_id)
+            const is_user_active = await this.user_usecase.is_active(parsed.user_id)
 
             if (!is_user_active) return reply.status(401).send({
                 message: 'user_is_inactive'

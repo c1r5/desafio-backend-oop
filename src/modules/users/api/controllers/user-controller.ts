@@ -15,7 +15,7 @@ import {
     userUpdateBodySchema,
     UserUpdateResponse
 } from "@/modules/users/api/schemas/user-update-schemas";
-import {parse_payload} from "@/shared/application/helpers/access_token";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 
 export class UserController extends AppControllerV1 {
@@ -36,24 +36,31 @@ export class UserController extends AppControllerV1 {
             Reply: UserUpdateResponse
         }>('/user/update', {
             preHandler: app.auth([
-                app.verify_jwt
+                app.verify_jwt,
+                app.validate_user_session
             ]),
             schema: {
                 body: userUpdateBodySchema
             }
         }, async (request, reply) => {
+            const {user_id} = jwtPayloadSchema.parse(request.user)
 
-            try {
-                const user_id = parse_payload(request.headers.authorization)
-
-                reply.status(200).send({
-                    message: 'user_updated'
-                })
-            } catch (e) {
-                reply.status(500).send({
-                    message: 'internal_server_error'
+            if (Object.keys(request.body).some(s => !["email", "phone"].includes(s))) {
+                return reply.status(401).send({
+                    message: 'user_is_inactive'
                 })
             }
+
+            const updated_user = await this.user_usecases.update_user(user_id, request.body)
+
+            if (!updated_user) return reply.status(500).send({
+                message: 'not_updated'
+            })
+
+            reply.status(200).send({
+                user_id: updated_user.user_id,
+                message: 'updated'
+            })
         })
     }
 

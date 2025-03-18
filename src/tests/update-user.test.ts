@@ -15,6 +15,7 @@ describe('user update suite', () => {
 
         const application: Application = container.get(TYPES.ApplicationServer);
         application
+            .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
             .register_controller(container.get(TYPES.UserController));
 
         mocked_server = await application.mocked();
@@ -24,7 +25,7 @@ describe('user update suite', () => {
         await datasource.destroy();
     });
 
-    it('should send email update request, update, and return 200', async () => {
+    it('should email update request, update, and return 200', async () => {
         const response = await request(mocked_server)
             .post('/api/v1/user/update')
             .send({});

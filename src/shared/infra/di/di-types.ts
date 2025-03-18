@@ -15,7 +15,7 @@ export const TYPES = {
     AuthController: Symbol.for('AuthController'),
 
 
-    SessionValidationMiddleware: Symbol.for('SessionValidationMiddleware'),
-    UserValidationMiddleware: Symbol.for('UserValidationMiddleware'),
+    VerifyUserSessionMiddleware: Symbol.for('SessionValidationMiddleware'),
+    VerifyUserMiddleware: Symbol.for('UserValidationMiddleware'),
     VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware')
 };
