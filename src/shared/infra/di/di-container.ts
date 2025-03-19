@@ -26,6 +26,7 @@ import VerifySessionMiddleware from "@/shared/api/middlewares/verify-session-mid
 import VerifyUserStatusMiddleware from "@/shared/api/middlewares/verify-user-status-middleware";
 import VerifyUserTransferAbilityMiddleware
     from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
+import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
 
 const container = new Container()
 
@@ -45,6 +46,7 @@ container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
 container.bind<AppControllerV1>(TYPES.AuthController).to(AuthController)
 container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
 
+container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserSessionMiddleware).to(VerifySessionMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)

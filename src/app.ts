@@ -1,18 +1,12 @@
-import Fastify, {FastifyInstance, FastifyReply, FastifyRequest, RawServerDefault} from "fastify";
+import Fastify, {FastifyInstance, RawServerDefault} from "fastify";
 import {DataSource} from "typeorm";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
-import jwt from "@fastify/jwt";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import fastifyAuth from "@fastify/auth";
 
-declare module 'fastify' {
-    interface FastifyInstance {
-        verify_jwt: (request: FastifyRequest, reply: FastifyReply) => void;
-    }
-}
 
 @injectable()
 export default class Application {
@@ -23,21 +17,6 @@ export default class Application {
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
-
-        this.fastify.decorate('verify_jwt', async (request: FastifyRequest, reply: FastifyReply) => {
-            try {
-                await request.jwtVerify()
-            } catch (err) {
-                reply.send(err)
-            }
-        })
-
-        this.fastify.register(jwt, {
-            secret: 'secret',
-            sign: {
-                expiresIn: '1h'
-            }
-        });
         this.fastify.register(fastifyAuth)
     }
 

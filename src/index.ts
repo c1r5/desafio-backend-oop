@@ -9,6 +9,7 @@ import Application from "@/app";
         .register_middleware(container.get(TYPES.VerifyUserMiddleware))
         .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
         .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
+        .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
         .register_controller(container.get(TYPES.AuthController))
         .register_controller(container.get(TYPES.UserController))
         .register_controller(container.get(TYPES.TransactionController))
