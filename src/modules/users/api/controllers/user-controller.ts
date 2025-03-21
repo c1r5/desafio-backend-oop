@@ -44,8 +44,9 @@ export class UserController extends AppControllerV1 {
             }
         }, async (request, reply) => {
             const {user_id} = jwtPayloadSchema.parse(request.user)
+            const is_active = await this.user_usecases.is_active(user_id)
 
-            if (Object.keys(request.body).some(s => !["email", "phone"].includes(s))) {
+            if (!is_active && !Object.keys(request.body).some(s => ["email", "phone"].includes(s))) {
                 return reply.status(401).send({
                     message: 'user_is_inactive'
                 })

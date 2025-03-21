@@ -1,18 +1,18 @@
-import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
+import SessionRepository from "@/modules/authentication/domain/repositories/session-repository";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource, Repository} from "typeorm";
-import {AuthSessionEntity} from "@/modules/authentication/domain/entities/auth-session-entity";
+import {SessionEntity} from "@/modules/authentication/domain/entities/session-entity";
 
 @injectable()
-export default class AuthRepositoryImpl implements AuthRepository {
-    orm: Repository<AuthSessionEntity>;
+export default class SessionRepositoryImpl implements SessionRepository {
+    orm: Repository<SessionEntity>;
 
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
-        this.orm = datasource.getRepository(AuthSessionEntity);
+        this.orm = datasource.getRepository(SessionEntity);
     }
 
-    async new_session(user_id: string): Promise<AuthSessionEntity> {
+    async new_session(user_id: string): Promise<SessionEntity> {
         let new_session = this.orm.create();
 
         new_session.userId = user_id;
@@ -21,7 +21,7 @@ export default class AuthRepositoryImpl implements AuthRepository {
         return this.orm.save(new_session);
     }
 
-    async find_session(user_id: string): Promise<AuthSessionEntity> {
+    async find_session(user_id: string): Promise<SessionEntity> {
         let session = await this.orm.find({
             where: {
                 userId: user_id
@@ -35,7 +35,7 @@ export default class AuthRepositoryImpl implements AuthRepository {
         return session[0]
     }
 
-    async revoke_session(session: AuthSessionEntity): Promise<void> {
-        await this.orm.update(session.sid, {...session, is_active: false})
+    async revoke_session(session: SessionEntity): Promise<void> {
+        await this.orm.update(session.session_id, {...session, is_active: false})
     }
 }

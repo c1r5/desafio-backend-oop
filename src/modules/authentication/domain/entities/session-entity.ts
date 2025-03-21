@@ -1,9 +1,9 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class AuthSessionEntity {
+export class SessionEntity {
     @PrimaryGeneratedColumn('uuid')
-    sid!: string;
+    session_id!: string;
     @Column({type: 'uuid'})
     userId!: string;
     @Column({type: 'numeric', default: () => 'CURRENT_TIMESTAMP'})

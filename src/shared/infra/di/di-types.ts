@@ -10,12 +10,12 @@ export const TYPES = {
     TransactionRepository: Symbol.for('TransactionRepository'),
     TransactionController: Symbol.for('TransactionController'),
 
-    AuthUsecase: Symbol.for('AuthUsecase'),
-    AuthRepository: Symbol.for('AuthRepository'),
-    AuthController: Symbol.for('AuthController'),
+    SessionRepository: Symbol.for('SessionRepository'),
+    SessionController: Symbol.for('SessionController'),
+    LoginUsecase: Symbol.for('LoginUsecase'),
 
     VerifyJWTMiddleware: Symbol.for('JWTValidationMiddleware'),
     VerifyUserSessionMiddleware: Symbol.for('SessionValidationMiddleware'),
     VerifyUserMiddleware: Symbol.for('UserValidationMiddleware'),
-    VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware')
+    VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware'),
 };

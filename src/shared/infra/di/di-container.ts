@@ -14,12 +14,10 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import TransactionRepository from "@/modules/transaction/domain/repositories/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
-import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
-import AuthRepository from "@/modules/authentication/domain/repositories/auth-repository";
-import AuthUsecaseImpl from "@/modules/authentication/infra/usecases/auth-usecase-impl";
-import AuthRepositoryImpl from "@/modules/authentication/infra/repositories/auth-repository-impl";
+import SessionRepository from "@/modules/authentication/domain/repositories/session-repository";
+import SessionRepositoryImpl from "@/modules/authentication/infra/repositories/session-repository-impl";
 import Application from "@/app";
-import AuthController from "@/modules/authentication/api/controllers/auth-controller";
+import SessionController from "@/modules/authentication/api/controllers/session-controller";
 import TransactionUsecase from "@/modules/transaction/application/usecases/transaction-usecase";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import VerifySessionMiddleware from "@/shared/api/middlewares/verify-session-middleware";
@@ -27,14 +25,16 @@ import VerifyUserStatusMiddleware from "@/shared/api/middlewares/verify-user-sta
 import VerifyUserTransferAbilityMiddleware
     from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
+import {LoginUsecase} from "@/modules/authentication/application/usecases/login-usecase";
+import LoginUsecaseImpl from "@/modules/authentication/infra/usecases/login-usecase-impl";
 
 const container = new Container()
 
 container.bind<DataSource>(TYPES.DataSource).toConstantValue(AppDataSource)
 container.bind<Application>(TYPES.ApplicationServer).to(Application)
 
-container.bind<AuthUsecase>(TYPES.AuthUsecase).to(AuthUsecaseImpl)
-container.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepositoryImpl)
+container.bind<SessionRepository>(TYPES.SessionRepository).to(SessionRepositoryImpl)
+container.bind<LoginUsecase>(TYPES.LoginUsecase).to(LoginUsecaseImpl)
 
 container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl)
 container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
@@ -43,7 +43,7 @@ container.bind<TransactionRepository>(TYPES.TransactionRepository).to(Transactio
 container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
 
 container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
-container.bind<AppControllerV1>(TYPES.AuthController).to(AuthController)
+container.bind<AppControllerV1>(TYPES.SessionController).to(SessionController)
 container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
 
 container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
