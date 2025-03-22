@@ -2,8 +2,8 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
-import {LoginRequest, LoginResponse} from "@/modules/authentication/api/schemas/login-schema";
-import {LoginUsecase} from "@/modules/authentication/application/usecases/login-usecase";
+import {LoginRequestSchema, LoginResponseSchema} from "@/modules/authentication/api/schemas/login-schema";
+import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
 import FormValidation from "@/shared/domain/models/form-validation";
 import CpfDocument from "@/shared/domain/models/cpf-document";
 import CnpjDocument from "@/shared/domain/models/cnpj-document";
@@ -13,16 +13,16 @@ import Password from "@/shared/domain/models/password";
 import {LoginError} from "@/modules/authentication/api/errors/login-errors";
 
 @injectable()
-export default class SessionController extends AppControllerV1 {
+export default class LoginController extends AppControllerV1 {
 
     constructor(
-        @inject(TYPES.LoginUsecase) private login_usecase: LoginUsecase
+        @inject(TYPES.SessionUseCase) private login_usecase: SessionUsecase
     ) {
         super()
     }
 
     register(server: FastifyInstance, options?: RouteShorthandOptions): void {
-        server.post<{ Body: LoginRequest, Reply: LoginResponse }>('/login', {}, async (request, reply) => {
+        server.post<{ Body: LoginRequestSchema, Reply: LoginResponseSchema }>('/login', {}, async (request, reply) => {
             const {
                 document,
                 email,

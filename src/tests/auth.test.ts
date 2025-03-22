@@ -18,7 +18,7 @@ describe('login test suite', () => {
         app
             .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
             .register_middleware(container.get(TYPES.VerifyUserMiddleware))
-            .register_controller(container.get(TYPES.SessionController))
+            .register_controller(container.get(TYPES.LoginController))
 
 
         mocked_server = await app.mocked()

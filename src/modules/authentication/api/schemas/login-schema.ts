@@ -1,9 +1,9 @@
-export interface LoginResponse {
+export interface LoginResponseSchema {
     message: string
     access_token?: string
 }
 
-export interface LoginRequest {
+export interface LoginRequestSchema {
     document?: string,
     email: string,
     password: string

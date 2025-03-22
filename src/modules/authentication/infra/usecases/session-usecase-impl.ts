@@ -1,4 +1,4 @@
-import {LoginResult, LoginUsecase} from "@/modules/authentication/application/usecases/login-usecase";
+import {LoginResult, SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
 import FormValidation from "@/shared/domain/models/form-validation";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
@@ -7,11 +7,19 @@ import UserRepository from "@/modules/users/domain/repositories/user-repository"
 import {InvalidCredentials} from "@/modules/authentication/api/errors/login-errors";
 
 @injectable()
-export default class LoginUsecaseImpl implements LoginUsecase {
+export default class SessionUsecaseImpl implements SessionUsecase {
     constructor(
-        @inject(TYPES.SessionRepository) private auth_repository: SessionRepository,
+        @inject(TYPES.SessionRepository) private session_repository: SessionRepository,
         @inject(TYPES.UserRepository) private user_repository: UserRepository
     ) {
+    }
+
+    logout(session_id: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async has_session(user_id: string): Promise<boolean> {
+        return !!(await this.session_repository.find_session(user_id))
     }
 
     async login(login: FormValidation, password: FormValidation): Promise<LoginResult> {
@@ -21,7 +29,7 @@ export default class LoginUsecaseImpl implements LoginUsecase {
 
         if (!user_entity) throw new InvalidCredentials()
 
-        const session_entity = await this.auth_repository.new_session(user_entity.user_id)
+        const session_entity = await this.session_repository.new_session(user_entity.user_id)
 
         return {
             user_id: user_entity.user_id,

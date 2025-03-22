@@ -7,9 +7,15 @@ export type LoginResult = {
     type: string
 }
 
-export interface LoginUsecase {
+export interface SessionUsecase {
     login(
         login: FormValidation,
         password: FormValidation
     ): Promise<LoginResult>
+
+    logout(
+        session_id: string
+    ): Promise<void>
+
+    has_session(user_id: string): Promise<boolean>
 }

@@ -11,8 +11,10 @@ export const TYPES = {
     TransactionController: Symbol.for('TransactionController'),
 
     SessionRepository: Symbol.for('SessionRepository'),
-    SessionController: Symbol.for('SessionController'),
-    LoginUsecase: Symbol.for('LoginUsecase'),
+    SessionUseCase: Symbol.for('SessionUsecase'),
+
+    LoginController: Symbol.for('LoginController'),
+    LogoutController: Symbol.for('LogoutController'),
 
     VerifyJWTMiddleware: Symbol.for('JWTValidationMiddleware'),
     VerifyUserSessionMiddleware: Symbol.for('SessionValidationMiddleware'),

@@ -21,8 +21,8 @@ export default class SessionRepositoryImpl implements SessionRepository {
         return this.orm.save(new_session);
     }
 
-    async find_session(user_id: string): Promise<SessionEntity> {
-        let session = await this.orm.find({
+    async find_session(user_id: string): Promise<SessionEntity | null> {
+        return await this.orm.findOne({
             where: {
                 userId: user_id
             },
@@ -31,8 +31,6 @@ export default class SessionRepositoryImpl implements SessionRepository {
                 createdAt: -1
             }
         })
-
-        return session[0]
     }
 
     async revoke_session(session: SessionEntity): Promise<void> {

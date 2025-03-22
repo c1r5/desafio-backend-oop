@@ -1,9 +1,10 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {inject} from "inversify";
 import jwt from "@fastify/jwt";
+import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
+import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -13,7 +14,7 @@ declare module 'fastify' {
 
 export default class VerifyJwtMiddleware implements AppMiddleware {
     constructor(
-        @inject(TYPES.AuthUsecase) private auth_usecase: AuthUsecase
+        @inject(TYPES.SessionUseCase) private session_usecase: SessionUsecase
     ) {
     }
 
@@ -29,7 +30,8 @@ export default class VerifyJwtMiddleware implements AppMiddleware {
                 await request.jwtVerify()
             } catch (err) {
                 if ((err as FastifyError).code == 'FST_JWT_AUTHORIZATION_TOKEN_EXPIRED') {
-                    await this.auth_usecase.logout(app.jwt, request.headers.authorization)
+                    const {session_id} = jwtPayloadSchema.parse(request.user);
+                    await this.session_usecase.logout(session_id)
                 }
                 reply.send(err)
             }

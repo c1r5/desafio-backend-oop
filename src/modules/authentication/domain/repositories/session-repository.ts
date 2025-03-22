@@ -6,7 +6,7 @@ export default interface SessionRepository {
 
     new_session(user_id: string): Promise<SessionEntity>;
 
-    find_session(user_id: string): Promise<SessionEntity>;
+    find_session(user_id: string): Promise<SessionEntity | null>;
 
     revoke_session(session: SessionEntity): Promise<void>;
 }

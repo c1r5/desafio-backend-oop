@@ -2,18 +2,18 @@ import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import AuthUsecase from "@/modules/authentication/application/usecases/auth-usecase";
 import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
 
 declare module 'fastify' {
     interface FastifyInstance {
-        validate_user_session: (request: FastifyRequest, reply: FastifyReply) => void
+        verify_user_session: (request: FastifyRequest, reply: FastifyReply) => void
     }
 }
 
 export default class VerifySessionMiddleware implements AppMiddleware {
     constructor(
-        @inject(TYPES.AuthUsecase) private auth_usecase: AuthUsecase
+        @inject(TYPES.SessionUseCase) private session_usecase: SessionUsecase
     ) {
     }
 
@@ -36,9 +36,9 @@ export default class VerifySessionMiddleware implements AppMiddleware {
 
             const decoded = jwtPayloadSchema.parse(payload)
 
-            const has_valid_session = await this.auth_usecase.has_session(decoded.user_id)
+            const has_valid_session = await this.session_usecase.has_session(decoded.user_id)
 
-            if (!has_valid_session || !has_valid_session.is_active) {
+            if (!has_valid_session) {
                 return reply.status(401).send({
                     message: 'no_active_session'
                 })
