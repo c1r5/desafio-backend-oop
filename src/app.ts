@@ -6,6 +6,7 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import fastifyAuth from "@fastify/auth";
+import jwt from "@fastify/jwt";
 
 
 @injectable()
@@ -18,6 +19,12 @@ export default class Application {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
         this.fastify.register(fastifyAuth)
+        this.fastify.register(jwt, {
+            secret: 'secret',
+            sign: {
+                expiresIn: 1000 * 60 * 60 * 24 * 7 // 7 days
+            }
+        })
     }
 
     async mocked(): Promise<RawServerDefault> {
@@ -27,8 +34,6 @@ export default class Application {
 
     async start_application(): Promise<void> {
         await this.datasource.initialize()
-        // this.register_middlewares()
-        // this.register_controllers()
         await this.fastify.listen({
             port: 3000
         })

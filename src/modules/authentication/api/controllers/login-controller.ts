@@ -2,9 +2,9 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
-import {LoginRequestSchema, LoginResponseSchema} from "@/modules/authentication/api/schemas/login-schema";
+import {LoginRequest, LoginRequestSchema} from "@/modules/authentication/api/schemas/login-schema";
 import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
-import FormValidation from "@/shared/domain/models/form-validation";
+import FieldValidation from "@/shared/domain/models/field-validation";
 import CpfDocument from "@/shared/domain/models/cpf-document";
 import CnpjDocument from "@/shared/domain/models/cnpj-document";
 import Email from "@/shared/domain/models/email";
@@ -22,38 +22,42 @@ export default class LoginController extends AppControllerV1 {
     }
 
     register(server: FastifyInstance, options?: RouteShorthandOptions): void {
-        server.post<{ Body: LoginRequestSchema, Reply: LoginResponseSchema }>('/login', {}, async (request, reply) => {
+        server.post<{ Body: LoginRequest }>('/login', {
+            schema: {
+                body: LoginRequestSchema
+            }
+        }, async (request, reply) => {
             const {
                 document,
                 email,
                 password
             } = request.body;
 
-            let login: FormValidation
+            let login: FieldValidation | undefined
 
-            if (document) {
+            if (document && !email) {
                 login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
-            } else if (email) {
+            } else if (email && !document) {
                 login = new Email(email)
-            } else {
-                return reply.status(400).send({message: 'invalid_credentials'})
             }
 
-            if (!login.is_valid()) {
+            if (!login) {
                 return reply.status(400).send({message: 'invalid_credentials'})
             }
 
             try {
                 const pwd = new Password(password)
-                const data = await this.login_usecase.login(login, pwd)
-                const token = server.jwt.sign(data)
+                const payload = await this.login_usecase.login(login, pwd)
+                const token = server.jwt.sign(payload)
                 return reply.status(200).send({
                     message: 'success',
                     access_token: token
                 })
             } catch (e) {
                 if (e instanceof LoginError) {
-                    return reply.status(e.code).send({message: e.message})
+                    return reply.status(e.code).send({
+                        message: e.message
+                    })
                 }
 
                 server.log.error(e)

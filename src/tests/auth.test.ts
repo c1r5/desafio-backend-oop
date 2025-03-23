@@ -18,8 +18,9 @@ describe('login test suite', () => {
         app
             .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
             .register_middleware(container.get(TYPES.VerifyUserMiddleware))
+            .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
             .register_controller(container.get(TYPES.LoginController))
-
+            .register_controller(container.get(TYPES.LogoutController))
 
         mocked_server = await app.mocked()
     })
@@ -51,16 +52,6 @@ describe('login test suite', () => {
         expect(authenticate.body.message).toBe('has_active_session')
     })
 
-    it('should return 200 and revoke session', async () => {
-        const authenticate = await request(mocked_server)
-            .get('/api/v1/logout')
-            .set({
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiZjUxZWI0YjItOTk1Yy00YmRiLTkxOTctZDRlODMxNzA1ZGRjIiwiaWF0IjoxNzQxOTEzNjUxLCJleHAiOjE3NDE5MTcyNTF9.0OvLoCMlCXowBNCOSXw-wJjzIyToCHZK_OB3lE_5zSs`
-            })
-
-
-        expect(authenticate.status).toBe(200)
-    })
 
     it('should return 200 and return a jwt token', async () => {
         const authenticate = await request(mocked_server)
@@ -84,5 +75,17 @@ describe('login test suite', () => {
             })
 
         expect(authenticate.status).toBe(401)
+    })
+
+
+    it('should return 200 and revoke session', async () => {
+        const authenticate = await request(mocked_server)
+            .get('/api/v1/logout')
+            .set({
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmEzZWNmYTQtYjBmZC00MTc5LTk0NDctMWVkYTE0Yzc4YjMzIiwidXNlcl90eXBlIjoicGYiLCJzZXNzaW9uX2lkIjoiZjUxZWI0YjItOTk1Yy00YmRiLTkxOTctZDRlODMxNzA1ZGRjIiwiaWF0IjoxNzQxOTEzNjUxLCJleHAiOjE3NDE5MTcyNTF9.0OvLoCMlCXowBNCOSXw-wJjzIyToCHZK_OB3lE_5zSs`
+            })
+
+
+        expect(authenticate.status).toBe(200)
     })
 })

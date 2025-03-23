@@ -1,10 +1,21 @@
-import FormValidation from "@/shared/domain/models/form-validation";
+import FieldValidation from "@/shared/domain/models/field-validation";
+import {z} from "zod";
 
-export default class Email implements FormValidation {
-    constructor(readonly value: string) {
+export default class Email implements FieldValidation {
+    private email_validator = z.string().email();
+
+    constructor(
+        readonly value: string,
+        readonly type: string = 'email'
+    ) {
     }
 
     is_valid(): boolean {
-        throw new Error("Method not implemented.");
+        try {
+            this.email_validator.safeParse(this.value)
+            return true
+        } catch (e) {
+            return false
+        }
     }
 }

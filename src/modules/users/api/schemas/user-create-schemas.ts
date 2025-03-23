@@ -1,5 +1,6 @@
 import {z} from "zod";
-import {validate_cnpj, validate_cpf} from "@/shared/application/helpers";
+import {validate_cpf} from "@/shared/application/helpers/cpf";
+import {validate_cnpj} from "@/shared/application/helpers/cnpj";
 
 export const userCreateResponseSchema = z.object({
     user_id: z.string().optional(),

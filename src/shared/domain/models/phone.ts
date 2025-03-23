@@ -1,7 +1,10 @@
-import FormValidation from "@/shared/domain/models/form-validation";
+import FieldValidation from "@/shared/domain/models/field-validation";
 
-export default class Phone implements FormValidation {
-    constructor(readonly value: string) {
+export default class Phone implements FieldValidation {
+    constructor(
+        readonly value: string,
+        readonly type: string = 'phone'
+    ) {
     }
 
     is_valid(): boolean {

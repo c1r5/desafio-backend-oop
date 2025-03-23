@@ -10,14 +10,10 @@ export class UserNotFound extends LoginError {
     }
 }
 
-export class InvalidPassword extends LoginError {
-    constructor() {
-        super(401, 'invalid_password');
-    }
-}
-
 export class InvalidCredentials extends LoginError {
-    constructor() {
-        super(400, 'invalid_credentials');
+    constructor(
+        public field: string = 'credentials'
+    ) {
+        super(400, `invalid_${field}`);
     }
 }

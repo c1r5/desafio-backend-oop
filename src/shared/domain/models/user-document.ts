@@ -1,4 +1,4 @@
-import FormValidation from "@/shared/domain/models/form-validation";
+import FieldValidation from "@/shared/domain/models/field-validation";
 
-export default interface UserDocument extends FormValidation {
+export default interface UserDocument extends FieldValidation {
 }

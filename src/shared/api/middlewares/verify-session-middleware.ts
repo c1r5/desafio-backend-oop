@@ -18,13 +18,16 @@ export default class VerifySessionMiddleware implements AppMiddleware {
     }
 
     register(app: FastifyInstance) {
-        app.decorate('validate_user_session', async (
+        app.decorate('verify_user_session', async (
             request: FastifyRequest,
-            reply: FastifyReply) => {
+            reply: FastifyReply
+        ) => {
 
-            if (!request.headers.authorization || !request.headers.authorization.startsWith('Bearer')) return reply.status(401).send({
-                message: 'invalid_token'
-            })
+            if (!request.headers.authorization || !request.headers.authorization.startsWith('Bearer')) {
+                return reply.status(401).send({
+                    message: 'invalid_token'
+                })
+            }
 
             const access_token = request.headers.authorization.split(' ')[1];
 

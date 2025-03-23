@@ -1,10 +1,11 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
-import {inject} from "inversify";
+import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
-import {LogoutRequestSchema, LogoutResponseSchema} from "@/modules/authentication/api/schemas/logout-schema";
+import {LogoutRequestSchema, LogoutResponse} from "@/modules/authentication/api/schemas/logout-schema";
 
+@injectable()
 export default class LogoutController extends AppControllerV1 {
     constructor(
         @inject(TYPES.SessionUseCase) private session_usecase: SessionUsecase
@@ -12,23 +13,21 @@ export default class LogoutController extends AppControllerV1 {
         super();
     }
 
-    register(server: FastifyInstance, options?: RouteShorthandOptions): void {
-        server.get<{
-            Body: LogoutRequestSchema,
-            Reply: LogoutResponseSchema
-        }>(
-            '/logout',
-            {
-                preHandler: server.auth([
-                    server.verify_jwt,
-                    server.verify_user_session
+    register(app: FastifyInstance, options?: RouteShorthandOptions): void {
+        app.get<{
+            Reply: LogoutResponse
+        }>('/logout', {
+                preHandler: app.auth([
+                    app.verify_jwt,
+                    app.verify_user_session
                 ])
-            },
-            async (
-                request,
-                reply
-            ) => {
-                await this.session_usecase.logout(request.body.session_id)
+            }, async (request, reply) => {
+                try {
+                    await this.session_usecase.logout(LogoutRequestSchema.parse(request.user))
+                } catch (e) {
+                    app.log.error(e)
+                    return reply.status(500).send({message: 'internal_server_error'})
+                }
             }
         )
     }

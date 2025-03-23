@@ -27,6 +27,7 @@ import VerifyUserTransferAbilityMiddleware
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
 import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
 import SessionUsecaseImpl from "@/modules/authentication/infra/usecases/session-usecase-impl";
+import LogoutController from "@/modules/authentication/api/controllers/logout-controller";
 
 const container = new Container()
 
@@ -42,8 +43,9 @@ container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
 container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl)
 container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
 
-container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
 container.bind<AppControllerV1>(TYPES.LoginController).to(LoginController)
+container.bind<AppControllerV1>(TYPES.LogoutController).to(LogoutController)
+container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
 container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
 
 container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)

@@ -6,12 +6,13 @@ import Application from "@/app";
 (async () => {
     const application: Application = container.get(TYPES.ApplicationServer);
     await application
-        .register_middleware(container.get(TYPES.VerifyUserMiddleware))
-        .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
-        .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
         .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
+        .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
+        .register_middleware(container.get(TYPES.VerifyUserMiddleware))
+        .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
         .register_controller(container.get(TYPES.LoginController))
-        .register_controller(container.get(TYPES.UserController))
-        .register_controller(container.get(TYPES.TransactionController))
+        .register_controller(container.get(TYPES.LogoutController))
+        // .register_controller(container.get(TYPES.UserController))
+        // .register_controller(container.get(TYPES.TransactionController))
         .start_application()
 })();
