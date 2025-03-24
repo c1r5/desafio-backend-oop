@@ -16,7 +16,7 @@ describe('user update suite', () => {
         const application: Application = container.get(TYPES.ApplicationServer);
         application
             .register_middleware(container.get(TYPES.VerifyUserMiddleware))
-            .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
+            .register_middleware(container.get(TYPES.VerifySessionMiddleware))
             .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
             .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
             .register_controller(container.get(TYPES.UserController));

@@ -37,7 +37,7 @@ export class UserController extends AppControllerV1 {
         }>('/user/update', {
             preHandler: app.auth([
                 app.verify_jwt,
-                app.verify_user_session
+                app.verify_session
             ]),
             schema: {
                 body: userUpdateBodySchema

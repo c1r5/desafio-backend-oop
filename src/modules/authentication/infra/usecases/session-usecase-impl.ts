@@ -24,7 +24,11 @@ export default class SessionUsecaseImpl implements SessionUsecase {
     }
 
     async has_session(user_id: string): Promise<boolean> {
-        return !!(await this.session_repository.find_session(user_id))
+        const session = await this.session_repository.find_session(user_id)
+
+        if (!session) return false
+
+        return session.is_active;
     }
 
     async login(login: FieldValidation, password: FieldValidation): Promise<LoginResult> {

@@ -17,7 +17,7 @@ export const TYPES = {
     LogoutController: Symbol.for('LogoutController'),
 
     VerifyJWTMiddleware: Symbol.for('JWTValidationMiddleware'),
-    VerifyUserSessionMiddleware: Symbol.for('SessionValidationMiddleware'),
+    VerifySessionMiddleware: Symbol.for('SessionValidationMiddleware'),
     VerifyUserMiddleware: Symbol.for('UserValidationMiddleware'),
     VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware'),
 };

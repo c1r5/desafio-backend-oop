@@ -17,13 +17,14 @@ export default class LogoutController extends AppControllerV1 {
         app.get<{
             Reply: LogoutResponse
         }>('/logout', {
-                preHandler: app.auth([
+                preHandler: [
                     app.verify_jwt,
-                    app.verify_user_session
-                ])
+                    app.verify_session
+                ]
             }, async (request, reply) => {
                 try {
                     await this.session_usecase.logout(LogoutRequestSchema.parse(request.user))
+                    return reply.status(200).send({message: 'logged_out'})
                 } catch (e) {
                     app.log.error(e)
                     return reply.status(500).send({message: 'internal_server_error'})

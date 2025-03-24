@@ -34,6 +34,10 @@ export default class SessionRepositoryImpl implements SessionRepository {
     }
 
     async revoke_session(session: SessionEntity): Promise<void> {
-        await this.orm.update(session.session_id, {...session, is_active: false})
+        const result = await this.orm.update(session.session_id, {...session, is_active: false})
+
+        if (!result.affected) throw new Error('session_not_found')
+
+        if (result.affected >= 1) return
     }
 }

@@ -1,7 +1,7 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity()
-export class SessionEntity {
+@Entity({name: 'sessions'})
+export class SessionEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     session_id!: string;
     @Column({type: 'uuid'})

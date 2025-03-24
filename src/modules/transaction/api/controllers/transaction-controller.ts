@@ -19,7 +19,7 @@ export default class TransactionController extends AppControllerV1 {
         app.post('/transfer', {
             preHandler: app.auth([
                 app.verify_jwt,
-                app.verify_user_session,
+                app.verify_session,
                 app.validate_user,
                 app.verify_user_transfer_ability
             ])

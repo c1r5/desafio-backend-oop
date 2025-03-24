@@ -49,7 +49,7 @@ container.bind<AppControllerV1>(TYPES.UserController).to(UserController)
 container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
 
 container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
-container.bind<AppMiddleware>(TYPES.VerifyUserSessionMiddleware).to(VerifySessionMiddleware)
+container.bind<AppMiddleware>(TYPES.VerifySessionMiddleware).to(VerifySessionMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
 export {container}

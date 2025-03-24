@@ -18,13 +18,14 @@ export default class Application {
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
-        this.fastify.register(fastifyAuth)
         this.fastify.register(jwt, {
             secret: 'secret',
             sign: {
                 expiresIn: 1000 * 60 * 60 * 24 * 7 // 7 days
             }
         })
+
+        this.fastify.register(fastifyAuth)
     }
 
     async mocked(): Promise<RawServerDefault> {

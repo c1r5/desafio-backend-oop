@@ -16,7 +16,7 @@ describe('login test suite', () => {
         const app = container.get<Application>(TYPES.ApplicationServer)
 
         app
-            .register_middleware(container.get(TYPES.VerifyUserSessionMiddleware))
+            .register_middleware(container.get(TYPES.VerifySessionMiddleware))
             .register_middleware(container.get(TYPES.VerifyUserMiddleware))
             .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
             .register_controller(container.get(TYPES.LoginController))
