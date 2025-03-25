@@ -22,24 +22,8 @@ export default class VerifyUserTransferAbilityMiddleware implements AppMiddlewar
             request: FastifyRequest,
             reply: FastifyReply
         ) => {
-            const {authorization} = request.headers;
 
-            if (
-                !authorization ||
-                !authorization.startsWith("Bearer")
-            ) {
-                return reply.status(401).send({
-                    message: 'invalid_token'
-                })
-            }
-
-            const token = authorization.split(' ')[1];
-
-            const decoded_payload = app.jwt.decode(token);
-
-            const {
-                user_type
-            } = jwtPayloadSchema.parse(decoded_payload);
+            const {user_type} = jwtPayloadSchema.parse(request.user);
 
             if (!user_type) {
                 return reply.status(401).send({
