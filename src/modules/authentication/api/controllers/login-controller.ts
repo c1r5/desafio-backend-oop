@@ -3,7 +3,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {LoginRequest, LoginRequestSchema} from "@/modules/authentication/api/schemas/login-schema";
-import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
+import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import FieldValidation from "@/shared/domain/models/field-validation";
 import CpfDocument from "@/shared/domain/models/cpf-document";
 import CnpjDocument from "@/shared/domain/models/cnpj-document";

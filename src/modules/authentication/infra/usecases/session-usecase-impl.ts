@@ -1,9 +1,9 @@
-import {LoginResult, SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
+import {LoginResult, SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import FieldValidation from "@/shared/domain/models/field-validation";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import SessionRepository from "@/modules/authentication/domain/repositories/session-repository";
-import UserRepository from "@/modules/users/domain/repositories/user-repository";
+import SessionRepository from "@/shared/domain/repositories/session-repository";
+import UserRepository from "@/shared/domain/repositories/user-repository";
 import {InvalidCredentials, UserNotFound} from "@/modules/authentication/api/errors/login-errors";
 import {LogoutRequest} from "@/modules/authentication/api/schemas/logout-schema";
 

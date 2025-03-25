@@ -1,5 +1,5 @@
 import UserEntity from "@/modules/users/domain/entities/user-entity";
-import UserRepository from "@/modules/users/domain/repositories/user-repository";
+import UserRepository from "@/shared/domain/repositories/user-repository";
 import {inject, injectable} from "inversify";
 import {DataSource, Repository} from "typeorm";
 import {TYPES} from "@/shared/infra/di/di-types";

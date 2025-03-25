@@ -2,8 +2,8 @@ import {inject, injectable} from "inversify";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance} from "fastify";
-import UserUseCases from "@/modules/users/application/usecases/user-usecases";
-import TransactionUsecase from "@/modules/transaction/application/usecases/transaction-usecase";
+import UserUseCases from "@/shared/application/usecases/user-usecases";
+import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
 
 @injectable()
 export default class TransactionController extends AppControllerV1 {

@@ -2,7 +2,7 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
+import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import {LogoutRequestSchema, LogoutResponse} from "@/modules/authentication/api/schemas/logout-schema";
 
 @injectable()

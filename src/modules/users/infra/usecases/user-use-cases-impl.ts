@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
-import UserRepository from "@/modules/users/domain/repositories/user-repository";
+import UserRepository from "@/shared/domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
-import UserUseCases from "@/modules/users/application/usecases/user-usecases";
+import UserUseCases from "@/shared/application/usecases/user-usecases";
 import UserEntity from "@/modules/users/domain/entities/user-entity";
 
 @injectable()

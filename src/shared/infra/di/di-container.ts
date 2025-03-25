@@ -7,25 +7,25 @@ import {Container} from "inversify";
 import {TYPES} from "./di-types";
 import {DataSource} from "typeorm";
 
-import UserRepository from "@/modules/users/domain/repositories/user-repository";
+import UserRepository from "@/shared/domain/repositories/user-repository";
 import UserRepositoryImpl from "@/modules/users/infra/repositories/user-repository-impl";
-import UserUseCases from "@/modules/users/application/usecases/user-usecases";
+import UserUseCases from "@/shared/application/usecases/user-usecases";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import TransactionRepository from "@/modules/transaction/domain/repositories/transaction-repository";
+import TransactionRepository from "@/shared/domain/repositories/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
-import SessionRepository from "@/modules/authentication/domain/repositories/session-repository";
+import SessionRepository from "@/shared/domain/repositories/session-repository";
 import SessionRepositoryImpl from "@/modules/authentication/infra/repositories/session-repository-impl";
 import Application from "@/app";
 import LoginController from "@/modules/authentication/api/controllers/login-controller";
-import TransactionUsecase from "@/modules/transaction/application/usecases/transaction-usecase";
+import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import VerifySessionMiddleware from "@/shared/api/middlewares/verify-session-middleware";
 import VerifyUserStatusMiddleware from "@/shared/api/middlewares/verify-user-status-middleware";
 import VerifyUserTransferAbilityMiddleware
     from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
-import {SessionUsecase} from "@/modules/authentication/application/usecases/session-usecase";
+import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import SessionUsecaseImpl from "@/modules/authentication/infra/usecases/session-usecase-impl";
 import LogoutController from "@/modules/authentication/api/controllers/logout-controller";
 
