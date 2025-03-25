@@ -4,8 +4,8 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
 import UserRepository from "@/shared/domain/repositories/user-repository";
-import {InvalidCredentials, UserNotFound} from "@/modules/authentication/api/errors/login-errors";
-import {LogoutRequest} from "@/modules/authentication/api/schemas/logout-schema";
+import {InvalidCredentials, UserNotFound} from "@/modules/session/api/errors/login-errors";
+import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
 
 @injectable()
 export default class SessionUsecaseImpl implements SessionUsecase {

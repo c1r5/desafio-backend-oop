@@ -3,7 +3,7 @@ import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import {LogoutRequestSchema, LogoutResponse} from "@/modules/authentication/api/schemas/logout-schema";
+import {LogoutRequestSchema, LogoutResponse} from "@/modules/session/api/schemas/logout-schema";
 
 @injectable()
 export default class LogoutController extends AppControllerV1 {

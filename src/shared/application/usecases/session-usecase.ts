@@ -1,6 +1,6 @@
 import {JwtPayload} from "@/shared/api/schemas/jwt-payload-schema";
 import FieldValidation from "@/shared/domain/models/field-validation";
-import {LogoutRequest} from "@/modules/authentication/api/schemas/logout-schema";
+import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
 
 
 export type LoginResult = JwtPayload

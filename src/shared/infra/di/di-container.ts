@@ -15,9 +15,9 @@ import TransactionRepository from "@/shared/domain/repositories/transaction-repo
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
 import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
-import SessionRepositoryImpl from "@/modules/authentication/infra/repositories/session-repository-impl";
+import SessionRepositoryImpl from "@/modules/session/infra/repositories/session-repository-impl";
 import Application from "@/app";
-import LoginController from "@/modules/authentication/api/controllers/login-controller";
+import LoginController from "@/modules/session/api/controllers/login-controller";
 import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import VerifySessionMiddleware from "@/shared/api/middlewares/verify-session-middleware";
@@ -26,8 +26,8 @@ import VerifyUserTransferAbilityMiddleware
     from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import SessionUsecaseImpl from "@/modules/authentication/infra/usecases/session-usecase-impl";
-import LogoutController from "@/modules/authentication/api/controllers/logout-controller";
+import SessionUsecaseImpl from "@/modules/session/infra/usecases/session-usecase-impl";
+import LogoutController from "@/modules/session/api/controllers/logout-controller";
 
 const container = new Container()
 

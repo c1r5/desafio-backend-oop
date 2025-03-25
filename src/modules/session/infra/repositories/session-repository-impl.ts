@@ -2,7 +2,7 @@ import SessionRepository from "@/shared/domain/repositories/session-repository";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource, Repository} from "typeorm";
-import {SessionEntity} from "@/modules/authentication/domain/entities/session-entity";
+import {SessionEntity} from "@/modules/session/domain/entities/session-entity";
 
 @injectable()
 export default class SessionRepositoryImpl implements SessionRepository {
