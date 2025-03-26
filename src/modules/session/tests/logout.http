@@ -1,0 +1,5 @@
+### LOGOUT USERR EXAMPLE
+@ACTIVE_SESSION = <ACCESS_TOKEN>
+GET http://127.0.0.1:3000/api/v1/logout
+Content-Type: application/json
+Authorization: Bearer {{ACTIVE_SESSION}}

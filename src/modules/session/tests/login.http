@@ -1,0 +1,8 @@
+### LOGIN USER EXAMPLE
+POST http://127.0.0.1:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "MariaJulia84@yahoo.com",
+  "password": "1zqUYYmMnD_UndN"
+}
