@@ -1,4 +1,4 @@
-import TransactionUsecaseImpl from "@/modules/transaction/infra/usecases/transaction-usecase-impl";
+import TransactionUsecaseImpl from "@/modules/transaction/application/usecases/transaction-usecase-impl";
 import TransactionRepositoryImpl from "@/modules/transaction/infra/repositories/transaction-repository-impl";
 import TransactionController from "@/modules/transaction/api/controllers/transaction-controller";
 import {UserController} from "@/modules/users/api/controllers/user-controller";
