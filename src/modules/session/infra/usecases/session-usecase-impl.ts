@@ -4,7 +4,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
 import UserRepository from "@/shared/domain/repositories/user-repository";
-import {InvalidCredentials, UserNotFound} from "@/modules/session/api/errors/login-errors";
+import {HasActiveSession, InvalidCredentials, UserNotFound} from "@/modules/session/api/errors/login-errors";
 import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
 
 @injectable()
@@ -42,6 +42,10 @@ export default class SessionUsecaseImpl implements SessionUsecase {
         ])
 
         if (!user_entity) throw new UserNotFound()
+
+        const has_active_session = await this.has_session(user_entity.user_id)
+
+        if (has_active_session) throw new HasActiveSession()
 
         const session_entity = await this.session_repository.new_session(user_entity.user_id)
 

@@ -17,3 +17,9 @@ export class InvalidCredentials extends LoginError {
         super(400, `invalid_${field}`);
     }
 }
+
+export class HasActiveSession extends LoginError {
+    constructor() {
+        super(403, 'has_active_session');
+    }
+}
