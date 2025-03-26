@@ -1,6 +1,6 @@
-import UserDocument from "@/shared/domain/models/user-document";
+import DocumentInterface from "@/shared/domain/models/document-interface";
 
-export default class CnpjDocument implements UserDocument {
+export default class CnpjDocument implements DocumentInterface {
     constructor(
         readonly value: string,
         readonly type: string = 'cnpj',

@@ -1,6 +1,6 @@
-import UserDocument from "@/shared/domain/models/user-document";
+import DocumentInterface from "@/shared/domain/models/document-interface";
 
-export default class CpfDocument implements UserDocument {
+export default class CpfDocument implements DocumentInterface {
     constructor(
         readonly value: string,
         readonly type: string = 'cpf',

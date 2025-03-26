@@ -1,5 +1,5 @@
 import {LoginResult, SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidation from "@/shared/domain/models/field-validation";
+import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
@@ -31,7 +31,7 @@ export default class SessionUsecaseImpl implements SessionUsecase {
         return session.is_active;
     }
 
-    async login(login: FieldValidation, password: FieldValidation): Promise<LoginResult> {
+    async login(login: FieldValidationInterface, password: FieldValidationInterface): Promise<LoginResult> {
         if (!login.is_valid()) throw new InvalidCredentials(login.type)
 
         if (!password.is_valid()) throw new InvalidCredentials(password.type)

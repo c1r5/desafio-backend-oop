@@ -1,5 +1,5 @@
 import {JwtPayload} from "@/shared/api/schemas/jwt-payload-schema";
-import FieldValidation from "@/shared/domain/models/field-validation";
+import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
 import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
 
 
@@ -7,8 +7,8 @@ export type LoginResult = JwtPayload
 
 export interface SessionUsecase {
     login(
-        login: FieldValidation,
-        password: FieldValidation
+        login: FieldValidationInterface,
+        password: FieldValidationInterface
     ): Promise<LoginResult>
 
     logout(

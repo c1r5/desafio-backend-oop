@@ -4,7 +4,7 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {LoginRequest, LoginRequestSchema} from "@/modules/session/api/schemas/login-schema";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidation from "@/shared/domain/models/field-validation";
+import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
 import CpfDocument from "@/shared/domain/models/cpf-document";
 import CnpjDocument from "@/shared/domain/models/cnpj-document";
 import Email from "@/shared/domain/models/email";
@@ -33,7 +33,7 @@ export default class LoginController extends AppControllerV1 {
                 password
             } = request.body;
 
-            let login: FieldValidation | undefined
+            let login: FieldValidationInterface | undefined
 
             if (document && !email) {
                 login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)

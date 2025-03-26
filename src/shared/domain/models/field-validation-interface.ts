@@ -1,4 +1,4 @@
-export default interface FieldValidation {
+export default interface FieldValidationInterface {
     value: string
     type: string
 

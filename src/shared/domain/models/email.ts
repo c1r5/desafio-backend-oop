@@ -1,7 +1,7 @@
-import FieldValidation from "@/shared/domain/models/field-validation";
+import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
 import {z} from "zod";
 
-export default class Email implements FieldValidation {
+export default class Email implements FieldValidationInterface {
     private email_validator = z.string().email();
 
     constructor(
