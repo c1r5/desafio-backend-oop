@@ -1,4 +1,4 @@
-import {UserCreatedPayload} from "@/shared/domain/models/event-models/user-events";
+import {UserCreatedPayload} from "@/shared/domain/models/event/user-events";
 
 export default interface NotificationService {
     init(): Promise<void>;

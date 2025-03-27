@@ -3,10 +3,10 @@ import UserRepository from "@/shared/domain/repositories/user-repository";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/shared/application/usecases/user-usecases";
 import UserEntity from "@/modules/users/domain/entities/user-entity";
-import {EventBusInterface} from "@/shared/domain/models/event-models/event-bus-interface";
+import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import {CannotCreateUser, UserAlreadyExist} from "@/modules/users/application/errors/create-errors";
 import {QueryFailedError} from "typeorm";
-import {UserCreatedPayload, UserUpdatedPayload} from "@/shared/domain/models/event-models/user-events";
+import {UserCreatedPayload, UserUpdatedPayload} from "@/shared/domain/models/event/user-events";
 
 @injectable()
 export default class UserUsecasesImpl implements UserUseCases {

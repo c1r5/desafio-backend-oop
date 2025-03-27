@@ -1,4 +1,4 @@
-import FieldValidationInterface from "@/shared/domain/models/field-models/field-validation-interface";
+import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
 
 export default class Password implements FieldValidationInterface {
     constructor(

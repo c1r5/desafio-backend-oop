@@ -1,8 +1,8 @@
 import NotificationService from "@/modules/notification/domain/services/notification-service";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import {EventBusInterface} from "@/shared/domain/models/event-models/event-bus-interface";
-import {UserCreatedPayload} from "@/shared/domain/models/event-models/user-events";
+import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
+import {UserCreatedPayload} from "@/shared/domain/models/event/user-events";
 
 @injectable()
 export default class EmailNotificationService implements NotificationService {

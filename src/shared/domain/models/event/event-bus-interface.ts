@@ -1,4 +1,4 @@
-import {EventPayload} from "@/shared/domain/models/event-models/event-payload";
+import {EventPayload} from "@/shared/domain/models/event/event-payload";
 
 export interface EventBusInterface {
     publish<T extends EventPayload>(event: string, payload: T): Promise<void>;

@@ -1,5 +1,5 @@
 import {LoginResult, SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidationInterface from "@/shared/domain/models/field-models/field-validation-interface";
+import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";

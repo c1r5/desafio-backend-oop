@@ -4,12 +4,12 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {LoginRequest, LoginRequestSchema} from "@/modules/session/api/schemas/login-schema";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidationInterface from "@/shared/domain/models/field-models/field-validation-interface";
-import CpfDocument from "@/shared/domain/models/field-models/cpf-document";
-import CnpjDocument from "@/shared/domain/models/field-models/cnpj-document";
-import Email from "@/shared/domain/models/field-models/email";
+import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
+import CpfDocument from "@/shared/domain/models/field/cpf-document";
+import CnpjDocument from "@/shared/domain/models/field/cnpj-document";
+import Email from "@/shared/domain/models/field/email";
 import {CPF_REGEX} from "@/shared/application/helpers";
-import Password from "@/shared/domain/models/field-models/password";
+import Password from "@/shared/domain/models/field/password";
 import {LoginError} from "@/modules/session/application/errors/login-errors";
 
 @injectable()

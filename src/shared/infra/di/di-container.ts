@@ -28,7 +28,7 @@ import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware"
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import SessionUsecaseImpl from "@/modules/session/infra/usecases/session-usecase-impl";
 import LogoutController from "@/modules/session/api/controllers/logout-controller";
-import {EventBusInterface} from "@/shared/domain/models/event-models/event-bus-interface";
+import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import {eventbus} from "@/shared/infra/events/eventbus";
 import NotificationService from "@/modules/notification/domain/services/notification-service";
 import EmailNotificationService from "@/modules/notification/application/email-notification-service";

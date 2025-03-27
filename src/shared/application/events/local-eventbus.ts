@@ -1,6 +1,6 @@
-import {EventBusInterface} from "@/shared/domain/models/event-models/event-bus-interface";
+import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import EventEmitter from "events";
-import {EventPayload} from "@/shared/domain/models/event-models/event-payload";
+import {EventPayload} from "@/shared/domain/models/event/event-payload";
 
 export class LocalEventBus implements EventBusInterface {
     private emitter = new EventEmitter();
