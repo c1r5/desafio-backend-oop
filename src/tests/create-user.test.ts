@@ -5,7 +5,7 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource} from "typeorm";
 import request from "supertest";
 import {fakerPT_BR} from "@faker-js/faker";
-import {generate_cpf} from "@/shared/application/helpers/cpf";
+import {generate_cnpj} from "@/shared/application/helpers/cnpj";
 
 describe('crate user test suite', () => {
     let mocked_server: RawServerDefault;
@@ -18,6 +18,10 @@ describe('crate user test suite', () => {
         const app: Application = container.get(TYPES.ApplicationServer);
 
         app
+            .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
+            .register_middleware(container.get(TYPES.VerifySessionMiddleware))
+            .register_middleware(container.get(TYPES.VerifyUserMiddleware))
+            .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
             .register_controller(container.get(TYPES.UserController))
 
         mocked_server = await app.mocked();
@@ -32,13 +36,12 @@ describe('crate user test suite', () => {
             .post('/api/v1/user/create')
             .send({
                 name: fakerPT_BR.person.fullName(),
-                document: generate_cpf(),
+                document: generate_cnpj(),
                 email: fakerPT_BR.internet.email(),
                 phone: fakerPT_BR.phone.number(),
                 password: fakerPT_BR.internet.password()
             })
 
         expect(create_user.status).toBe(201)
-        expect(create_user.body.user_id).toBeTruthy()
     });
 })

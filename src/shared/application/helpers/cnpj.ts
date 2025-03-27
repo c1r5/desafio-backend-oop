@@ -1,21 +1,23 @@
 function digits_mod_cnpj(digits: number[]) {
-    let weightsFirst = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-    let weightsSecond = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 
-    let sumFirst = digits.slice(0, 12).reduce((acc, digit, i) => acc + digit * weightsFirst[i], 0);
-    let firstDigit = (sumFirst % 11) < 2 ? 0 : 11 - (sumFirst % 11);
+    let sum1 = digits.slice(0, 12).reduce((acc, digit, i) => acc + digit * weights1[i], 0);
+    let mod1 = sum1 % 11;
+    let digit1 = mod1 < 2 ? 0 : 11 - mod1;
 
-    digits.push(firstDigit);
+    let weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let sum2 = [...digits.slice(0, 12), digit1].reduce((acc, digit, i) => acc + digit * weights2[i], 0);
+    let mod2 = sum2 % 11;
+    let digit2 = mod2 < 2 ? 0 : 11 - mod2;
 
-    let sumSecond = digits.slice(0, 13).reduce((acc, digit, i) => acc + digit * weightsSecond[i], 0);
-    let secondDigit = (sumSecond % 11) < 2 ? 0 : 11 - (sumSecond % 11);
-
-    return [firstDigit, secondDigit];
+    return [digit1, digit2];
 }
 
 export function generate_cnpj(formatted: boolean = false): string {
     const randomDigits = () => Math.floor(Math.random() * 10);
-    const digits = Array.from({length: 12}, randomDigits);
+    const digits = Array.from({length: 8}, randomDigits);
+
+    digits.push(0, 0, 0, 1)
 
     let [first_check, second_check] = digits_mod_cnpj(digits);
     digits.push(first_check, second_check);

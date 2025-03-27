@@ -88,6 +88,7 @@ export class UserController extends AppControllerV1 {
                 reply.status(201).send({message: 'created'})
             } catch (e) {
                 if (e instanceof UserAlreadyExist || e instanceof CannotCreateUser) {
+                    app.log.error(e)
                     return reply.status(400).send({message: e.message})
                 }
 
