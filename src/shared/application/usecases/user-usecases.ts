@@ -1,11 +1,9 @@
 import UserEntity from "@/modules/users/domain/entities/user-entity";
 
 export default interface UserUseCases {
-    create_user(entity: Partial<UserEntity>): Promise<string>
+    create_user(entity: Partial<UserEntity>): Promise<void>
 
-    update_user(id: string, entity: Partial<UserEntity>): Promise<UserEntity | null>
+    update_user(id: string, entity: Partial<UserEntity>): Promise<void>
 
-    get_user_by_id(id: string): Promise<UserEntity | null>
-
-    is_active(user_id: string): Promise<boolean>;
+    is_active(id: string): Promise<boolean>
 }

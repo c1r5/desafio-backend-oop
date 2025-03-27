@@ -10,6 +10,7 @@ import Application from "@/app";
         .register_middleware(container.get(TYPES.VerifySessionMiddleware))
         .register_middleware(container.get(TYPES.VerifyUserMiddleware))
         .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
+        .register_controller(container.get(TYPES.UserController))
         .register_controller(container.get(TYPES.LoginController))
         .register_controller(container.get(TYPES.LogoutController))
         .start_application()

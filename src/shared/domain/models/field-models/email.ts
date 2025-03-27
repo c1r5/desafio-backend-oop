@@ -1,4 +1,4 @@
-import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
+import FieldValidationInterface from "@/shared/domain/models/field-models/field-validation-interface";
 import {z} from "zod";
 
 export default class Email implements FieldValidationInterface {

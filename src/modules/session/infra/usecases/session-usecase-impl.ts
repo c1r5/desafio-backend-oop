@@ -1,10 +1,10 @@
 import {LoginResult, SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidationInterface from "@/shared/domain/models/field-validation-interface";
+import FieldValidationInterface from "@/shared/domain/models/field-models/field-validation-interface";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
 import UserRepository from "@/shared/domain/repositories/user-repository";
-import {HasActiveSession, InvalidCredentials, UserNotFound} from "@/modules/session/api/errors/login-errors";
+import {HasActiveSession, InvalidCredentials, UserNotFound} from "@/modules/session/application/errors/login-errors";
 import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
 
 @injectable()

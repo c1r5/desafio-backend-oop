@@ -13,7 +13,7 @@ import UserUseCases from "@/shared/application/usecases/user-usecases";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import TransactionRepository from "@/shared/domain/repositories/transaction-repository";
 import {AppDataSource} from "@/shared/infra/datasources/app-data-source";
-import UserUseCasesImpl from "@/modules/users/infra/usecases/user-use-cases-impl";
+import UserUsecasesImpl from "@/modules/users/application/usecases/user-usecases-impl";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
 import SessionRepositoryImpl from "@/modules/session/infra/repositories/session-repository-impl";
 import Application from "@/app";
@@ -28,17 +28,22 @@ import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware"
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import SessionUsecaseImpl from "@/modules/session/infra/usecases/session-usecase-impl";
 import LogoutController from "@/modules/session/api/controllers/logout-controller";
+import {EventBusInterface} from "@/shared/domain/models/event-models/event-bus-interface";
+import {eventbus} from "@/shared/infra/events/eventbus";
+import NotificationService from "@/modules/notification/domain/services/notification-service";
+import EmailNotificationService from "@/modules/notification/application/email-notification-service";
 
 const container = new Container()
 
 container.bind<DataSource>(TYPES.DataSource).toConstantValue(AppDataSource)
+container.bind<EventBusInterface>(TYPES.EventBus).toConstantValue(eventbus)
 container.bind<Application>(TYPES.ApplicationServer).to(Application)
 
 container.bind<SessionRepository>(TYPES.SessionRepository).to(SessionRepositoryImpl)
 container.bind<SessionUsecase>(TYPES.SessionUseCase).to(SessionUsecaseImpl)
 
 container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl)
-container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUseCasesImpl)
+container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUsecasesImpl)
 
 container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl)
 container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
@@ -52,4 +57,7 @@ container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifySessionMiddleware).to(VerifySessionMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
+
+container.bind<NotificationService>(TYPES.EmailNotificationService).to(EmailNotificationService)
+
 export {container}

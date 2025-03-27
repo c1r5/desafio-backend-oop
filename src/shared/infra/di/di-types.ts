@@ -20,4 +20,8 @@ export const TYPES = {
     VerifySessionMiddleware: Symbol.for('SessionValidationMiddleware'),
     VerifyUserMiddleware: Symbol.for('UserValidationMiddleware'),
     VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware'),
+
+    EventBus: Symbol.for('EventBus'),
+
+    EmailNotificationService: Symbol.for('EmailNotificationService')
 };

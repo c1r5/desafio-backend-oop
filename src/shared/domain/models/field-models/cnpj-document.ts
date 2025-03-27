@@ -1,4 +1,4 @@
-import DocumentInterface from "@/shared/domain/models/document-interface";
+import DocumentInterface from "@/shared/domain/models/field-models/document-interface";
 
 export default class CnpjDocument implements DocumentInterface {
     constructor(
