@@ -25,11 +25,13 @@ export default class TransactionUsecaseImpl implements TransactionUsecase {
         await query_runner.startTransaction()
 
         const payer_entity = await query_runner.manager.findOne(UserEntity, {
-            where: {user_id: payer_id}
+            where: {user_id: payer_id},
+            lock: { mode: "pessimistic_write" }
         });
 
         const payee_entity = await query_runner.manager.findOne(UserEntity, {
-            where: {user_id: payee_id}
+            where: {user_id: payee_id},
+            lock: { mode: "pessimistic_write" }
         });
 
         if (!payer_entity || !payee_entity) {
