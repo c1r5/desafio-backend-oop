@@ -26,7 +26,7 @@ _Serviços de pagamento simplificado_
 - Cache: Redis
 - Banco de dados: Postgresql
 - Arquitetura: DDD
-- Cobertura de testes atual: 0%
+- Cobertura de testes atual: 50%
 
 ## Tasks
 
