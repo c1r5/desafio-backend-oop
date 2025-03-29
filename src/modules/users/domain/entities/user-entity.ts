@@ -1,5 +1,5 @@
 import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
-import {CurrencyTransformer} from "@/modules/users/domain/models/CurrencyTransformer";
+import {CurrencyTransformer} from "@/modules/users/domain/models/currency-transformer";
 
 @Entity({name: "users"})
 export default class UserEntity extends BaseEntity {
