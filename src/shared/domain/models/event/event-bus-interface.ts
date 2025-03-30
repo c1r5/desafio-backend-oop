@@ -1,7 +1,14 @@
-import {EventPayload} from "@/shared/domain/models/event/event-payload";
+
+
+export interface EventPayload {
+    event_id?: string;
+}
+export type EventHandler<T extends EventPayload> = (payload: T) => Promise<void>;
+
+export type EventType = symbol
 
 export interface EventBusInterface {
-    publish<T extends EventPayload>(event: string, payload: T): Promise<void>;
-
-    subscribe<T extends EventPayload>(event: string, handler: (payload: T) => void): Promise<void>;
+    publish<T extends EventPayload>(event: EventType, payload: T): Promise<void>;
+    subscribe<T extends EventPayload>(event: EventType, handler: EventHandler<T>): Promise<void>;
+    unsubscribe<T extends EventPayload>(event: EventType, handler: EventHandler<T>): Promise<void>;
 }

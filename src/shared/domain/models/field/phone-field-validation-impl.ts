@@ -1,6 +1,6 @@
 import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
 
-export default class Phone implements FieldValidationInterface {
+export default class PhoneFieldValidationImpl implements FieldValidationInterface {
     constructor(
         readonly value: string,
         readonly type: string = 'phone'

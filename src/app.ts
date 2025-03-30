@@ -7,7 +7,8 @@ import {serializerCompiler, validatorCompiler} from "fastify-type-provider-zod";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import fastifyAuth from "@fastify/auth";
 import jwt from "@fastify/jwt";
-import NotificationService from "@/modules/notification/domain/services/notification-service";
+
+import NotificationUsecase from "@/shared/application/usecases/notification-usecase";
 
 
 @injectable()
@@ -18,7 +19,7 @@ export default class Application {
 
     constructor(
         @inject(TYPES.DataSource) private datasource: DataSource,
-        @inject(TYPES.EmailNotificationService) private email_notification_service: NotificationService
+        @inject(TYPES.EmailNotificationService) private email_notification_service: NotificationUsecase
     ) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
@@ -39,7 +40,7 @@ export default class Application {
 
     async start_application(): Promise<void> {
         await this.datasource.initialize()
-        await this.email_notification_service.init()
+        await this.email_notification_service.initialize()
         await this.fastify.listen({
             port: 3000
         })

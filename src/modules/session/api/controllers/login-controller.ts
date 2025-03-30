@@ -7,9 +7,9 @@ import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
 import CpfDocument from "@/shared/domain/models/field/cpf-document";
 import CnpjDocument from "@/shared/domain/models/field/cnpj-document";
-import Email from "@/shared/domain/models/field/email";
+import EmailFieldValidationImpl from "@/shared/domain/models/field/email-field-validation-impl";
 import {CPF_REGEX} from "@/shared/application/helpers";
-import Password from "@/shared/domain/models/field/password";
+import PasswordFieldValidationImpl from "@/shared/domain/models/field/password-field-validation-impl";
 import {LoginError} from "@/modules/session/application/errors/login-errors";
 
 @injectable()
@@ -38,7 +38,7 @@ export default class LoginController extends AppControllerV1 {
             if (document && !email) {
                 login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
             } else if (email && !document) {
-                login = new Email(email)
+                login = new EmailFieldValidationImpl(email)
             }
 
             if (!login) {
@@ -46,7 +46,7 @@ export default class LoginController extends AppControllerV1 {
             }
 
             try {
-                const pwd = new Password(password)
+                const pwd = new PasswordFieldValidationImpl(password)
                 const payload = await this.login_usecase.login(login, pwd)
                 const token = server.jwt.sign(payload)
                 return reply.status(200).send({

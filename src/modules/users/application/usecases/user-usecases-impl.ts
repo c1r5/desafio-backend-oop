@@ -6,7 +6,8 @@ import UserEntity from "@/modules/users/domain/entities/user-entity";
 import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import {CannotCreateUser, UserAlreadyExist} from "@/modules/users/application/errors/create-errors";
 import {QueryFailedError} from "typeorm";
-import {UserCreatedPayload, UserUpdatedPayload} from "@/shared/domain/models/event/user-events";
+import {UserCreatedPayload} from "@/shared/domain/models/event/user-event-payloads";
+import {EVENT_TYPES} from "@/shared/domain/models/event/event-types";
 
 @injectable()
 export default class UserUsecasesImpl implements UserUseCases {
@@ -30,11 +31,11 @@ export default class UserUsecasesImpl implements UserUseCases {
             let entity_to_update = await this.user_repository.orm.update(id, entity);
 
             if (entity_to_update.affected && entity.email) {
-                await this.event_bus.publish<UserUpdatedPayload>('user.updated', {email: entity.email});
+                // await this.event_bus.publish<UserUpdatedPayload>('user.updated', {email: entity.email});
             }
 
             if (entity_to_update.affected && entity.phone) {
-                await this.event_bus.publish<UserUpdatedPayload>('user.updated', {phone: entity.phone});
+                // await this.event_bus.publish<UserUpdatedPayload>('user.updated', {phone: entity.phone});
             }
         } catch (e) {
             throw e
@@ -45,7 +46,7 @@ export default class UserUsecasesImpl implements UserUseCases {
         try {
             let result = await this.user_repository.orm.save(entity);
 
-            await this.event_bus.publish<UserCreatedPayload>('user.created', {email: result.email});
+            await this.event_bus.publish<UserCreatedPayload>(EVENT_TYPES.UserCreatedEvent, {email: result.email});
         } catch (e) {
             if (e instanceof QueryFailedError) {
                 switch (e.driverError.errno) {

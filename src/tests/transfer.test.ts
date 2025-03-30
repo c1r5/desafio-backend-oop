@@ -19,7 +19,7 @@ describe('transfer test suite', () => {
     })
 
     it('should PF user transfer to PJ user', async () => {
-        await transaction_usecases.transfer(
+        await transaction_usecases.new_transaction(
             100n,
             "248f8f1c-ef90-44e8-b487-012796b76e9e",
             "c65a1bad-5c92-49e8-b454-3c45746e69d1"

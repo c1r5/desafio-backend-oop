@@ -1,6 +1,6 @@
 import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
 
-export default class Password implements FieldValidationInterface {
+export default class PasswordFieldValidationImpl implements FieldValidationInterface {
     constructor(
         readonly value: string,
         readonly type: string = 'password',
