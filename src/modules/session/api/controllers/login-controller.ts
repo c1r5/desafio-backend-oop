@@ -4,13 +4,13 @@ import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {LoginRequest, LoginRequestSchema} from "@/modules/session/api/schemas/login-schema";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import FieldValidationInterface from "@/shared/domain/models/field/field-validation-interface";
-import CpfDocument from "@/shared/domain/models/field/cpf-document";
-import CnpjDocument from "@/shared/domain/models/field/cnpj-document";
-import EmailFieldValidationImpl from "@/shared/domain/models/field/email-field-validation-impl";
 import {CPF_REGEX} from "@/shared/application/helpers";
-import PasswordFieldValidationImpl from "@/shared/domain/models/field/password-field-validation-impl";
 import {LoginError} from "@/modules/session/application/errors/login-errors";
+import InputValidatorInterface from "@/shared/domain/models/validators/input-validator-interface";
+import CpfDocument from "@/shared/domain/models/validators/cpf-document";
+import CnpjDocument from "@/shared/domain/models/validators/cnpj-document";
+import EmailValidator from "@/shared/domain/models/validators/email-validator";
+import PasswordValidator from "@/shared/domain/models/validators/password-validator";
 
 @injectable()
 export default class LoginController extends AppControllerV1 {
@@ -33,12 +33,12 @@ export default class LoginController extends AppControllerV1 {
                 password
             } = request.body;
 
-            let login: FieldValidationInterface | undefined
+            let login: InputValidatorInterface | undefined
 
             if (document && !email) {
                 login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
             } else if (email && !document) {
-                login = new EmailFieldValidationImpl(email)
+                login = new EmailValidator(email)
             }
 
             if (!login) {
@@ -46,7 +46,7 @@ export default class LoginController extends AppControllerV1 {
             }
 
             try {
-                const pwd = new PasswordFieldValidationImpl(password)
+                const pwd = new PasswordValidator(password)
                 const payload = await this.login_usecase.login(login, pwd)
                 const token = server.jwt.sign(payload)
                 return reply.status(200).send({

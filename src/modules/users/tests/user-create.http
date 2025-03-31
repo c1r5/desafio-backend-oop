@@ -1,0 +1,13 @@
+### GET request to example server
+POST http://127.0.0.1:3000/api/v1/user/create
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao.silva@email.com",
+  "document": "123.456.789-09",
+  "phone": "+55 11 98765-4321",
+  "password": "SenhaForte123!"
+}
+
+###

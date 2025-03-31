@@ -1,5 +1,4 @@
 import {BaseEntity, Column, Entity, PrimaryColumn} from "typeorm";
-import {CurrencyTransformer} from "@/modules/users/domain/models/currency-transformer";
 
 @Entity({name: "users"})
 export default class UserEntity extends BaseEntity {
@@ -27,7 +26,7 @@ export default class UserEntity extends BaseEntity {
     @Column({type: 'varchar', length: 100, default: "inactive"})
     status!: "active" | "inactive" | "blocked";
 
-    @Column({type: 'bigint', default: 0n, transformer: new CurrencyTransformer()})
+    @Column({type: 'bigint', default: 0n})
     balance!: bigint
 
     @Column({type: 'numeric', default: () => 'CURRENT_TIMESTAMP'})

@@ -23,5 +23,5 @@ export const TYPES = {
 
     EventBus: Symbol.for('EventBus'),
 
-    EmailNotificationService: Symbol.for('EmailNotificationService')
+    NotificationEventManager: Symbol.for('NotificationEventManager')
 };

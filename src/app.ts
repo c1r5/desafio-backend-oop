@@ -8,7 +8,7 @@ import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import fastifyAuth from "@fastify/auth";
 import jwt from "@fastify/jwt";
 
-import NotificationUsecase from "@/shared/application/usecases/notification-usecase";
+import NotificationEventManagerImpl from "@/modules/notification/application/services/notification-event-manager-impl";
 
 
 @injectable()
@@ -19,7 +19,7 @@ export default class Application {
 
     constructor(
         @inject(TYPES.DataSource) private datasource: DataSource,
-        @inject(TYPES.EmailNotificationService) private email_notification_service: NotificationUsecase
+        @inject(TYPES.NotificationEventManager) private notification_event_manager: NotificationEventManagerImpl
     ) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
@@ -40,7 +40,7 @@ export default class Application {
 
     async start_application(): Promise<void> {
         await this.datasource.initialize()
-        await this.email_notification_service.initialize()
+        await this.notification_event_manager.initialize()
         await this.fastify.listen({
             port: 3000
         })

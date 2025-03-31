@@ -16,8 +16,7 @@ export const userCreateBodySchema = z.object({
         return validate_cpf(s) || validate_cnpj(s)
     }, 'invalid_document'),
     phone: z.string(),
-    password: z.string(),
-    type: z.string().optional()
+    password: z.string()
 });
 
 export type UserCreateBody = z.infer<typeof userCreateBodySchema>

@@ -30,8 +30,8 @@ import SessionUsecaseImpl from "@/modules/session/infra/usecases/session-usecase
 import LogoutController from "@/modules/session/api/controllers/logout-controller";
 import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import {eventbus} from "@/shared/infra/events/eventbus";
-import NotificationUsecase from "@/shared/application/usecases/notification-usecase";
-import EmailNotificationUsecaseImpl from "@/modules/notification/application/usecases/email-notification-usecase-impl";
+import NotificationEventManagerInterface from "@/shared/application/services/notification-event-manager-interface";
+import NotificationEventManagerImpl from "@/modules/notification/application/services/notification-event-manager-impl";
 
 const container = new Container()
 
@@ -58,6 +58,6 @@ container.bind<AppMiddleware>(TYPES.VerifySessionMiddleware).to(VerifySessionMid
 container.bind<AppMiddleware>(TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
 container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
 
-container.bind<NotificationUsecase>(TYPES.EmailNotificationService).to(EmailNotificationUsecaseImpl)
+container.bind<NotificationEventManagerInterface>(TYPES.NotificationEventManager).to(NotificationEventManagerImpl)
 
 export {container}
