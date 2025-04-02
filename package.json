@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.8.4",
     "@fastify/auth": "^5.0.2",
     "@fastify/jwt": "^9.1.0",
     "@fastify/swagger": "^9.4.2",
