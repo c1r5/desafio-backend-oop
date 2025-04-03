@@ -1,8 +1,8 @@
 import {z} from "zod";
 
-export const transfer_body_schema = z.object({
+export const TRANSFER_REQUEST_SCHEMA = z.object({
     recipient_id: z.string(),
     amount: z.string()
 });
 
-export type TransferBody = z.infer<typeof transfer_body_schema>
+export type TransferBody = z.infer<typeof TRANSFER_REQUEST_SCHEMA>

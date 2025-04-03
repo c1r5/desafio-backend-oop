@@ -3,7 +3,7 @@ import {FastifyInstance, RouteShorthandOptions} from "fastify";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import {LogoutRequestSchema, LogoutResponse} from "@/modules/session/api/schemas/logout-schema";
+import {LOGOUT_REQUEST_SCHEMA, LogoutResponse} from "@/modules/session/api/schemas/logout-schema";
 
 @injectable()
 export default class LogoutController extends AppControllerV1 {
@@ -23,7 +23,7 @@ export default class LogoutController extends AppControllerV1 {
                 ]
             }, async (request, reply) => {
                 try {
-                    await this.session_usecase.logout(LogoutRequestSchema.parse(request.user))
+                    await this.session_usecase.logout(LOGOUT_REQUEST_SCHEMA.parse(request.user))
                     return reply.status(200).send({message: 'logged_out'})
                 } catch (e) {
                     app.log.error(e)

@@ -1,6 +1,6 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/shared/application/usecases/user-usecases";
@@ -27,7 +27,7 @@ export default class VerifyUserStatusMiddleware implements AppMiddleware {
                 user
             } = request;
 
-            const parsed = jwtPayloadSchema.parse(user)
+            const parsed = JWT_PAYLOAD_SCHEMA.parse(user)
 
             const is_user_active = await this.user_usecase.is_active(parsed.user_id)
 

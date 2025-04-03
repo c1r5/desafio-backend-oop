@@ -1,7 +1,7 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {injectable} from "inversify";
-import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -23,7 +23,7 @@ export default class VerifyUserTransferAbilityMiddleware implements AppMiddlewar
             reply: FastifyReply
         ) => {
 
-            const {user_type} = jwtPayloadSchema.parse(request.user);
+            const {user_type} = JWT_PAYLOAD_SCHEMA.parse(request.user);
 
             if (!user_type) {
                 return reply.status(401).send({

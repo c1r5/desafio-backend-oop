@@ -2,7 +2,7 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {FastifyInstance, RouteShorthandOptions} from "fastify";
-import {LoginRequest, LoginRequestSchema} from "@/modules/session/api/schemas/login-schema";
+import {LoginRequest, LOGIN_REQUEST_SCHEMA} from "@/modules/session/api/schemas/login-schema";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import {CPF_REGEX} from "@/shared/application/helpers";
 import {LoginError} from "@/modules/session/application/errors/login-errors";
@@ -24,7 +24,7 @@ export default class LoginController extends AppControllerV1 {
     register(server: FastifyInstance, options?: RouteShorthandOptions): void {
         server.post<{ Body: LoginRequest }>('/login', {
             schema: {
-                body: LoginRequestSchema
+                body: LOGIN_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
             const {

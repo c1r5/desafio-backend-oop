@@ -5,7 +5,7 @@ import {FastifyInstance} from "fastify";
 import UserUseCases from "@/shared/application/usecases/user-usecases";
 import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
 import TransferTransactionImpl from "@/modules/transaction/domain/models/transfer-transaction-impl";
-import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 import {TransferBody} from "@/modules/transaction/api/schemas/transfer-body-schema";
 
 @injectable()
@@ -29,7 +29,7 @@ export default class TransactionController extends AppControllerV1 {
                 app.verify_user_transfer_ability
             ])
         }, async (request, reply) => {
-            const { user_id } = jwtPayloadSchema.parse(request.user)
+            const { user_id } = JWT_PAYLOAD_SCHEMA.parse(request.user)
             const { recipient_id, amount } = request.body;
 
             const new_transfer_transaction = new TransferTransactionImpl();

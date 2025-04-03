@@ -1,15 +1,15 @@
 import {z} from "zod";
 
-export const userUpdateBodySchema = z.object({
+export const USER_UPDATE_REQUEST_SCHEMA = z.object({
     email: z.string().email().optional(),
     phone: z.string().optional(),
 });
 
-export type UserUpdateBody = z.infer<typeof userUpdateBodySchema>
+export type UserUpdateBody = z.infer<typeof USER_UPDATE_REQUEST_SCHEMA>
 
-export const userUpdateResponseSchema = z.object({
+export const USER_UPDATE_RESPONSE_SCHEMA = z.object({
     message: z.string(),
     user_id: z.string().optional()
 });
 
-export type UserUpdateResponse = z.infer<typeof userUpdateResponseSchema>
+export type UserUpdateResponse = z.infer<typeof USER_UPDATE_RESPONSE_SCHEMA>

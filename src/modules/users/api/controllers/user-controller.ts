@@ -5,17 +5,17 @@ import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {FastifyInstance} from "fastify";
 import {
     UserCreateBody,
-    userCreateBodySchema,
+    USER_CREATE_REQUEST_SCHEMA,
     UserCreateResponse,
-    userCreateResponseSchema
+    USER_CREATE_RESPONSE_SCHEMA
 } from "@/modules/users/api/schemas/user-create-schemas";
 
 import {
     UserUpdateBody,
-    userUpdateBodySchema,
+    USER_UPDATE_REQUEST_SCHEMA,
     UserUpdateResponse
 } from "@/modules/users/api/schemas/user-update-schemas";
-import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 import {CannotCreateUser, UserAlreadyExist} from "@/modules/users/application/errors/create-errors";
 
 
@@ -41,10 +41,10 @@ export class UserController extends AppControllerV1 {
                 app.verify_session
             ]),
             schema: {
-                body: userUpdateBodySchema
+                body: USER_UPDATE_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
-            const {user_id} = jwtPayloadSchema.parse(request.user)
+            const {user_id} = JWT_PAYLOAD_SCHEMA.parse(request.user)
             try {
                 const is_active = await this.user_usecases.is_active(user_id)
 
@@ -70,9 +70,9 @@ export class UserController extends AppControllerV1 {
         }>('/user/create', {
             schema: {
                 response: {
-                    201: userCreateResponseSchema
+                    201: USER_CREATE_RESPONSE_SCHEMA
                 },
-                body: userCreateBodySchema
+                body: USER_UPDATE_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
             app.log.info(`[+] Routing ${app.prefix}/user/create`)

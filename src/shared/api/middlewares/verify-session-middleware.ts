@@ -3,7 +3,7 @@ import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import {jwtPayloadSchema} from "@/shared/api/schemas/jwt-payload-schema";
+import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -22,7 +22,7 @@ export default class VerifySessionMiddleware implements AppMiddleware {
             request: FastifyRequest,
             reply: FastifyReply
         ) => {
-            const {user_id} = jwtPayloadSchema.parse(request.user)
+            const {user_id} = JWT_PAYLOAD_SCHEMA.parse(request.user)
             //
             const is_valid_session = await this.session_usecase.has_session(user_id)
 
