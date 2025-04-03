@@ -48,16 +48,7 @@ export default class UserUsecasesImpl implements UserUseCases {
 
             await this.event_bus.publish<UserCreatedPayload>(EVENT_TYPES.UserCreatedEvent, {email: result.email});
         } catch (e) {
-            if (e instanceof QueryFailedError) {
-                switch (e.driverError.errno) {
-                    case 19:
-                        throw new UserAlreadyExist()
-                    default:
-                        throw new CannotCreateUser()
-                }
-            }
-
-            throw new CannotCreateUser()
+            throw new CannotCreateUser((e as Error).message)
         }
     }
 }

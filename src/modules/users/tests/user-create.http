@@ -3,11 +3,9 @@ POST http://127.0.0.1:3000/api/v1/user/create
 Content-Type: application/json
 
 {
-  "name": "João Silva",
-  "email": "joao1.silva@email.com",
-  "document": "123.456.789-09",
-  "phone": "+55 11 98765-4321",
-  "password": "SenhaForte123!"
+  "name": "Maria Oliveira",
+  "email": "maria.oliveira1@email.com",
+  "document": "987.654.321-00",
+  "phone": "+55 21 91234-5678",
+  "password": "SenhaSegura456!"
 }
-
-###

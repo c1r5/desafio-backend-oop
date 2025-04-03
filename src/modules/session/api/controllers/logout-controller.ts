@@ -1,5 +1,5 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import {FastifyInstance, RouteShorthandOptions} from "fastify";
+import {FastifyInstance, preHandlerHookHandler, RouteShorthandOptions} from "fastify";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
@@ -7,6 +7,9 @@ import {LOGOUT_REQUEST_SCHEMA, LogoutResponse} from "@/modules/session/api/schem
 
 @injectable()
 export default class LogoutController extends AppControllerV1 {
+    auth_middleware(server: FastifyInstance): preHandlerHookHandler {
+        throw new Error("Method not implemented.");
+    }
     constructor(
         @inject(TYPES.SessionUseCase) private session_usecase: SessionUsecase
     ) {

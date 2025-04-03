@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start:dev": "npx tsx watch src/index.ts",
+    "build": "node build.js",
     "test": "jest"
   },
   "keywords": [],
@@ -27,6 +28,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "esbuild": "0.25.2",
+    "esbuild-plugin-tsc": "0.5.0",
     "@faker-js/faker": "^9.6.0",
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.3",

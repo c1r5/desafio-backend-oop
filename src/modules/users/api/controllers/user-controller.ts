@@ -2,7 +2,7 @@ import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
 import UserUseCases from "@/shared/application/usecases/user-usecases";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import {FastifyInstance} from "fastify";
+import {FastifyInstance, preHandlerHookHandler} from "fastify";
 import {
     UserCreateBody,
     USER_CREATE_REQUEST_SCHEMA,
@@ -20,6 +20,9 @@ import {CannotCreateUser, UserAlreadyExist} from "@/modules/users/application/er
 
 
 export class UserController extends AppControllerV1 {
+    auth_middleware(server: FastifyInstance): preHandlerHookHandler {
+        throw new Error("Method not implemented.");
+    }
     constructor(
         @inject(TYPES.UserUseCases) private user_usecases: UserUseCases
     ) {
@@ -72,16 +75,10 @@ export class UserController extends AppControllerV1 {
                 response: {
                     201: USER_CREATE_RESPONSE_SCHEMA
                 },
-                body: USER_UPDATE_REQUEST_SCHEMA
+                body: USER_CREATE_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
             app.log.info(`[+] Routing ${app.prefix}/user/create`)
-            const {body} = request;
-
-            const CNPJ_REGEX = /^(\d{2}\.?(\d{3}\.?(\d{3})\/?0001-?\d{2}))/;
-            const CPF_REGEX = /^(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})$/;
-
-            body.type = body.document?.match(CNPJ_REGEX) ? 'pj' : body.document?.match(CPF_REGEX) ? 'pf' : ''
 
             try {
                 await this.user_usecases.create_user(request.body)

@@ -17,7 +17,7 @@ export default class TransactionUsecaseImpl implements TransactionUsecase {
 
     new_transaction(transaction: Transaction): void {
         const options = transaction.transaction_options;
-        
+        console.log(options)
     }
 
     // async new_transaction(transaction: Transaction): Promise<void> {

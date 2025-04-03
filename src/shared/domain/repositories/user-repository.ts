@@ -1,4 +1,4 @@
-import AppRepository from "@/shared/domain/repositories/AppRepository";
+import AppRepository from "@/shared/domain/repositories/app-repository";
 import {Repository} from "typeorm";
 import UserEntity from "@/modules/users/domain/entities/user-entity";
 

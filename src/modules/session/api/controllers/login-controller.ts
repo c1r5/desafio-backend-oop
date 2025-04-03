@@ -1,7 +1,7 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import {inject, injectable} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import {FastifyInstance, RouteShorthandOptions} from "fastify";
+import {FastifyInstance, preHandlerHookHandler, RouteShorthandOptions} from "fastify";
 import {LoginRequest, LOGIN_REQUEST_SCHEMA} from "@/modules/session/api/schemas/login-schema";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
 import {CPF_REGEX} from "@/shared/application/helpers";
@@ -14,6 +14,9 @@ import PasswordValidator from "@/shared/domain/models/validators/password-valida
 
 @injectable()
 export default class LoginController extends AppControllerV1 {
+    auth_middleware(server: FastifyInstance): preHandlerHookHandler {
+        throw new Error("Method not implemented.");
+    }
 
     constructor(
         @inject(TYPES.SessionUseCase) private login_usecase: SessionUsecase
