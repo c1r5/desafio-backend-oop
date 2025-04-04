@@ -21,7 +21,7 @@ export default class UserModel extends BaseEntity {
     password!: string;
 
     @Column({ type: 'varchar', length: 10 })
-    type!: string;
+    user_type!: string;
 
     @Column({ type: 'varchar', length: 100, default: "inactive" })
     status!: "active" | "inactive" | "blocked";

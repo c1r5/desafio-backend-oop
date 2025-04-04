@@ -1,21 +1,33 @@
 import { UserDocument } from "./user-document";
+import { ValueObject } from "./value-object";
 
 export class CPF implements UserDocument {
-  constructor(private readonly value: string) { }
-  mask(): string {
-    return this.value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  private constructor(private readonly document: string) { }
+
+  get type(): string {
+    return 'PF';
+  }
+  get value(): string {
+    return CPF.format(this.document);
   }
 
-  get document(): string {
-    return CPF.format(this.value);
+  equals(other: ValueObject): boolean {
+    if (!(other instanceof CPF)) {
+      return false;
+    }
+    return this.document === other.value;
   }
-  
-  static from(value: string): CPF {
-    if (!this.is_valid(value)) {
+
+  mask(): string {
+    return this.document.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  static from(document: string): CPF {
+    const cleanedCpf = document.replace(/\D/g, '');
+    if (!CPF.is_valid(cleanedCpf)) {
       throw new Error('Invalid CPF');
     }
-    
-    return new CPF(value);
+    return new CPF(cleanedCpf);
   }
 
   static generate(formatted: boolean = false): string {

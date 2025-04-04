@@ -2,7 +2,10 @@ import { UserDocument } from "./user-document";
 import { ValueObject } from "./value-object";
 
 export class CNPJ implements UserDocument {
-  constructor(private readonly document: string) { }
+  private constructor(
+    private readonly document: string
+  ) { }
+
 
   equals(other: ValueObject): boolean {
     if (!(other instanceof CNPJ)) {
@@ -17,6 +20,10 @@ export class CNPJ implements UserDocument {
 
   get value(): string {
     return CNPJ.format(this.document);
+  }
+
+  get type(): string {
+    return 'PJ';
   }
 
   static from(value: string): CNPJ {

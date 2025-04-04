@@ -50,7 +50,7 @@ export default class SessionUsecaseImpl implements SessionUsecase {
         return {
             user_id: user_entity.user_id,
             session_id: session_entity.session_id,
-            user_type: user_entity.type
+            user_type: user_entity.user_type
         }
     }
 }
