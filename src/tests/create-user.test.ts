@@ -1,11 +1,11 @@
-import {RawServerDefault} from "fastify";
-import {container} from "@/shared/infra/di/di-container";
+import { RawServerDefault } from "fastify";
+import { container } from "@/shared/infra/di/di-container";
 import Application from "@/app";
-import {TYPES} from "@/shared/infra/di/di-types";
-import {DataSource} from "typeorm";
+import { TYPES } from "@/shared/infra/di/di-types";
+import { DataSource } from "typeorm";
 import request from "supertest";
-import {fakerPT_BR} from "@faker-js/faker";
-import {generate_cnpj} from "@/shared/application/helpers/cnpj";
+import { fakerPT_BR } from "@faker-js/faker";
+import { generate_cnpj } from "@/shared/application/helpers/cnpj-helper";
 
 describe('crate user test suite', () => {
     let mocked_server: RawServerDefault;

@@ -1,8 +1,8 @@
-import {inject, injectable} from "inversify";
-import TransactionEntity from "@/modules/transaction/domain/entities/transaction-entity";
+import { inject, injectable } from "inversify";
+import TransactionEntity from "@/modules/transaction/domain/models/transaction-model";
 import TransactionRepository from "@/shared/domain/repositories/transaction-repository";
-import {DataSource, Repository} from "typeorm";
-import {TYPES} from "@/shared/infra/di/di-types";
+import { DataSource, Repository } from "typeorm";
+import { TYPES } from "@/shared/infra/di/di-types";
 
 @injectable()
 export default class TransactionRepositoryImpl implements TransactionRepository {

@@ -1,12 +1,12 @@
-import {Repository} from "typeorm";
-import {SessionEntity} from "@/modules/session/domain/entities/session-entity";
+import { Repository } from "typeorm";
+import { SessionModel } from "@/modules/session/domain/models/session-model";
 
 export default interface SessionRepository {
-    orm: Repository<SessionEntity>;
+    orm: Repository<SessionModel>;
 
-    new_session(user_id: string): Promise<SessionEntity>;
+    new_session(user_id: string): Promise<SessionModel>;
 
-    find_session(user_id: string): Promise<SessionEntity | null>;
+    find_session(user_id: string): Promise<SessionModel | null>;
 
-    revoke_session(session: SessionEntity): Promise<void>;
+    revoke_session(session: SessionModel): Promise<void>;
 }

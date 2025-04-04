@@ -1,4 +1,4 @@
-import {Repository} from "typeorm";
-import TransactionEntity from "../../../modules/transaction/domain/entities/transaction-entity";
+import { Repository } from "typeorm";
+import TransactionEntity from "../../../modules/transaction/domain/models/transaction-model";
 
-export default interface TransactionRepository {}
+export default interface TransactionRepository { }
