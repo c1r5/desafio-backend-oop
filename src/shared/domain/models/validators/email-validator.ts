@@ -5,7 +5,7 @@ export default class EmailValidator implements InputValidatorInterface {
     private email_validator = z.string().email();
 
     constructor(
-        readonly value: string,
+        readonly value: string | undefined,
         readonly type: string = 'email'
     ) {
     }

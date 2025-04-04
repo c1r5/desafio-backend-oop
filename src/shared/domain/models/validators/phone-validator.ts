@@ -2,12 +2,12 @@ import InputValidatorInterface from "@/shared/domain/models/validators/input-val
 
 export default class PhoneValidator implements InputValidatorInterface {
     constructor(
-        readonly value: string,
+        readonly value: string | undefined,
         readonly type: string = 'phone'
     ) {
     }
 
     is_valid(): boolean {
-        throw new Error("Method not implemented.");
+        return true
     }
 }

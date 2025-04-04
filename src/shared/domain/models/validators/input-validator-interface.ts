@@ -1,5 +1,5 @@
 export default interface InputValidatorInterface {
-    value: string
+    value?: string
     type: string
 
     is_valid(): boolean
