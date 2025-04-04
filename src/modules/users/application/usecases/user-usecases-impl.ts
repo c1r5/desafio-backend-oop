@@ -23,10 +23,10 @@ export default class UserUsecasesImpl implements UserUseCases {
         try {
             const create = await this.user_repository.create_user({
                 name: entity.name,
-                email: entity.email.value,
-                phone: entity.phone.value,
-                document: entity.document.value,
-                password: entity.password.value,
+                email: entity.email?.value,
+                phone: entity.phone?.value,
+                document: entity.document?.value,
+                password: entity.password?.value,
                 user_type: entity.user_type
             });
             if (create) {

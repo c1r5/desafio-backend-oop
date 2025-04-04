@@ -1,0 +1,33 @@
+### User Update - Success
+POST http://localhost:3000/api/v1/user/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjg1OTNmMzEtYzM5MS00ZjQ0LTkwYzQtOWQyMDJlNjc1NzRkIiwic2Vzc2lvbl9pZCI6ImU3NTUxZjgzLTY4NTctNDQwZS04MTlkLTRlYjc3YjAyN2NiNiIsInVzZXJfdHlwZSI6InBmIiwiaWF0IjoxNzQzNzM4Nzg0LCJleHAiOjIzNDg1Mzg3ODR9.Aw8c4wREsWackcagCjOlhWmAjeanw-ABJan0lsLpI7c
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com",
+  "phone": "1234567890"
+}
+
+### User Update - Missing Fields
+POST http://localhost:3000/api/v1/user/update
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{}
+
+### User Update - Invalid Email
+POST http://localhost:3000/api/v1/user/update
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+  "email": "invalid-email"
+}
+
+### User Update - Unauthorized
+POST http://localhost:3000/api/v1/user/update
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com"
+}

@@ -1,4 +1,4 @@
-import { UserCreateRequest } from "../../api/schemas/user-create-schemas";
+import UserModel from "../model/user-model";
 import { CNPJ } from "../values/cnpj";
 import { CPF } from "../values/cpf";
 import { UserEmail } from "../values/email";
@@ -8,30 +8,24 @@ import { UserDocument } from "../values/user-document";
 
 export class UserEntity {
   private constructor(
-    public readonly name: string,
-    public readonly email: UserEmail,
-    public readonly phone: UserPhone,
-    public readonly document: UserDocument,
-    public readonly password: UserPassword,
-    public readonly user_type: string = document.type,
+    public name?: string,
+    public email?: UserEmail,
+    public phone?: UserPhone,
+    public document?: UserDocument,
+    public password?: UserPassword,
+    public user_type?: string,
   ) { }
 
-  static from(schema: Record<string, string>): UserEntity
-  static from(schema: UserCreateRequest): UserEntity {
-    let document: UserDocument;
+  static from(schema: Partial<UserModel>): UserEntity {
+    const new_entity = new UserEntity();
 
-    try {
-      document = CPF.from(schema.document);
-    } catch (error) {
-      document = CNPJ.from(schema.document);
-    }
+    new_entity.name = schema.name;
+    new_entity.user_type = schema.user_type;
+    new_entity.email = schema.email ? UserEmail.from(schema.email) : undefined;
+    new_entity.phone = schema.phone ? UserPhone.from(schema.phone) : undefined;
+    new_entity.document = schema.document ? (schema.document.length === 11 ? CPF.from(schema.document) : CNPJ.from(schema.document)) : undefined;
+    new_entity.password = schema.password ? UserPassword.from(schema.password) : undefined;
 
-    return new UserEntity(
-      schema.name,
-      UserEmail.from(schema.email),
-      UserPhone.from(schema.phone),
-      document,
-      UserPassword.from(schema.password),
-    );
+    return new_entity
   }
 }

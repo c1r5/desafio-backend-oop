@@ -12,6 +12,26 @@ export default class UserRepositoryImpl implements UserRepository {
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
         this.orm = datasource.getRepository<UserModel>(UserModel)
     }
+    async update_user(user_id: string, value: Partial<UserModel>): Promise<{ email: string; phone: string; password: string }> {
+        const update_result = await this.orm.update(user_id, value);
+
+        if (!update_result.affected) {
+            throw new UserNotFound();
+        }
+
+        const user = await this.orm.findOneBy({ user_id });
+
+        if (!user) {
+            throw new UserNotFound();
+        }
+
+        return {
+            email: user.email,
+            phone: user.phone,
+            password: user.password
+        };
+    }
+
     async create_user(value: Partial<UserModel>): Promise<{ email: string; phone: string }> {
         const user = this.orm.create(value);
         await this.orm.save(user);
@@ -20,25 +40,6 @@ export default class UserRepositoryImpl implements UserRepository {
             email: user.email,
             phone: user.phone
         };
-    }
-
-    async update_user(user_id: string, value: Partial<UserModel>): Promise<{ email: string; phone: string }> {
-        const update = await this.orm.update(user_id, value)
-        if (!update.affected) {
-            throw new UserNotFound()
-        }
-
-        const user = await this.orm.findOneBy({ user_id: user_id })
-
-        if (!user) {
-            throw new UserNotFound()
-        }
-
-        return {
-            email: user.email,
-            phone: user.phone
-        }
-
     }
 
     get query_runner(): QueryRunner {
