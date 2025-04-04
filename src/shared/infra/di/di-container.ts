@@ -26,7 +26,7 @@ import VerifyUserTransferAbilityMiddleware
     from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
 import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import SessionUsecaseImpl from "@/modules/session/infra/usecases/session-usecase-impl";
+import SessionUsecaseImpl from "@/modules/session/application/usecases/session-usecase-impl";
 import LogoutController from "@/modules/session/api/controllers/logout-controller";
 import {EventBusInterface} from "@/shared/domain/models/event/event-bus-interface";
 import {eventbus} from "@/shared/infra/events/eventbus";

@@ -17,14 +17,13 @@ import {
     USER_UPDATE_RESPONSE_SCHEMA
 } from "@/modules/users/api/schemas/user-update-schemas";
 import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
-import { CannotCreateUser, UserAlreadyExist } from "@/modules/users/application/errors/create-errors";
-import EmailValidator from "@/shared/domain/models/validators/email-validator";
-import PhoneValidator from "@/shared/domain/models/validators/phone-validator";
-
 
 export class UserController extends AppControllerV1 {
     auth_middleware(server: FastifyInstance): preHandlerHookHandler {
-        throw new Error("Method not implemented.");
+        return server.auth([
+            server.verify_jwt,
+            server.verify_session
+        ])
     }
     constructor(
         @inject(TYPES.UserUseCases) private user_usecases: UserUseCases
@@ -42,10 +41,7 @@ export class UserController extends AppControllerV1 {
             Body: UserUpdateRequest,
             Reply: UserUpdateResponse
         }>('/user/update', {
-            preHandler: app.auth([
-                app.verify_jwt,
-                app.verify_session
-            ]),
+            preHandler: this.auth_middleware(app),
             schema: {
                 response: {
                     200: USER_UPDATE_RESPONSE_SCHEMA
@@ -56,7 +52,7 @@ export class UserController extends AppControllerV1 {
             const { user_id } = JWT_PAYLOAD_SCHEMA.parse(request.user)
             try {
 
-                await this.user_usecases.update_user(user_id, {})
+                await this.user_usecases.update_user(user_id, request.body)
 
                 reply.status(200).send({ message: 'updated' })
             } catch (e) {
@@ -77,7 +73,15 @@ export class UserController extends AppControllerV1 {
                 body: USER_CREATE_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
+            try {
+                await this.user_usecases.create_user(request.body)
 
+                reply.status(201).send({
+                    message: 'created'
+                })
+            } catch (e) {
+                reply.status(400).send({ message: 'error' })
+            }
         })
     }
 }

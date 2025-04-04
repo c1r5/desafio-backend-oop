@@ -1,16 +1,10 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import {inject, injectable} from "inversify";
-import {TYPES} from "@/shared/infra/di/di-types";
-import {FastifyInstance, preHandlerHookHandler, RouteShorthandOptions} from "fastify";
-import {LoginRequest, LOGIN_REQUEST_SCHEMA} from "@/modules/session/api/schemas/login-schema";
-import {SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import {CPF_REGEX} from "@/shared/application/helpers";
-import {LoginError} from "@/modules/session/application/errors/login-errors";
-import InputValidatorInterface from "@/shared/domain/models/validators/input-validator-interface";
-import CpfDocument from "@/shared/domain/models/validators/cpf-document";
-import CnpjDocument from "@/shared/domain/models/validators/cnpj-document";
-import EmailValidator from "@/shared/domain/models/validators/email-validator";
-import PasswordValidator from "@/shared/domain/models/validators/password-validator";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@/shared/infra/di/di-types";
+import { FastifyInstance, preHandlerHookHandler, RouteShorthandOptions } from "fastify";
+import { LoginRequest, LOGIN_REQUEST_SCHEMA } from "@/modules/session/api/schemas/login-schema";
+import { SessionUsecase } from "@/shared/application/usecases/session-usecase";
+import { LoginError } from "@/modules/session/application/errors/login-errors";
 
 @injectable()
 export default class LoginController extends AppControllerV1 {
@@ -30,27 +24,21 @@ export default class LoginController extends AppControllerV1 {
                 body: LOGIN_REQUEST_SCHEMA
             }
         }, async (request, reply) => {
-            const {
-                document,
-                email,
-                password
-            } = request.body;
 
-            let login: InputValidatorInterface | undefined
+            // let login: InputValidatorInterface | undefined
 
-            if (document && !email) {
-                login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
-            } else if (email && !document) {
-                login = new EmailValidator(email)
-            }
+            // if (document && !email) {
+            //     login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
+            // } else if (email && !document) {
+            //     login = new EmailValidator(email)
+            // }
 
-            if (!login) {
-                return reply.status(400).send({message: 'invalid_credentials'})
-            }
+            // if (!login) {
+            //     return reply.status(400).send({message: 'invalid_credentials'})
+            // }
 
             try {
-                const pwd = new PasswordValidator(password)
-                const payload = await this.login_usecase.login(login, pwd)
+                const payload = await this.login_usecase.login(request.body)
                 const token = server.jwt.sign(payload)
                 return reply.status(200).send({
                     message: 'success',
@@ -65,7 +53,7 @@ export default class LoginController extends AppControllerV1 {
 
                 server.log.error(e)
 
-                return reply.status(500).send({message: 'internal_server_error'})
+                return reply.status(500).send({ message: 'internal_server_error' })
             }
         })
     }

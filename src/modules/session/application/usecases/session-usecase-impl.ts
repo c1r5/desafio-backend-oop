@@ -1,11 +1,11 @@
-import {LoginResult, SessionUsecase} from "@/shared/application/usecases/session-usecase";
-import {inject, injectable} from "inversify";
-import {TYPES} from "@/shared/infra/di/di-types";
+import { LoginResult, SessionUsecase } from "@/shared/application/usecases/session-usecase";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/domain/repositories/session-repository";
 import UserRepository from "@/shared/domain/repositories/user-repository";
-import {HasActiveSession, InvalidCredentials, UserNotFound} from "@/modules/session/application/errors/login-errors";
-import {LogoutRequest} from "@/modules/session/api/schemas/logout-schema";
-import InputValidatorInterface from "@/shared/domain/models/validators/input-validator-interface";
+import { HasActiveSession, InvalidCredentials, UserNotFound } from "@/modules/session/application/errors/login-errors";
+import { LogoutRequest } from "@/modules/session/api/schemas/logout-schema";
+import { LoginRequest } from "../../api/schemas/login-schema";
 
 @injectable()
 export default class SessionUsecaseImpl implements SessionUsecase {
@@ -31,14 +31,12 @@ export default class SessionUsecaseImpl implements SessionUsecase {
         return session.is_active;
     }
 
-    async login(login: InputValidatorInterface, password: InputValidatorInterface): Promise<LoginResult> {
-        if (!login.is_valid()) throw new InvalidCredentials(login.type)
-
-        if (!password.is_valid()) throw new InvalidCredentials(password.type)
+    async login(value: LoginRequest): Promise<LoginResult> {
+        const { document, email, password } = value
 
         const user_entity = await this.user_repository.orm.findOneBy([
-            {document: login.value, password: password.value},
-            {email: login.value, password: password.value}
+            { document, password },
+            { email, password }
         ])
 
         if (!user_entity) throw new UserNotFound()

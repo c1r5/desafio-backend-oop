@@ -4,3 +4,9 @@ export type UserCreatedPayload = EventPayload & {
     email?: string
     phone?: string
 }
+
+export type UserUpdatedPayload = EventPayload & {
+    email?: string
+    phone?: string
+    password?: string
+}
