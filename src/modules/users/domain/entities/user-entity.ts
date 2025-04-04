@@ -16,6 +16,7 @@ export class UserEntity {
     public readonly user_type: string = document.type,
   ) { }
 
+  static from(schema: Record<string, string>): UserEntity
   static from(schema: UserCreateRequest): UserEntity {
     let document: UserDocument;
 

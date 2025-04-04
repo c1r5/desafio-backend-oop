@@ -58,7 +58,7 @@ export class CNPJ implements UserDocument {
     return cleanedCnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
   }
 
-  private static is_valid(document?: string): boolean {
+  static is_valid(document?: string): boolean {
     if (!document) return false;
 
     const cleanedCnpj = document.replace(/\D/g, '');

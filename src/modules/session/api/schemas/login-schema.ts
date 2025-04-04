@@ -1,9 +1,10 @@
-import {z} from "zod";
-import {CNPJ_REGEX, CPF_REGEX} from "@/shared/application/helpers";
+import { CNPJ } from "@/modules/users/domain/values/cnpj";
+import { CPF } from "@/modules/users/domain/values/cpf";
+import { z } from "zod";
 
 
 export const LOGIN_REQUEST_SCHEMA = z.object({
-    document: z.string().refine(s => s.match(CPF_REGEX) || s.match(CNPJ_REGEX), {
+    document: z.string().refine(s => CPF.is_valid(s) || CNPJ.is_valid(s), {
         message: 'É necessário fornecer um documento válido.',
         path: ['document'],
     }).optional(),

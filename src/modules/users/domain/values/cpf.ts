@@ -54,7 +54,7 @@ export class CPF implements UserDocument {
     return cleanedCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
-  private static is_valid(document: string): boolean {
+  static is_valid(document: string): boolean {
     if (!document) return false;
 
     const cleanedCpf = document.replace(/\D/g, '');

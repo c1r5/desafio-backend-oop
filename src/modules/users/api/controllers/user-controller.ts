@@ -17,6 +17,7 @@ import {
     USER_UPDATE_RESPONSE_SCHEMA
 } from "@/modules/users/api/schemas/user-update-schemas";
 import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
+import { UserEntity } from "../../domain/entities/user-entity";
 
 export class UserController extends AppControllerV1 {
     auth_middleware(server: FastifyInstance): preHandlerHookHandler {
@@ -52,7 +53,7 @@ export class UserController extends AppControllerV1 {
             const { user_id } = JWT_PAYLOAD_SCHEMA.parse(request.user)
             try {
 
-                await this.user_usecases.update_user(user_id, request.body)
+                await this.user_usecases.update_user(user_id, UserEntity.from(request.body))
 
                 reply.status(200).send({ message: 'updated' })
             } catch (e) {
@@ -74,12 +75,13 @@ export class UserController extends AppControllerV1 {
             }
         }, async (request, reply) => {
             try {
-                await this.user_usecases.create_user(request.body)
+                await this.user_usecases.create_user(UserEntity.from(request.body))
 
                 reply.status(201).send({
                     message: 'created'
                 })
             } catch (e) {
+                console.error(e)
                 reply.status(400).send({ message: 'error' })
             }
         })
