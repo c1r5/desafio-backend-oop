@@ -1,5 +1,5 @@
-import { CNPJ } from "@/modules/users/domain/values/cnpj";
-import { CPF } from "@/modules/users/domain/values/cpf";
+import { CNPJ } from "@/shared/domain/values/cnpj";
+import { CPF } from "@/shared/domain/values/cpf";
 import { z } from "zod";
 
 

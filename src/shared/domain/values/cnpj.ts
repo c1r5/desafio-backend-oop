@@ -26,10 +26,15 @@ export class CNPJ implements UserDocument {
     return 'PJ';
   }
 
-  static from(value: string): CNPJ {
+  static from(value?: string): CNPJ {
+    if (!value) {
+      throw new Error('Document is required');
+    }
+
     if (!this.is_valid(value)) {
       throw new Error('Invalid CNPJ');
     }
+
     return new CNPJ(value);
   }
 

@@ -2,11 +2,11 @@ import { inject, injectable } from "inversify";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import { TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, FastifyReply, FastifyRequest, preHandlerHookHandler } from "fastify";
-import UserUseCases from "@/shared/application/usecases/user-usecases";
-import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
+import UserUseCases from "@/shared/modules/user/user-usecases";
+import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 import TransferTransactionImpl from "@/modules/transaction/domain/models/transfer-transaction-impl";
 import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
-import { TRANSFER_REQUEST_SCHEMA, TransferBody } from "@/modules/transaction/api/schemas/transfer-body-schema";
+import { TRANSFER_REQUEST_SCHEMA } from "@/modules/transaction/api/schemas/transfer-body-schema";
 
 @injectable()
 export default class TransactionController extends AppControllerV1 {

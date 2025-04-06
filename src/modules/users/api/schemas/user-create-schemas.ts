@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { CPF } from "../../domain/values/cpf";
-import { CNPJ } from "../../domain/values/cnpj";
+import { CPF } from "@/shared/domain/values/cpf";
+import { CNPJ } from "@/shared/domain/values/cnpj";
 
 export const USER_CREATE_RESPONSE_SCHEMA = z.object({
     user_id: z.string().optional(),

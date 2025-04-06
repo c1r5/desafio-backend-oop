@@ -1,7 +1,7 @@
 import {container} from "@/shared/infra/di/di-container";
 import {TYPES} from "@/shared/infra/di/di-types";
 import {DataSource} from "typeorm";
-import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
+import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 
 describe('transfer test suite', () => {
     let datasource: DataSource;

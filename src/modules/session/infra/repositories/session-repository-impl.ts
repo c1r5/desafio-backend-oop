@@ -1,4 +1,4 @@
-import SessionRepository from "@/shared/domain/repositories/session-repository";
+import SessionRepository from "@/shared/modules/session/session-repository";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@/shared/infra/di/di-types";
 import { DataSource, Repository } from "typeorm";

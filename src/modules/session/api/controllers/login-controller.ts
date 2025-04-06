@@ -3,8 +3,8 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, preHandlerHookHandler, RouteShorthandOptions } from "fastify";
 import { LoginRequest, LOGIN_REQUEST_SCHEMA } from "@/modules/session/api/schemas/login-schema";
-import { SessionUsecase } from "@/shared/application/usecases/session-usecase";
-import { LoginError } from "@/modules/session/application/errors/login-errors";
+import { SessionUsecase } from "@/shared/modules/session/session-usecase";
+import { OperationError } from "@/shared/application/errors/operation-error";
 
 @injectable()
 export default class LoginController extends AppControllerV1 {
@@ -25,18 +25,6 @@ export default class LoginController extends AppControllerV1 {
             }
         }, async (request, reply) => {
 
-            // let login: InputValidatorInterface | undefined
-
-            // if (document && !email) {
-            //     login = document.match(CPF_REGEX) ? new CpfDocument(document) : new CnpjDocument(document)
-            // } else if (email && !document) {
-            //     login = new EmailValidator(email)
-            // }
-
-            // if (!login) {
-            //     return reply.status(400).send({message: 'invalid_credentials'})
-            // }
-
             try {
                 const payload = await this.login_usecase.login(request.body)
                 const token = server.jwt.sign(payload)
@@ -45,7 +33,7 @@ export default class LoginController extends AppControllerV1 {
                     access_token: token
                 })
             } catch (e) {
-                if (e instanceof LoginError) {
+                if (e instanceof OperationError) {
                     return reply.status(e.code).send({
                         message: e.message
                     })

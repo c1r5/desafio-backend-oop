@@ -22,12 +22,16 @@ export class CPF implements UserDocument {
     return this.document.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
-  static from(document: string): CPF {
-    const cleanedCpf = document.replace(/\D/g, '');
-    if (!CPF.is_valid(cleanedCpf)) {
+  static from(document?: string): CPF {
+    if (!document) {
+      throw new Error('Document is required');
+    }
+
+    if (!CPF.is_valid(document)) {
       throw new Error('Invalid CPF');
     }
-    return new CPF(cleanedCpf);
+
+    return new CPF(document);
   }
 
   static generate(formatted: boolean = false): string {

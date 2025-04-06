@@ -3,7 +3,7 @@ import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
 import {inject} from "inversify";
 import {TYPES} from "@/shared/infra/di/di-types";
-import UserUseCases from "@/shared/application/usecases/user-usecases";
+import UserUseCases from "@/shared/modules/user/user-usecases";
 
 
 declare module 'fastify' {

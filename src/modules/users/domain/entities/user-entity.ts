@@ -1,10 +1,10 @@
 import UserModel from "../model/user-model";
-import { CNPJ } from "../values/cnpj";
-import { CPF } from "../values/cpf";
-import { UserEmail } from "../values/email";
-import { UserPassword } from "../values/password";
-import { UserPhone } from "../values/phone";
-import { UserDocument } from "../values/user-document";
+import { CNPJ } from "@/shared/domain/values/cnpj";
+import { CPF } from "@/shared/domain/values/cpf";
+import { UserEmail } from "@/shared/domain/values/email";
+import { UserPassword } from "@/shared/domain/values/password";
+import { UserPhone } from "@/shared/domain/values/phone";
+import { UserDocument } from "@/shared/domain/values/user-document";
 
 export class UserEntity {
   private constructor(
@@ -19,11 +19,19 @@ export class UserEntity {
   static from(schema: Partial<UserModel>): UserEntity {
     const new_entity = new UserEntity();
 
+    let document: UserDocument
+
+    try {
+      document = CPF.from(schema.document)
+    } catch (e) {
+      document = CNPJ.from(schema.document)
+    }
+
     new_entity.name = schema.name;
-    new_entity.user_type = schema.user_type;
+    new_entity.user_type = document.type;
     new_entity.email = schema.email ? UserEmail.from(schema.email) : undefined;
     new_entity.phone = schema.phone ? UserPhone.from(schema.phone) : undefined;
-    new_entity.document = schema.document ? (schema.document.length === 11 ? CPF.from(schema.document) : CNPJ.from(schema.document)) : undefined;
+    new_entity.document = document
     new_entity.password = schema.password ? UserPassword.from(schema.password) : undefined;
 
     return new_entity

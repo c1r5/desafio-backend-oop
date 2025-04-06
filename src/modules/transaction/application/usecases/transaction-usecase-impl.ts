@@ -1,9 +1,8 @@
 import { inject, injectable } from "inversify";
-import TransactionRepository from "@/shared/domain/repositories/transaction-repository";
-import UserRepository from "@/shared/domain/repositories/user-repository";
+import TransactionRepository from "@/shared/modules/transaction/transaction-repository";
+import UserRepository from "@/shared/modules/user/user-repository";
 import { TYPES } from "@/shared/infra/di/di-types";
-import TransactionUsecase from "@/shared/application/usecases/transaction-usecase";
-import UserModel from "@/modules/users/domain/model/user-model";
+import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 import { Transaction } from "@/modules/transaction/domain/models/transaction";
 
 @injectable()

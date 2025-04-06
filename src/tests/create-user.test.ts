@@ -2,21 +2,15 @@ import { RawServerDefault } from "fastify";
 import { container } from "@/shared/infra/di/di-container";
 import Application from "@/app";
 import { TYPES } from "@/shared/infra/di/di-types";
-import { DataSource } from "typeorm";
 import request from "supertest";
 import { fakerPT_BR } from "@faker-js/faker";
-import { generate_cnpj } from "@/shared/application/helpers/cnpj-helper";
+import {CNPJ} from "@/shared/domain/values/cnpj";
 
 describe('crate user test suite', () => {
+    let app: Application = container.get(TYPES.ApplicationServer);
     let mocked_server: RawServerDefault;
-    let datasource: DataSource;
 
     beforeAll(async () => {
-        const _datasource: DataSource = container.get(TYPES.DataSource)
-        datasource = await _datasource.initialize();
-
-        const app: Application = container.get(TYPES.ApplicationServer);
-
         app
             .register_middleware(container.get(TYPES.VerifyJWTMiddleware))
             .register_middleware(container.get(TYPES.VerifySessionMiddleware))
@@ -24,11 +18,14 @@ describe('crate user test suite', () => {
             .register_middleware(container.get(TYPES.VerifyUserTransferAbilityMiddleware))
             .register_controller(container.get(TYPES.UserController))
 
+        await app.start_datasource()
+        await app.start_notifications()
+
         mocked_server = await app.mocked();
     });
 
     afterAll(async () => {
-        await datasource.destroy()
+        await app.stop_datasource()
     });
 
     it('should create a user and return 201', async () => {
@@ -36,7 +33,7 @@ describe('crate user test suite', () => {
             .post('/api/v1/user/create')
             .send({
                 name: fakerPT_BR.person.fullName(),
-                document: generate_cnpj(),
+                document: CNPJ.generate(),
                 email: fakerPT_BR.internet.email(),
                 phone: fakerPT_BR.phone.number(),
                 password: fakerPT_BR.internet.password()

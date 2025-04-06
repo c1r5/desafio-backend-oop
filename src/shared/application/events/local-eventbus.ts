@@ -1,8 +1,9 @@
-import { EventBusInterface, EventHandler, EventType, EventPayload } from "@/shared/domain/models/event/event-bus-interface";
+import { EventBusInterface, EventHandler, EventType, EventPayload } from "@/shared/application/events/event-bus-interface";
 import EventEmitter from "events";
 
 export class LocalEventBus implements EventBusInterface {
     async publish<T extends EventPayload>(event: EventType, payload: T): Promise<void> {
+        payload.event_id = crypto.randomUUID();
         console.log(`Publishing event:\n`, payload);
         this.emitter.emit(event, payload);
     }

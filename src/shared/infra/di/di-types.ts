@@ -1,3 +1,4 @@
+
 export const TYPES = {
     DataSource: Symbol.for('DataSource'),
     ApplicationServer: Symbol.for('ApplicationServer'),
@@ -23,5 +24,5 @@ export const TYPES = {
 
     EventBus: Symbol.for('EventBus'),
 
-    NotificationEventManager: Symbol.for('NotificationEventManager')
+    NotificationManager: Symbol.for('NotificationManager'),
 };

@@ -1,9 +1,9 @@
 import UserModel from "@/modules/users/domain/model/user-model";
-import UserRepository from "@/shared/domain/repositories/user-repository";
-import { inject, injectable } from "inversify";
-import { DataSource, QueryRunner, Repository } from "typeorm";
-import { TYPES } from "@/shared/infra/di/di-types";
-import { UserNotFound } from "@/modules/session/application/errors/login-errors";
+import {inject, injectable} from "inversify";
+import {DataSource, QueryRunner, Repository} from "typeorm";
+import {TYPES} from "@/shared/infra/di/di-types";
+import {UserNotFound} from "@/shared/application/errors/operation-error";
+import UserRepository from "@/shared/modules/user/user-repository";
 
 @injectable()
 export default class UserRepositoryImpl implements UserRepository {
@@ -12,7 +12,12 @@ export default class UserRepositoryImpl implements UserRepository {
     constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
         this.orm = datasource.getRepository<UserModel>(UserModel)
     }
-    async update_user(user_id: string, value: Partial<UserModel>): Promise<{ email: string; phone: string; password: string }> {
+
+    get query_runner(): QueryRunner {
+        return this.datasource.createQueryRunner()
+    }
+
+    async update_user(user_id: string, value: Partial<UserModel>): Promise<UserModel> {
         const update_result = await this.orm.update(user_id, value);
 
         if (!update_result.affected) {
@@ -25,24 +30,17 @@ export default class UserRepositoryImpl implements UserRepository {
             throw new UserNotFound();
         }
 
-        return {
-            email: user.email,
-            phone: user.phone,
-            password: user.password
-        };
+        return user
     }
 
-    async create_user(value: Partial<UserModel>): Promise<{ email: string; phone: string }> {
+    async create_user(value: Partial<UserModel>): Promise<UserModel> {
         const user = this.orm.create(value);
         await this.orm.save(user);
 
-        return {
-            email: user.email,
-            phone: user.phone
-        };
+        return user
     }
 
-    get query_runner(): QueryRunner {
-        return this.datasource.createQueryRunner()
+    async get_user_by_id(user_id: string): Promise<UserModel | null> {
+        return (await this.orm.findOneBy({ user_id }))
     }
 }

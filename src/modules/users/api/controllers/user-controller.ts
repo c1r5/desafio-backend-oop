@@ -1,6 +1,6 @@
 import { inject } from "inversify";
 import { TYPES } from "@/shared/infra/di/di-types";
-import UserUseCases from "@/shared/application/usecases/user-usecases";
+import UserUseCases from "@/shared/modules/user/user-usecases";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import { FastifyInstance, preHandlerHookHandler } from "fastify";
 import {

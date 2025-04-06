@@ -1,9 +1,9 @@
-import { LoginResult, SessionUsecase } from "@/shared/application/usecases/session-usecase";
+import { LoginResult, SessionUsecase } from "@/shared/modules/session/session-usecase";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@/shared/infra/di/di-types";
-import SessionRepository from "@/shared/domain/repositories/session-repository";
-import UserRepository from "@/shared/domain/repositories/user-repository";
-import { HasActiveSession, InvalidCredentials, UserNotFound } from "@/modules/session/application/errors/login-errors";
+import SessionRepository from "@/shared/modules/session/session-repository";
+import UserRepository from "@/shared/modules/user/user-repository";
+import { HasActiveSession, InvalidCredentials, UserNotFound } from "@/shared/application/errors/operation-error";
 import { LogoutRequest } from "@/modules/session/api/schemas/logout-schema";
 import { LoginRequest } from "../../api/schemas/login-schema";
 

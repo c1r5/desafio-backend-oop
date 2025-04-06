@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import TransactionEntity from "@/modules/transaction/domain/models/transaction-model";
-import TransactionRepository from "@/shared/domain/repositories/transaction-repository";
+import TransactionRepository from "@/shared/modules/transaction/transaction-repository";
 import { DataSource, Repository } from "typeorm";
 import { TYPES } from "@/shared/infra/di/di-types";
 
