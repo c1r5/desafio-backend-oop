@@ -3,7 +3,7 @@ import TransactionRepository from "@/shared/modules/transaction/transaction-repo
 import UserRepository from "@/shared/modules/user/user-repository";
 import { TYPES } from "@/shared/infra/di/di-types";
 import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
-import { Transaction } from "@/modules/transaction/domain/models/transaction";
+import { TransactionStrategy } from "@/shared/modules/transaction/transaction-strategy";
 
 @injectable()
 export default class TransactionUsecaseImpl implements TransactionUsecase {
@@ -11,13 +11,13 @@ export default class TransactionUsecaseImpl implements TransactionUsecase {
     constructor(
         @inject(TYPES.TransactionRepository) private transaction_repository: TransactionRepository,
         @inject(TYPES.UserRepository) private user_repository: UserRepository
-    ) {
+    ) {}
+
+    new_transaction(transaction: TransactionStrategy): void {
+        console.log(`[+] TransactionUsecaseImpl::new_transaction ${transaction.options} transaction created`);
     }
 
-    new_transaction(transaction: Transaction): void {
-        const options = transaction.transaction_options;
-        console.log(options)
-    }
+
 
     // async new_transaction(transaction: Transaction): Promise<void> {
 

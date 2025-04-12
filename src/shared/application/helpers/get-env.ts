@@ -1,4 +1,5 @@
 export type EnvValue = string | number | null;
+
 export function get_env(
     env_key: string,
     default_value: EnvValue = null,

@@ -2,18 +2,16 @@ import { inject, injectable } from "inversify";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import { TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, FastifyReply, FastifyRequest, preHandlerHookHandler } from "fastify";
-import UserUseCases from "@/shared/modules/user/user-usecases";
 import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
-import TransferTransactionImpl from "@/modules/transaction/domain/models/transfer-transaction-impl";
 import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
 import { TRANSFER_REQUEST_SCHEMA } from "@/modules/transaction/api/schemas/transfer-body-schema";
+import { TransactionStrategyFactory } from "@/shared/modules/transaction/transaction-strategy";
 
 @injectable()
 export default class TransactionController extends AppControllerV1 {
 
     constructor(
-        @inject(TYPES.TransactionUseCases) private transaction_usecases: TransactionUsecase,
-        @inject(TYPES.UserUseCases) private user_usecases: UserUseCases
+        @inject(TYPES.TransactionUseCases) private transaction_usecases: TransactionUsecase
     ) {
         super()
     }
@@ -37,14 +35,15 @@ export default class TransactionController extends AppControllerV1 {
         const { user_id } = JWT_PAYLOAD_SCHEMA.parse(request.user)
         const { recipient_id, amount } = TRANSFER_REQUEST_SCHEMA.parse(request.body);
 
-        const new_transfer_transaction = new TransferTransactionImpl();
-
-        new_transfer_transaction.sender = user_id;
-        new_transfer_transaction.receiver = recipient_id;
-        new_transfer_transaction.amount = amount;
+        const new_transfer_transaction = TransactionStrategyFactory.create({
+            type: 'transfer',
+            sender: user_id,
+            receiver: recipient_id,
+            amount: BigInt(amount),
+        })
 
         this.transaction_usecases.new_transaction(new_transfer_transaction)
 
-        reply.status(200).send('ok');
+        reply.status(201).send(new_transfer_transaction.options);
     }
 }

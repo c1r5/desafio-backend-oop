@@ -10,7 +10,6 @@ import jwt from "@fastify/jwt";
 import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
-import EventManager from "@/shared/application/events/event-manager";
 import { get_env } from "./shared/application/helpers/get-env";
 
 @injectable()
@@ -20,8 +19,7 @@ export default class Application {
     });
 
     constructor(
-        @inject(TYPES.DataSource) private datasource: DataSource,
-        @inject(TYPES.NotificationManager) private notification_event_manager: EventManager
+        @inject(TYPES.DataSource) private datasource: DataSource
     ) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);
@@ -48,8 +46,7 @@ export default class Application {
 
     async start_application(): Promise<void> {
         try {
-            await this.datasource.initialize();
-            await this.notification_event_manager.initialize();
+            await this.start_datasource()
             await this.fastify.listen({ port: 3000 });
         } catch (error) {
             this.fastify.log.error(error);
@@ -69,15 +66,6 @@ export default class Application {
     async stop_datasource(): Promise<void> {
         try {
             await this.datasource.destroy();
-        } catch (error) {
-            this.fastify.log.error(error);
-            process.exit(1);
-        }
-    }
-
-    async start_notifications(): Promise<void> {
-        try {
-            await this.notification_event_manager.initialize();
         } catch (error) {
             this.fastify.log.error(error);
             process.exit(1);

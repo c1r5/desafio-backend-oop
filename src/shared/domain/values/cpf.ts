@@ -8,7 +8,7 @@ export class CPF implements UserDocument {
     return 'PF';
   }
   get value(): string {
-    return CPF.format(this.document);
+    return CPF.unformat(this.document);
   }
 
   equals(other: ValueObject): boolean {
@@ -56,6 +56,11 @@ export class CPF implements UserDocument {
   private static format(document: string): string {
     const cleanedCpf = document.replace(/\D/g, '');
     return cleanedCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  private static unformat(document: string): string {
+    const cleanedCpf = document.replace(/\D/g, '');
+    return cleanedCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1$2$3$4');
   }
 
   static is_valid(document: string): boolean {

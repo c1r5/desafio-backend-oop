@@ -5,7 +5,9 @@ export const TYPES = {
 
     UserRepository: Symbol.for('UserRepository'),
     UserUseCases: Symbol.for('UserUseCases'),
-    UserController: Symbol.for('UserController'),
+    
+    CreateUserController: Symbol.for('CreateUserController'),
+    UpdateUserController: Symbol.for('UpdateUserController'),
 
     TransactionUseCases: Symbol.for('TransactionUseCases'),
     TransactionRepository: Symbol.for('TransactionRepository'),
@@ -20,9 +22,5 @@ export const TYPES = {
     VerifyJWTMiddleware: Symbol.for('JWTValidationMiddleware'),
     VerifySessionMiddleware: Symbol.for('SessionValidationMiddleware'),
     VerifyUserMiddleware: Symbol.for('UserValidationMiddleware'),
-    VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware'),
-
-    EventBus: Symbol.for('EventBus'),
-
-    NotificationManager: Symbol.for('NotificationManager'),
+    VerifyUserTransferAbilityMiddleware: Symbol.for('VerifyUserTransferAbilityMiddleware')
 };

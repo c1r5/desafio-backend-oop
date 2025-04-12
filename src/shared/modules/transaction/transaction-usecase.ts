@@ -1,5 +1,5 @@
-import {Transaction} from "@/modules/transaction/domain/models/transaction";
+import { TransactionStrategy } from "./transaction-strategy";
 
 export default interface TransactionUsecase {
-    new_transaction(transaction: Transaction): void;
+    new_transaction(transaction: TransactionStrategy): void;
 }
