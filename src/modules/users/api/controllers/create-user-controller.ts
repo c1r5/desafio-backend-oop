@@ -1,5 +1,5 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, RouteShorthandOptions, preHandlerHookHandler } from "fastify";
 import { inject } from "inversify";
 import { UserCreateRequest, UserCreateResponse } from "../schemas/user-create-schemas";
@@ -11,7 +11,7 @@ import UserUseCases from "@/shared/modules/user/user-usecases";
 
 export class CreateUserController extends AppControllerV1 {
   constructor(
-    @inject(TYPES.UserUseCases) private create_user_usecase: UserUseCases,
+    @inject(DI_TYPES.UserUseCases) private create_user_usecase: UserUseCases,
   ) {
     super();
   }
@@ -34,7 +34,7 @@ export class CreateUserController extends AppControllerV1 {
       }
     })
   }
-  
+
   auth_middleware(server: FastifyInstance): preHandlerHookHandler {
     throw new Error("Method not implemented.");
   }

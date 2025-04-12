@@ -3,14 +3,14 @@ import TransactionRepositoryImpl from "@/modules/transaction/infra/repositories/
 import TransactionController from "@/modules/transaction/api/controllers/transaction-controller";
 
 import { Container } from "inversify";
-import { TYPES } from "./di-types";
+import { DI_TYPES } from "./di-types";
 import { DataSource } from "typeorm";
 
 import UserRepository from "@/shared/modules/user/user-repository";
 import UserRepositoryImpl from "@/modules/users/infra/repositories/user-repository-impl";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import TransactionRepository from "@/shared/modules/transaction/transaction-repository";
-import { AppDataSource } from "@/shared/infra/datasources/app-data-source";
+import { AppDataSource } from "@/shared/infra/app-datasource";
 import SessionRepository from "@/shared/modules/session/session-repository";
 import SessionRepositoryImpl from "@/modules/session/infra/repositories/session-repository-impl";
 import Application from "@/app";
@@ -19,8 +19,7 @@ import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
 import VerifySessionMiddleware from "@/shared/api/middlewares/verify-session-middleware";
 import VerifyUserStatusMiddleware from "@/shared/api/middlewares/verify-user-status-middleware";
-import VerifyUserTransferAbilityMiddleware
-    from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
+import VerifyUserTransferAbilityMiddleware from "@/modules/transaction/api/middlewares/verify-user-transfer-ability-middleware";
 import VerifyJwtMiddleware from "@/shared/api/middlewares/verify-jwt-middleware";
 import { SessionUsecase } from "@/shared/modules/session/session-usecase";
 import SessionUsecaseImpl from "@/modules/session/application/usecases/session-usecase-impl";
@@ -28,31 +27,37 @@ import LogoutController from "@/modules/session/api/controllers/logout-controlle
 import { CreateUserController } from "@/modules/users/api/controllers/create-user-controller";
 import UserUsecasesImpl from "@/modules/users/application/usecases/user-usecases-impl";
 import UserUseCases from "@/shared/modules/user/user-usecases";
+import MailerClient from "@/shared/application/services/mailer-client";
+import { get_env } from "../../application/helpers/get-env";
 
 const container = new Container()
 
-container.bind<DataSource>(TYPES.DataSource).toConstantValue(AppDataSource)
-container.bind<Application>(TYPES.ApplicationServer).to(Application)
+container.bind<DataSource>(DI_TYPES.DataSource).toConstantValue(AppDataSource)
+container.bind<MailerClient>(DI_TYPES.MailerClient).toConstantValue(MailerClient.create({
+  host: String(get_env('MAILER_HOST', 'https://util.devi.tools/api/v1')),
+  port: Number(get_env('MAILER_PORT', 8080))
+}))
+container.bind<Application>(DI_TYPES.Application).to(Application)
 
-container.bind<SessionRepository>(TYPES.SessionRepository).to(SessionRepositoryImpl)
-container.bind<SessionUsecase>(TYPES.SessionUseCase).to(SessionUsecaseImpl)
+container.bind<SessionRepository>(DI_TYPES.SessionRepository).to(SessionRepositoryImpl)
+container.bind<SessionUsecase>(DI_TYPES.SessionUseCase).to(SessionUsecaseImpl)
 
-container.bind<UserRepository>(TYPES.UserRepository).to(UserRepositoryImpl)
-container.bind<UserUseCases>(TYPES.UserUseCases).to(UserUsecasesImpl)
+container.bind<UserRepository>(DI_TYPES.UserRepository).to(UserRepositoryImpl)
+container.bind<UserUseCases>(DI_TYPES.UserUseCases).to(UserUsecasesImpl)
 
-container.bind<TransactionRepository>(TYPES.TransactionRepository).to(TransactionRepositoryImpl)
-container.bind<TransactionUsecase>(TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
+container.bind<TransactionRepository>(DI_TYPES.TransactionRepository).to(TransactionRepositoryImpl)
+container.bind<TransactionUsecase>(DI_TYPES.TransactionUseCases).to(TransactionUsecaseImpl)
 
-container.bind<AppControllerV1>(TYPES.LoginController).to(LoginController)
-container.bind<AppControllerV1>(TYPES.LogoutController).to(LogoutController)
-container.bind<AppControllerV1>(TYPES.CreateUserController).to(CreateUserController)
+container.bind<AppControllerV1>(DI_TYPES.LoginController).to(LoginController)
+container.bind<AppControllerV1>(DI_TYPES.LogoutController).to(LogoutController)
+container.bind<AppControllerV1>(DI_TYPES.CreateUserController).to(CreateUserController)
 // container.bind<AppControllerV1>(TYPES.UpdateUserController).to(UpdateUserController)
 
-container.bind<AppControllerV1>(TYPES.TransactionController).to(TransactionController)
+container.bind<AppControllerV1>(DI_TYPES.TransactionController).to(TransactionController)
 
-container.bind<AppMiddleware>(TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
-container.bind<AppMiddleware>(TYPES.VerifySessionMiddleware).to(VerifySessionMiddleware)
-container.bind<AppMiddleware>(TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
-container.bind<AppMiddleware>(TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
+container.bind<AppMiddleware>(DI_TYPES.VerifyJWTMiddleware).to(VerifyJwtMiddleware)
+container.bind<AppMiddleware>(DI_TYPES.VerifySessionMiddleware).to(VerifySessionMiddleware)
+container.bind<AppMiddleware>(DI_TYPES.VerifyUserMiddleware).to(VerifyUserStatusMiddleware)
+container.bind<AppMiddleware>(DI_TYPES.VerifyUserTransferAbilityMiddleware).to(VerifyUserTransferAbilityMiddleware)
 
 export { container }

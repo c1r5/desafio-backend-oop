@@ -1,8 +1,8 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
-import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
-import {inject} from "inversify";
-import {TYPES} from "@/shared/infra/di/di-types";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
+import { inject } from "inversify";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import UserUseCases from "@/shared/modules/user/user-usecases";
 
 
@@ -14,7 +14,7 @@ declare module 'fastify' {
 
 export default class VerifyUserStatusMiddleware implements AppMiddleware {
     constructor(
-        @inject(TYPES.UserUseCases) private user_usecase: UserUseCases
+        @inject(DI_TYPES.UserUseCases) private user_usecase: UserUseCases
     ) {
     }
 

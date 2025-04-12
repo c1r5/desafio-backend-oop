@@ -1,20 +1,29 @@
 import { inject, injectable } from "inversify";
 import TransactionRepository from "@/shared/modules/transaction/transaction-repository";
 import UserRepository from "@/shared/modules/user/user-repository";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 import { TransactionStrategy } from "@/shared/modules/transaction/transaction-strategy";
+import MailerClient from "@/shared/application/services/mailer-client";
 
 @injectable()
 export default class TransactionUsecaseImpl implements TransactionUsecase {
 
     constructor(
-        @inject(TYPES.TransactionRepository) private transaction_repository: TransactionRepository,
-        @inject(TYPES.UserRepository) private user_repository: UserRepository
-    ) {}
+        @inject(DI_TYPES.TransactionRepository) private transaction_repository: TransactionRepository,
+        @inject(DI_TYPES.UserRepository) private user_repository: UserRepository,
+        @inject(DI_TYPES.MailerClient) private mailer: MailerClient
+    ) { }
 
-    new_transaction(transaction: TransactionStrategy): void {
+    async request_email_notification(transaction_id: string): Promise<void> {
+        // const transaction = await this.transaction_repository.get_transaction_by_id(transaction_id);
+
+        console.log(`[+] TransactionUsecaseImpl::request_email_notification ${transaction_id} transaction requested email notification`);
+    }
+
+    async new_transaction(transaction: TransactionStrategy): Promise<void> {
         console.log(`[+] TransactionUsecaseImpl::new_transaction ${transaction.options} transaction created`);
+        await this.request_email_notification('1');
     }
 
 

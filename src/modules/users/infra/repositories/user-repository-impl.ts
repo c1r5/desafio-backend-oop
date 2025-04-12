@@ -1,15 +1,15 @@
 import UserModel from "@/modules/users/domain/model/user-model";
-import {inject, injectable} from "inversify";
-import {DataSource, QueryRunner, Repository} from "typeorm";
-import {TYPES} from "@/shared/infra/di/di-types";
-import {UserNotFound} from "@/shared/application/errors/operation-error";
+import { inject, injectable } from "inversify";
+import { DataSource, QueryRunner, Repository } from "typeorm";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
+import { UserNotFound } from "@/shared/application/errors/operation-error";
 import UserRepository from "@/shared/modules/user/user-repository";
 
 @injectable()
 export default class UserRepositoryImpl implements UserRepository {
     orm: Repository<UserModel>;
 
-    constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
+    constructor(@inject(DI_TYPES.DataSource) private datasource: DataSource) {
         this.orm = datasource.getRepository<UserModel>(UserModel)
     }
 

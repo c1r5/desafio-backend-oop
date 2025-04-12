@@ -1,9 +1,9 @@
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
-import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {TYPES} from "@/shared/infra/di/di-types";
-import {inject} from "inversify";
-import {SessionUsecase} from "@/shared/modules/session/session-usecase";
-import {JWT_PAYLOAD_SCHEMA} from "@/shared/api/schemas/jwt-payload-schema";
+import { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
+import { inject } from "inversify";
+import { SessionUsecase } from "@/shared/modules/session/session-usecase";
+import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -13,7 +13,7 @@ declare module 'fastify' {
 
 export default class VerifyJwtMiddleware implements AppMiddleware {
     constructor(
-        @inject(TYPES.SessionUseCase) private session_usecase: SessionUsecase
+        @inject(DI_TYPES.SessionUseCase) private session_usecase: SessionUsecase
     ) {
     }
 

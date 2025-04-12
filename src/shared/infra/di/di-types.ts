@@ -1,11 +1,12 @@
 
-export const TYPES = {
+export const DI_TYPES = {
     DataSource: Symbol.for('DataSource'),
-    ApplicationServer: Symbol.for('ApplicationServer'),
+    MailerClient: Symbol.for('MailerClient'),
+    Application: Symbol.for('Application'),
 
     UserRepository: Symbol.for('UserRepository'),
     UserUseCases: Symbol.for('UserUseCases'),
-    
+
     CreateUserController: Symbol.for('CreateUserController'),
     UpdateUserController: Symbol.for('UpdateUserController'),
 

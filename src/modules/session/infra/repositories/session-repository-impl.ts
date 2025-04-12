@@ -1,6 +1,6 @@
 import SessionRepository from "@/shared/modules/session/session-repository";
 import { inject, injectable } from "inversify";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import { DataSource, Repository } from "typeorm";
 import { SessionModel } from "@/modules/session/domain/models/session-model";
 
@@ -8,7 +8,7 @@ import { SessionModel } from "@/modules/session/domain/models/session-model";
 export default class SessionRepositoryImpl implements SessionRepository {
     orm: Repository<SessionModel>;
 
-    constructor(@inject(TYPES.DataSource) private datasource: DataSource) {
+    constructor(@inject(DI_TYPES.DataSource) private datasource: DataSource) {
         this.orm = datasource.getRepository(SessionModel);
     }
 

@@ -7,7 +7,7 @@ export function generate_email_verify_template(
 ): string {
     const templatePath = path.resolve(
         __dirname,
-        "../../view/email-verify-template.html"
+        "./templates/verify-email.html"
     );
     const templateSource = fs.readFileSync(templatePath, "utf-8");
     const compiledTemplate = handlebars.compile(templateSource);

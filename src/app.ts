@@ -1,7 +1,7 @@
 import Fastify, { FastifyInstance, RawServerDefault } from "fastify";
 import { DataSource } from "typeorm";
 import { inject, injectable } from "inversify";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import AppMiddleware from "@/shared/domain/middlewares/app-middleware";
@@ -19,7 +19,7 @@ export default class Application {
     });
 
     constructor(
-        @inject(TYPES.DataSource) private datasource: DataSource
+        @inject(DI_TYPES.DataSource) private datasource: DataSource
     ) {
         this.fastify.setValidatorCompiler(validatorCompiler);
         this.fastify.setSerializerCompiler(serializerCompiler);

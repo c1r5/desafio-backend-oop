@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, FastifyReply, FastifyRequest, preHandlerHookHandler } from "fastify";
 import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 import { JWT_PAYLOAD_SCHEMA } from "@/shared/api/schemas/jwt-payload-schema";
@@ -11,7 +11,7 @@ import { TransactionStrategyFactory } from "@/shared/modules/transaction/transac
 export default class TransactionController extends AppControllerV1 {
 
     constructor(
-        @inject(TYPES.TransactionUseCases) private transaction_usecases: TransactionUsecase
+        @inject(DI_TYPES.TransactionUseCases) private transaction_usecases: TransactionUsecase
     ) {
         super()
     }
@@ -38,7 +38,7 @@ export default class TransactionController extends AppControllerV1 {
         const new_transfer_transaction = TransactionStrategyFactory.create({
             type: 'transfer',
             sender: user_id,
-            receiver: recipient_id,
+            recipient: recipient_id,
             amount: BigInt(amount),
         })
 

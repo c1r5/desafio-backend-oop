@@ -1,6 +1,6 @@
 import { LoginResult, SessionUsecase } from "@/shared/modules/session/session-usecase";
 import { inject, injectable } from "inversify";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import SessionRepository from "@/shared/modules/session/session-repository";
 import UserRepository from "@/shared/modules/user/user-repository";
 import { HasActiveSession, InvalidCredentials, UserNotFound } from "@/shared/application/errors/operation-error";
@@ -10,8 +10,8 @@ import { LoginRequest } from "../../api/schemas/login-schema";
 @injectable()
 export default class SessionUsecaseImpl implements SessionUsecase {
     constructor(
-        @inject(TYPES.SessionRepository) private session_repository: SessionRepository,
-        @inject(TYPES.UserRepository) private user_repository: UserRepository
+        @inject(DI_TYPES.SessionRepository) private session_repository: SessionRepository,
+        @inject(DI_TYPES.UserRepository) private user_repository: UserRepository
     ) {
     }
 

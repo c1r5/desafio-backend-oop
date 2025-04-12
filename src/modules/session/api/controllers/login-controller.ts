@@ -1,6 +1,6 @@
 import AppControllerV1 from "@/shared/domain/controllers/app-controller-v1";
 import { inject, injectable } from "inversify";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import { FastifyInstance, preHandlerHookHandler, RouteShorthandOptions } from "fastify";
 import { LoginRequest, LOGIN_REQUEST_SCHEMA } from "@/modules/session/api/schemas/login-schema";
 import { SessionUsecase } from "@/shared/modules/session/session-usecase";
@@ -13,7 +13,7 @@ export default class LoginController extends AppControllerV1 {
     }
 
     constructor(
-        @inject(TYPES.SessionUseCase) private login_usecase: SessionUsecase
+        @inject(DI_TYPES.SessionUseCase) private login_usecase: SessionUsecase
     ) {
         super()
     }

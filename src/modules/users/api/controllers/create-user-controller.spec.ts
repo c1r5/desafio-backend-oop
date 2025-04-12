@@ -1,7 +1,7 @@
 import { RawServerDefault } from "fastify";
 import { container } from "@/shared/infra/di/di-container";
 import Application from "@/app";
-import { TYPES } from "@/shared/infra/di/di-types";
+import { DI_TYPES } from "@/shared/infra/di/di-types";
 import request from "supertest";
 import { fakerPT_BR as faker } from "@faker-js/faker";
 import { CPF } from "@/shared/domain/values/cpf";
@@ -13,8 +13,8 @@ describe('CreateUserController', () => {
   beforeAll(async () => {
     dotenv.config();
 
-    app = container.get<Application>(TYPES.ApplicationServer)
-      .register_controller(container.get(TYPES.CreateUserController));
+    app = container.get<Application>(DI_TYPES.Application)
+      .register_controller(container.get(DI_TYPES.CreateUserController));
 
     await app.start_datasource()
     server = await app.mocked();
