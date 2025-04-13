@@ -14,10 +14,12 @@ export class CircuitBreaker {
 
   async call<T>(fn: () => Promise<T>): Promise<T> {
     if (this.state === 'OPEN' && !this.isRecoveryTimePassed()) {
+      console.error('[+] Circuit is open, not calling the function');
       throw new Error('Circuit is open');
     }
 
     if (this.state === 'OPEN' && this.isRecoveryTimePassed()) {
+      console.log('[+] Circuit is half-open, trying to call the function');
       this.state = 'HALF_OPEN';
     }
 

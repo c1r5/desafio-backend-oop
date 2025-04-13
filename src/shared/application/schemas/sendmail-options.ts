@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SENDMAIL_OPTIONS = z.object({
-    from: z.string().email().optional().default("nao_responda@testepay.com"),
+    from: z.string().email().default("nao_responda@testepay.com").optional(),
     to: z.string().email(),
     subject: z.string(),
     body: z.string(),

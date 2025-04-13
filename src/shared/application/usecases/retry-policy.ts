@@ -21,6 +21,7 @@ export async function retry<T>(
     try {
       return await fn();
     } catch (error) {
+      console.error(`[+] Attempt ${attempts + 1} failed:`, error);
       attempts++;
       if (attempts >= retries) {
         throw error;

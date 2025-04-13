@@ -8,36 +8,34 @@ import { generate_verification_token } from "@/shared/application/helpers/verifi
 import { UserNotFound } from "@/shared/application/errors/operation-error";
 import { generate_email_verify_template } from "@/shared/modules/user/generate-email-verify-template";
 import { CreateUserOptions } from "@/shared/modules/user/create-user-options";
-import MailerClient from "@/shared/application/services/mailer-client";
 import { CircuitBreaker } from "@/shared/application/usecases/circuit-breaker";
 import { retry } from "@/shared/application/usecases/retry-policy";
+import { MailerClientStrategy } from "@/shared/modules/notification/mailer-client-strategy";
 
 
 @injectable()
 export default class UserUsecasesImpl implements UserUseCases {
 
     constructor(
-        @inject(DI_TYPES.UserRepository) private user_repository: UserRepository ,
-        @inject(DI_TYPES.MailerClient) private mailer_client: MailerClient,
+        @inject(DI_TYPES.UserRepository) private user_repository: UserRepository,
+        @inject(DI_TYPES.MailerClient) private mailer_client: MailerClientStrategy,
         private circuit_breaker = new CircuitBreaker(3, 5000)
     ) {
     }
 
     async create_user(data: CreateUserOptions): Promise<void> {
-        const created_user = await this.user_repository.create_user({
+        await this.user_repository.create_user({
             email: data.email.value,
             password: data.password.value,
             name: data.name,
             document: data.document.value,
             phone: data.phone.value,
             user_type: data.document.type
+        }).then(async (user) => {
+
         });
 
-        if (!created_user) {
-            throw new Error("Error creating user");
-        }
 
-        await this.request_email_verification(created_user.user_id)
     }
 
     async request_email_verification(user_id: string): Promise<void> {
@@ -54,12 +52,12 @@ export default class UserUsecasesImpl implements UserUseCases {
 
             this.circuit_breaker.call(async () => {
                 retry(async () => {
-                    await this.mailer_client.send_email({
+                    await this.mailer_client.send({
                         to: user.email,
-                        subject: "Verify your email address",
+                        subject: "Verify your email",
                         body: email_template,
                     })
-                }, {retries: 3, delay: 2500})
+                }, { retries: 3, delay: 2500 })
             })
 
         } catch (error) {

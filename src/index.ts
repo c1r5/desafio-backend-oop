@@ -12,6 +12,7 @@ application
     .register_controller(container.get(DI_TYPES.CreateUserController))
     .register_controller(container.get(DI_TYPES.LoginController))
     .register_controller(container.get(DI_TYPES.LogoutController))
+    .register_controller(container.get(DI_TYPES.TransactionController))
     .start_application()
     .then(() => {
         console.log("[+] Application started successfully");

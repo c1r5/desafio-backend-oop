@@ -27,16 +27,13 @@ import LogoutController from "@/modules/session/api/controllers/logout-controlle
 import { CreateUserController } from "@/modules/users/api/controllers/create-user-controller";
 import UserUsecasesImpl from "@/modules/users/application/usecases/user-usecases-impl";
 import UserUseCases from "@/shared/modules/user/user-usecases";
-import MailerClient from "@/shared/application/services/mailer-client";
-import { get_env } from "../../application/helpers/get-env";
+import { MailerClientStrategy } from "@/shared/modules/notification/mailer-client-strategy";
+import MailerClientMockImpl from "@/modules/notification/application/mailer-client-mock-impl";
 
 const container = new Container()
 
 container.bind<DataSource>(DI_TYPES.DataSource).toConstantValue(AppDataSource)
-container.bind<MailerClient>(DI_TYPES.MailerClient).toConstantValue(MailerClient.create({
-  host: String(get_env('MAILER_HOST', 'https://util.devi.tools/api/v1')),
-  port: Number(get_env('MAILER_PORT', 8080))
-}))
+container.bind<MailerClientStrategy>(DI_TYPES.MailerClient).to(MailerClientMockImpl)
 container.bind<Application>(DI_TYPES.Application).to(Application)
 
 container.bind<SessionRepository>(DI_TYPES.SessionRepository).to(SessionRepositoryImpl)

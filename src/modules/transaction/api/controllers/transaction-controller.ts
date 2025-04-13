@@ -21,7 +21,7 @@ export default class TransactionController extends AppControllerV1 {
             server.verify_jwt,
             server.verify_session,
             server.validate_user,
-            server.verify_user_transfer_ability
+            // server.verify_user_transfer_ability
         ])
     }
 
@@ -35,15 +35,15 @@ export default class TransactionController extends AppControllerV1 {
         const { user_id } = JWT_PAYLOAD_SCHEMA.parse(request.user)
         const { recipient_id, amount } = TRANSFER_REQUEST_SCHEMA.parse(request.body);
 
-        const new_transfer_transaction = TransactionStrategyFactory.create({
+        const transfer = TransactionStrategyFactory.create({
             type: 'transfer',
             sender: user_id,
             recipient: recipient_id,
             amount: BigInt(amount),
         })
+        
+        await this.transaction_usecases.new_transaction(transfer)
 
-        this.transaction_usecases.new_transaction(new_transfer_transaction)
-
-        reply.status(201).send(new_transfer_transaction.options);
+        reply.status(201).send('ok');
     }
 }

@@ -4,7 +4,7 @@ import UserRepository from "@/shared/modules/user/user-repository";
 import { DI_TYPES } from "@/shared/infra/di/di-types";
 import TransactionUsecase from "@/shared/modules/transaction/transaction-usecase";
 import { TransactionStrategy } from "@/shared/modules/transaction/transaction-strategy";
-import MailerClient from "@/shared/application/services/mailer-client";
+import { MailerClientStrategy } from "@/shared/modules/notification/mailer-client-strategy";
 
 @injectable()
 export default class TransactionUsecaseImpl implements TransactionUsecase {
@@ -12,7 +12,7 @@ export default class TransactionUsecaseImpl implements TransactionUsecase {
     constructor(
         @inject(DI_TYPES.TransactionRepository) private transaction_repository: TransactionRepository,
         @inject(DI_TYPES.UserRepository) private user_repository: UserRepository,
-        @inject(DI_TYPES.MailerClient) private mailer: MailerClient
+        @inject(DI_TYPES.MailerClient) private mailer: MailerClientStrategy
     ) { }
 
     async request_email_notification(transaction_id: string): Promise<void> {
