@@ -37,6 +37,7 @@ Este projeto oferece um sistema de transferências financeiras entre usuários c
 - Integração completa com serviço de notificação externo
 - Testes para transferência e notificação
 - Refatoração e cobertura de testes (meta: 80%)
+- Refatorar aos poucos de OOP para FP.
 
 ## Mocks utilizados
 
